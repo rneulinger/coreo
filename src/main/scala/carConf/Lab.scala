@@ -1,0 +1,82 @@
+package carConf
+
+import com.microsoft.playwright.*
+import com.microsoft.playwright.options.*
+
+import coreo.*
+
+object Lab extends Main( ){
+  lazy val C1: Main = new Main()
+  lazy val C2: Main = new Main()
+  lazy val `/`:Main = this
+  // file:///C:/burli/carconfigWeb/html/CarConfig.htm?lang=en
+
+  @main def clickMains():Unit = {
+    _SpecialsTab.click
+    _AccessoriesTab.click
+    _VehiclesTab.click
+
+    goto(Menu.File)
+    goto(Menu.File)
+    goto(Menu.File_Reset)
+
+    goto(Menu.Options)
+    goto(Menu.Options)
+    goto(Menu.Options_Vehicles)
+
+    def clickButton( name:String ) ={
+      page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(name)).click()
+    }
+    def clickOK() = clickButton( "OK")
+    def clickCancel() = clickButton( "Cancel")
+
+    _VehiclesDialog.VehicleName.flash()
+    clickCancel()
+
+    goto(Menu.Options_Specials)
+    clickOK()
+    goto(Menu.Options_Accessories)
+    clickOK()
+
+    goto( Menu.PurchaseOrder)
+    goto( Menu.PurchaseOrder)
+    goto( Menu.PurchaseOrder_ViewSelectedDetails)
+    clickOK()
+    goto( Menu.PurchaseOrder_SendOrder)
+    clickCancel()
+
+    goto( Menu.Help)
+    goto( Menu.Help)
+    goto( Menu.Help_Info)
+    clickOK()
+    goto( Menu.Help_Buggy)
+    goto( Menu.Help_LoadTestingModule)
+
+    dump()
+    close()
+  }
+}
+
+import com.microsoft.playwright.*
+
+object FlashElement {
+  def main(args:Array[String]):Unit = {
+      val playwright = Playwright.create()
+      val browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false))
+      val page = browser.newPage()
+      page.navigate("https://example.com")
+
+      // Replace with your actual selector
+      val selector = "h1"
+
+      // Inject JavaScript to flash the element
+      page.evalOnSelector(selector, "element => {" +
+        "element.style.transition = 'background-color 0.3s ease';" +
+        "element.style.backgroundColor = 'yellow';" +
+        "setTimeout(() => element.style.backgroundColor = '', 500);" +
+        "}")
+  }
+}
+
+
+

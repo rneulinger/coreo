@@ -1,0 +1,64 @@
+classDiagram
+    class OBJ
+    class CHILD
+    class FRM
+    OBJ <|-- ROOT
+
+    class ATOM{
+        + loc
+        + click
+        + set
+        + get
+        + ...
+    }
+
+    class BAG{
+        + edit:
+        + add:
+        + filter:
+        + ...
+    }
+    class PwRoot{
+        +browser
+        +page
+        +baseUrl
+    }
+
+    class NAV{
+        + goto
+    }
+    class ACT{
+        + act
+    }
+    ROOT <|-- PwRoot
+
+    OBJ <|-- CHILD
+    CHILD <|-- BAG
+    CHILD <|-- ATOM
+
+    %% class CanOwn{<<interface>>}
+    %% CanOwn <|-- BAG
+    %% CanOwn <|-- ROOT
+    
+    ATOM <|-- ACT
+    ATOM <|-- DATA
+    ACT <|-- MIT
+    ACT <|-- BTN
+    DATA <|-- TXT
+    DATA <|-- CBX
+    DATA <|-- TBL
+    DATA <|-- Some_More
+
+    PwRoot <|-- CarConfig
+    PwRoot <|-- Practice
+    PwRoot <|-- Ridux
+    PwRoot <|-- Many_More
+
+    BAG  <|-- NAV
+    BAG  <|-- FRM 
+    
+    ROOT *-- BAG
+    BAG *-- ATOM
+    
+    
+    
