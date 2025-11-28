@@ -5,10 +5,10 @@ import coreo.bricks.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
-class AccessoriesDialog_(own:CanOwn ) extends FRM(own){
+class AccessoriesDialog(own:CanOwn ) extends FRM(own){
 
   // tag::fields[]
-  given ref: Own[AccessoriesDialog_] = Own(this)
+  given ref: Own[AccessoriesDialog] = Own(this)
 
 
 

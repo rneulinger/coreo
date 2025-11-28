@@ -9,7 +9,7 @@ image::Vehicles.png[]
 
 [,java]
 ----
-include::CarConfig_.scala[tag=fields]
+include::CarConfig.scala[tag=fields]
 ----
 
 == Vehicles
@@ -18,7 +18,7 @@ image::Vehicles.png[]
 
 [,java]
 ----
-include::vehicles/Vehicles_.scala[tag=fields]
+include::vehicles/Vehicles.scala[tag=fields]
 ----
 
 === Vehicles Dialog
@@ -27,7 +27,7 @@ image::VehiclesDialog.png[]
 
 [,java]
 ----
-include::vehicles/VehiclesDialog_.scala[tag=fields]
+include::vehicles/VehiclesDialog.scala[tag=fields]
 ----
 
 == Specials
@@ -36,7 +36,7 @@ image::Specials.png[]
 
 [,java]
 ----
-include::specials/Specials_.scala[tag=fields]
+include::specials/Specials.scala[tag=fields]
 ----
 
 === Specials Dialog
@@ -45,7 +45,7 @@ image::SpecialsDialog.png[]
 
 [,java]
 ----
-include::specials/SpecialsDialog_.scala[tag=fields]
+include::specials/SpecialsDialog.scala[tag=fields]
 ----
 
 == Accessories
@@ -54,7 +54,7 @@ image::Accessories.png[]
 
 [,java]
 ----
-include::accessories/Accessories_.scala[tag=fields]
+include::accessories/Accessories.scala[tag=fields]
 ----
 
 === Accessories Dialog
@@ -63,7 +63,7 @@ image::AccessoriesDialog.png[]
 
 [,java]
 ----
-include::accessories/AccessoriesDialog_.scala[tag=fields]
+include::accessories/AccessoriesDialog.scala[tag=fields]
 ----
 
 == Selection details

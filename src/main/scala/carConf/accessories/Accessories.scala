@@ -1,13 +1,13 @@
-package carConf.ui.accessories
+package carConf.accessories
 
 import coreo.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
-class Accessories_(own:CanOwn ) extends FRM(own) {
+class Accessories(own:CanOwn ) extends FRM(own) {
 
   // tag::fields[]
-  given ref: Own[Accessories_] = Own(this)
+  given ref: Own[Accessories] = Own(this)
 
   val Accessories = TBL(_.locator("#AccessoryTable"))
 

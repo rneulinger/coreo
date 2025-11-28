@@ -9,7 +9,6 @@ object Lab extends Main( ){
   lazy val C1: Main = new Main()
   lazy val C2: Main = new Main()
   lazy val `/`:Main = this
-  // file:///C:/burli/carconfigWeb/html/CarConfig.htm?lang=en
 
   @main def clickMains():Unit = {
     _SpecialsTab.click
@@ -30,7 +29,7 @@ object Lab extends Main( ){
     def clickOK() = clickButton( "OK")
     def clickCancel() = clickButton( "Cancel")
 
-    _VehiclesDialog.VehicleName.flash()
+    _VehiclesDialog.VehicleName.flash
     clickCancel()
 
     goto(Menu.Options_Specials)

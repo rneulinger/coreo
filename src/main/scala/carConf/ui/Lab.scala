@@ -9,13 +9,13 @@ object Lab extends Main( ){
   //lazy val C1 = new Main()
   //lazy val C2 = new Main()
   //lazy val `/` = this
-  // file:///C:/Projects/burli/carconfigWeb/html/CarConfig.htm?lang=en
+  // file:///C:/Projects/carconfigWeb/html/CarConfig.htm?lang=en
 
   @main def clickMains() = {
     dump()
-    SpecialsTab.click
-    AccessoriesTab.click
-    VehiclesTab.click
+    _SpecialsTab.click
+    _AccessoriesTab.click
+    _VehiclesTab.click
 
     goto(Menu.File)
     goto(Menu.File)
@@ -28,28 +28,28 @@ object Lab extends Main( ){
     def clickButton( name:String ) ={
       page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(name)).click();
     }
-    def clickOK() = clickButton( "OK")
-    def clickCancel() = clickButton( "Cancel")
+    def clickOK = clickButton( "OK")
+    def clickCancel = clickButton( "Cancel")
 
-    VehiclesDialog.VehicleName.flash()
-    clickCancel()
+    _VehiclesDialog.VehicleName.flash
+    clickCancel
 
     goto(Menu.Options_Specials)
-    clickOK()
+    clickOK
     goto(Menu.Options_Accessories)
-    clickOK()
+    clickOK
 
     goto( Menu.PurchaseOrder)
     goto( Menu.PurchaseOrder)
     goto( Menu.PurchaseOrder_ViewSelectedDetails)
-    clickOK()
+    clickOK
     goto( Menu.PurchaseOrder_SendOrder)
-    clickCancel()
+    clickCancel
 
     goto( Menu.Help)
     goto( Menu.Help)
     goto( Menu.Help_Info)
-    clickOK()
+    clickOK
     goto( Menu.Help_Buggy)
     goto( Menu.Help_LoadTestingModule)
 

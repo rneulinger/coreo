@@ -9,6 +9,7 @@
 //:source-highlighter: pygments
 :DOD: Definition Of Done
 
+icon:check[]
 
 * https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/[adoc]
 
@@ -17,7 +18,17 @@
 * https://copilot.microsoft.com/[copilot]
 
 * https://docs.reqnroll.net/latest/automation/cucumber-expressions.html[Cucumber Expressions]
+* https://172.26.47.19/[19]
 
+* https://172.26.47.19/settings/management/users[Users]
+
+* https://blackned-technologies.atlassian.net/jira/software/c/projects/TARC/boards/1126/timeline[Timeline-Jira]
+
+* https://blackned-technologies.atlassian.net/jira/software/c/projects/TARC/list[Quickstart]
+
+* https://blackned-technologies.atlassian.net/jira/software/c/projects/TARC/boards/1126?assignee=712020%3A36545ad8-01c6-4e1c-ab24-28e71d1753f3[TARC-Aufgaben]
+
+* https://blackned-technologies.atlassian.net/browse/TARC-265[TARC-265 VoIP Refactoring]
 
 == Brainstorming Elements of Language
 

@@ -19,11 +19,6 @@ case class TXT[F <: FRM](b: By = Loc.Default)(using ref: Own[F])
     }
   }
 
-  def fill(s: Any): F = {
-    loc.fill(s.toString)
-    own
-  }
-
   def rightClick: F =
     log("rightClick")
     own
@@ -54,7 +49,7 @@ case class TXT[F <: FRM](b: By = Loc.Default)(using ref: Own[F])
 
   // asignment
   def set(txt: Any = ""): F = {
-    fill(txt)
+    loc.fill(txt.toString)
     own
   }
 

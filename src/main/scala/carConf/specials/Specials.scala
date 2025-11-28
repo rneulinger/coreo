@@ -4,11 +4,11 @@ import coreo.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
-class Specials_ ( own:CanOwn ) extends FRM(own)
+class Specials(own:CanOwn ) extends FRM(own)
  with coreo.bricks.NewChangDeleteDetailsCancelOK {
 
   // tag::fields[]
-  given ref: Own[Specials_] = Own(this)
+  given ref: Own[Specials] = Own(this)
 
   val Specials = CBX(_.locator("#SpecialsCombo"))
   val Special = TXT(_.locator("#SpecialsArea"))

@@ -67,11 +67,11 @@ object Defs {
 
   def gen(inp: String, frm:String = "") = {
     val tr = frm.trim
-    val name = if tr.isEmpty then "New frame" else tr
+    val name = if tr.isEmpty then "NewFrame" else tr
     val cc = mkCamelCase(name)
     val p2 = if( cc == name) then "" else s", \"$name\""
 
-    val myFrm = if cc.endsWith("_") then cc else cc + "_"
+    val myFrm = cc
 
     import java.io.{StringWriter, PrintWriter}
 
@@ -84,7 +84,7 @@ object Defs {
     if fields.size != fields.toSet.size then
       throw IllegalArgumentException("Duplicate(s) in field(s) definitions")
 
-    def declFields() = {
+    def declFields(): Unit = {
       val Buttons = Set("Add", "Edit", "Delete", "Next", "Finish", "Cancel", "Back")
 
       def getType( s:String) = if Buttons.contains(s) then "BTN()" else "TXT()"
@@ -103,12 +103,16 @@ object Defs {
     }
 
     pw.println(
-      s""" ${"-"* 20}  $myFrm
+      s"""// ${"-"* 20}  $myFrm
         |import coreo.*
         |import coreo.bricks.*
         |import com.microsoft.playwright.*
         |import com.microsoft.playwright.options.*
         |
+        |/**
+        | * @param own owner of this frame
+        ${fields.mkString("|", "\n|", "" )}
+        | */
         |final class $myFrm ( own:CanOwn ) extends FRM(own${p2}){
         |  // tag::fields[]
         |  given ref: Own[$myFrm] = Own(this)

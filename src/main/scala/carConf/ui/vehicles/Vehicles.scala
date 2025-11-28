@@ -6,10 +6,10 @@ import com.microsoft.playwright.options.*
 
 
 
-class Vehicles_( own:CanOwn ) extends FRM(own){
+class Vehicles(own:CanOwn ) extends FRM(own){
 
   // tag::fields[]
-  given ref: Own[Vehicles_] = Own(this)
+  given ref: Own[Vehicles] = Own(this)
 
   val Vehicles = TBL( _.locator("#VehicleTablePanel"))
 

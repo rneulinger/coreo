@@ -1,11 +1,11 @@
-package carConf.ui.specials
+package carConf.specials
 
 import coreo.*
 
-class SpecialsDialog_ ( own:CanOwn ) extends FRM(own){
+class SpecialsDialog(own:CanOwn ) extends FRM(own){
 
   // tag::fields[]
-  given ref: Own[SpecialsDialog_] = Own(this)
+  given ref: Own[SpecialsDialog] = Own(this)
 
   val Specials = TAB(_.locator("#SpecialsTable"))
 

@@ -200,28 +200,28 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
    * typescript sharp erzeugen
    */
   def mkTs:String = {
-    val Coreo="Coreo"
+    val Core="Coreo"
     val lines = for (a <- atoms) yield {
       val name = a._2.fullName
       val short = Defs.mkCamelCase(name)
       val typ = a._2.myType
-      s"""|        this.$short = new $Coreo.$typ(this, \"$name\");"""
+      s"""|        this.$short = new $Core.$typ(this, \"$name\");"""
     }
     val decls = for (a <- atoms) yield {
       val name = a._2.fullName
       val short = Defs.mkCamelCase(name)
       val typ = a._2.myType
-      s"""|    public readonly $short : $Coreo.$typ;"""
+      s"""|    public readonly $short : $Core.$typ;"""
     }
 
     val res = s"""namespace Generic{
                  |
-                 |//import {BTN,TXT,FRM,CanOwn} from '../Coreo';
+                 |//import {BTN,TXT,FRM,CanOwn} from '../Core';
                  |
-                 |export class ${myType}_ extends $Coreo.FRM{
+                 |export class ${myType}_ extends $Core.FRM{
        ${decls.mkString("\n")}
                  |
-                 |  constructor( own:$Coreo.CanOwn ){
+                 |  constructor( own:$Core.CanOwn ){
                  |    super(own)
           ${lines.mkString("\n")}
                  |  }
@@ -257,4 +257,10 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
     Defs.toClipboard(res)
     res
   }
+
+
+  def getVar(key: String): Any = {own.getVar(key)}
+
+  def setVar(key: String, value: Any): Unit = {own.setVar(key, value)}
+
 }

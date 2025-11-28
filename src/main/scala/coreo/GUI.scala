@@ -341,7 +341,7 @@ class GUI(ui: PwRoot) {
     val northPanel = JPanel()
     northPanel.setPreferredSize(new Dimension(200, 50))
     northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.X_AXIS)); // Vertical alignment
-    val name = JTextField("MyFrm_")
+    val name = JTextField("MyFrm")
     northPanel.add(name)
     frmGen.add(northPanel, BorderLayout.NORTH)
 
@@ -370,7 +370,7 @@ class GUI(ui: PwRoot) {
         val txt = atoms.getText
         val out = Defs.gen(txt, name.getText)
         output.setText(out)
-
+        Defs.toClipboard(out)
       }
     })
     southPanel.add(generate)

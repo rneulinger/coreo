@@ -20,7 +20,7 @@ abstract class ATOM[F <: FRM](b: By)(using ref: Own[F])
 
   def loc: Locator = loc(own.pg)
 
-  def flash():F = {
+  def flash:F = {
     loc.evaluate("element => {" +
       "element.style.transition = 'background-color 0.3s ease';" +
       "element.style.backgroundColor = 'yellow';" +
@@ -71,6 +71,17 @@ abstract class ATOM[F <: FRM](b: By)(using ref: Own[F])
   final def set(any: String): F = {
     loc(pg).fill(any.toString)
     own
+  }
+
+  final def random(any: String): F = {
+    val rand = gen(any)
+    own.setVar(shortName, rand)
+    loc(pg).fill(rand)
+    own
+  }
+
+  def gen(any: Any): String = {
+    any.toString+Math.random();
   }
 
 }

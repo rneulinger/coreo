@@ -1,7 +1,7 @@
 package carConf
 
 import coreo.*
-import carConf.specials.Specials_
+import carConf.specials.Specials
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
@@ -19,7 +19,7 @@ import carConf.accessories.*
   import carConf.*
 }
 */
-val s = "file:///C:/Projects/burli/carconfigWeb/html/CarConfig.htm?lang=en#"
+val s = "file:///C:/Projects/carconfigWeb/html/CarConfig.htm?lang=en#"
 class Main() extends PwRoot(s) {
   override def nameOfApp = "Car Configurator"
 
@@ -27,19 +27,19 @@ class Main() extends PwRoot(s) {
 
 
   // TODO Mene
-  val _CarConfig: CarConfig_ = CarConfig_(this)
-  val _SpecialsTab: TAB[CarConfig_] = _CarConfig.SpecialsTab
-  val _VehiclesTab: TAB[CarConfig_] = _CarConfig.VehiclesTab
-  val _AccessoriesTab: TAB[CarConfig_] = _CarConfig.AccessoriesTab
+  val _CarConfig: CarConfig = CarConfig(this)
+  val _SpecialsTab: TAB[CarConfig] = _CarConfig.SpecialsTab
+  val _VehiclesTab: TAB[CarConfig] = _CarConfig.VehiclesTab
+  val _AccessoriesTab: TAB[CarConfig] = _CarConfig.AccessoriesTab
 
-  val _Specials = Specials_(this)
-  val _SpecialsDialog = SpecialsDialog_(this)
+  val _Specials = Specials(this)
+  val _SpecialsDialog = SpecialsDialog(this)
 
-  val _Vehicles = Vehicles_(this)
-  val _VehiclesDialog = VehiclesDialog_(this)
+  val _Vehicles = Vehicles(this)
+  val _VehiclesDialog = VehiclesDialog(this)
 
-  val _Accessories = Accessories_(this)
-  val _AccessoriesDialog = AccessoriesDialog_(this)
+  val _Accessories = Accessories(this)
+  val _AccessoriesDialog = AccessoriesDialog(this)
 
   object specials {
   }

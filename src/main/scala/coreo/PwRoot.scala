@@ -3,24 +3,12 @@ package coreo
 import scala.jdk.CollectionConverters.*
 import com.microsoft.playwright.*
 
-class PwRoot(val baseUrl: String) extends CanOwn {
+class PwRoot(val baseUrl: String) extends ROOT with CanOwn {
   def nameOfApp = "No Name"
   def predefBaseUrls = Map[String, String]()
 
   private var adoptedAtoms = List[ATOM[?]]()
   lazy val atoms: Map[String, ATOM[?]] = adoptedAtoms.map(a => a.fullName -> a).toMap
-
-  /**
-   * variables for test execution
-   */
-  private var VARS = Map[String, Any]()
-  def setVar( key:String, value:Any): Unit = {
-    val res = VARS + (key -> value)
-    VARS = res
-  }
-  def getVar( key:String): Any = {VARS.get(key)}
-  def getVarOrElse( key:String, default:Any): Any = {VARS.getOrElse(key, default)}
-
 
   private var adoptedFrms = List[FRM]()
   lazy val (short, full, frms)  = {
