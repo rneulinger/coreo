@@ -2,11 +2,11 @@ package coreo.bricks
 
 import coreo.*
 
-trait CancelFinish[F <: FRM]() {
+trait CancelFinish[F <: FRM, T <: FRM]() {
   self: F =>
 
   def ref: Own[F]
 
-  final val Cancel = BTN[F]()(using ref)
-  final val Finish = BTN[F]()(using ref)
+  final val Cancel = BTN[F, T]()(using ref)
+  final val Finish = BTN[F, T]()(using ref)
 }

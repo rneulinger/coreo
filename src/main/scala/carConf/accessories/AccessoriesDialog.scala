@@ -17,6 +17,11 @@ class AccessoriesDialog(own:CanOwn ) extends FRM(own){
   val ID = TXT()
   val Price = TXT()
 
+  val New = BTN()
+  val Change = BTN()
+  val Delete = BTN()
+  val Ok = BTN()
+  val Cancel = BTN()
 
   // end::fields[]
 }
