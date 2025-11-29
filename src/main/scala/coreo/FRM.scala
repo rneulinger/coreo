@@ -15,7 +15,7 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
 
   private var adoptedAtoms = List[ATOM[?]]()
   lazy val atoms: Map[String, ATOM[?]] = {
-    val tmp = adoptedAtoms.map(a => a.fullName -> a).toMap
+    val tmp = adoptedAtoms.map(a => a.cleanName -> a).toMap
     tmp
   }
 
@@ -63,7 +63,7 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
   def dump:Unit = dump("")
 
   private def atomsMax = if atoms.isEmpty then 0 else atoms.keySet.map(_.length).max
-  private def shortMax = if atoms.isEmpty then 0 else atoms.values.map(_.fullName.length).max
+  private def shortMax = if atoms.isEmpty then 0 else atoms.values.map(_.cleanName.length).max
   private def typeMax = if atoms.isEmpty then 0 else atoms.values.map(_.myType.length).max
   private val BLANK = " ".charAt(0)
 
@@ -168,13 +168,15 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
    */
   def mkCs:String = {
     val lines = for (a <- atoms) yield {
-      val name = a._2.fullName
+      val name = a._2.cleanName
+      val trueName = a._2.displayName
       val short = Defs.mkCamelCase(name)
       val typ = a._2.myType
-      s"""|        $short = new $typ(this, \"$name\");"""
+      s"""|        $short = new $typ(this, \"$trueName\");"""
     }
     val decls = for (a <- atoms) yield {
-      val name = a._2.fullName
+      val name = a._2.cleanName
+      val trueName = a._2.displayName
       val short = Defs.mkCamelCase(name)
       val typ = a._2.myType
       s"""|    public readonly $typ $short;"""
@@ -184,14 +186,14 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
        |
        |using Coreo;
        |// ReSharper disable InconsistentNaming
-       |public class ${myType}_ : FRM{
+       |public class ${myType} : FRM{
        ${decls.mkString("\n")}
        |
-       |  public ${myType}_( CanOwn own ):base(own) {
+       |  public ${myType}( CanOwn own ):base(own) {
           ${lines.mkString("\n")}
        |  }
        |}
-       |// ${myType}_ _$myType = new $myType( this );
+       |// ${myType} _$myType = new $myType( this );
        |""".stripMargin
     Defs.toClipboard(res)
   }
@@ -202,13 +204,14 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
   def mkTs:String = {
     val Core="Coreo"
     val lines = for (a <- atoms) yield {
-      val name = a._2.fullName
+      val name = a._2.cleanName
+      val trueName = a._2.displayName
       val short = Defs.mkCamelCase(name)
       val typ = a._2.myType
-      s"""|        this.$short = new $Core.$typ(this, \"$name\");"""
+      s"""|        this.$short = new $Core.$typ(this, \"$trueName\");"""
     }
     val decls = for (a <- atoms) yield {
-      val name = a._2.fullName
+      val name = a._2.cleanName
       val short = Defs.mkCamelCase(name)
       val typ = a._2.myType
       s"""|    public readonly $short : $Core.$typ;"""
@@ -218,7 +221,7 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
                  |
                  |//import {BTN,TXT,FRM,CanOwn} from '../Core';
                  |
-                 |export class ${myType}_ extends $Core.FRM{
+                 |export class ${myType} extends $Core.FRM{
        ${decls.mkString("\n")}
                  |
                  |  constructor( own:$Core.CanOwn ){
@@ -226,7 +229,7 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
           ${lines.mkString("\n")}
                  |  }
                  |}
-                 |// ${myType}_ _$myType = new $myType( this );
+                 |// ${myType} _$myType = new $myType( this );
                  |}
                  |""".stripMargin
     Defs.toClipboard(res)

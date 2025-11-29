@@ -10,7 +10,7 @@ case class CHK[F <: FRM](b: By = Loc.Default)(using ref: Own[F])
     by match {
       case Loc.Default =>
         val opt = Page.GetByRoleOptions()
-          .setName(fullName)
+          .setName(cleanName)
           .setExact(false)
         pg.getByRole(AriaRole.CHECKBOX, opt)
 

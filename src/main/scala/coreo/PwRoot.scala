@@ -8,7 +8,7 @@ class PwRoot(val baseUrl: String) extends ROOT with CanOwn {
   def predefBaseUrls = Map[String, String]()
 
   private var adoptedAtoms = List[ATOM[?]]()
-  lazy val atoms: Map[String, ATOM[?]] = adoptedAtoms.map(a => a.fullName -> a).toMap
+  lazy val atoms: Map[String, ATOM[?]] = adoptedAtoms.map(a => a.cleanName -> a).toMap
 
   private var adoptedFrms = List[FRM]()
   lazy val (short, full, frms)  = {

@@ -193,7 +193,7 @@ class StepDefinitions extends ScalaDsl with EN {
         println(s"current frame does not contain: $obj")
         println("->" + /.currentFrm.atoms.keySet)
       case Some(atom) =>
-        println(s"I set ${atom.fullName} = $value in ${/.currentFrm.myType}")
+        println(s"I set ${atom.cleanName} = $value in ${/.currentFrm.myType}")
         atom.set(value)
     }
   }
@@ -231,7 +231,7 @@ class StepDefinitions extends ScalaDsl with EN {
         println(s"current frame does not contain: $obj")
         println("->" + /.currentFrm.atoms.keySet)
       case Some(atom) =>
-        println(s"I click on ${atom.fullName} in ${/.currentFrm.myType}")
+        println(s"I click on ${atom.cleanName} in ${/.currentFrm.myType}")
         atom.click
     }
   }
@@ -299,7 +299,7 @@ class StepDefinitions extends ScalaDsl with EN {
         println("->" + /.currentFrm.atoms.keySet)
       case Some(atom) =>
         val rand = atom.gen(value)
-        println(s"I set ${atom.fullName} = $rand in ${/.currentFrm.myType}")
+        println(s"I set ${atom.cleanName} = $rand in ${/.currentFrm.myType}")
         atom.random(value)
     }
   }

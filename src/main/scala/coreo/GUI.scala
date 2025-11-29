@@ -284,7 +284,7 @@ class GUI(ui: PwRoot) {
 
           val frm = ui.full(item)
           for atom <- frm.atoms.keySet.toList.sorted.zipWithIndex yield {
-            atomsModel.add(atom._2, atom._1)
+            atomsModel.add(atom._2, atom._1) // TODO user better name
           }
         }
       }

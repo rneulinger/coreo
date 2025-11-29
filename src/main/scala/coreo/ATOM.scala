@@ -36,7 +36,7 @@ abstract class ATOM[F <: FRM](b: By)(using ref: Own[F])
    * @return
    */
   //def defaultLocator:Locator
-  def fullName: String = {
+  def cleanName: String = {
 
     for (field <- own.getClass.getDeclaredFields) {
       field.setAccessible(true)
@@ -46,7 +46,8 @@ abstract class ATOM[F <: FRM](b: By)(using ref: Own[F])
           //println("My name im parent is: " + field.getName)
           return field.getName
             .replaceAll("\\$u0020", " ")
-            .replaceAll("-", " ") // TODO to be improved
+            .replaceAll("\\$colon", "")
+            .replaceAll("\\$minus", " ") // TODO to be improved
         }
       } catch {
         case e: IllegalAccessException =>
@@ -56,7 +57,28 @@ abstract class ATOM[F <: FRM](b: By)(using ref: Own[F])
     "NOT FOUND"
   }
 
-  def shortName = Defs.mkCamelCase(fullName)
+  def displayName: String = {
+
+    for (field <- own.getClass.getDeclaredFields) {
+      field.setAccessible(true)
+      try {
+        val value = field.get(own)
+        if (value eq this) {
+          //println("My name im parent is: " + field.getName)
+          return field.getName
+            .replaceAll("\\$u0020", " ")
+            .replaceAll("\\$colon", ":")
+            .replaceAll("\\$minus", "-") // TODO to be improved
+        }
+      } catch {
+        case e: IllegalAccessException =>
+          e.printStackTrace()
+      }
+    }
+    "NOT FOUND"
+  }
+
+  def shortName = Defs.mkCamelCase(cleanName)
 
   own.adopt(this)
 
