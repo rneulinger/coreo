@@ -15,7 +15,7 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
 
   private var adoptedAtoms = List[ATOM[?]]()
   lazy val atoms: Map[String, ATOM[?]] = {
-    val tmp = adoptedAtoms.map(a => a.cleanName -> a).toMap
+    val tmp = adoptedAtoms.map(a => a.displayName -> a).toMap
     tmp
   }
 
@@ -252,7 +252,7 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
        |
        |[,java]
        |----
-       |include::{SRI}/$mkInc${myType}_.scala[tag=fields]
+       |include::{SRI}/$mkInc${myType}.scala[tag=fields]
        |----
        |
        |
