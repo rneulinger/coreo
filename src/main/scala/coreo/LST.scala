@@ -5,6 +5,8 @@ import com.microsoft.playwright.options.AriaRole
 
 case class LST[F <: FRM](b: By = Loc.Default)(using ref: Own[F])
   extends DATA[F](b) {
+  override def weight = 3
+
   override def loc(pg: Page): Locator = {
     by match {
       case Loc.Default =>

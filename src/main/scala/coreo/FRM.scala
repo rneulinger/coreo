@@ -7,6 +7,10 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
 
   def path: String = "" //
 
+  override def weight = {
+    atoms.map(_._2.weight).sum + 1
+  }
+
   val fullType:String = if ( typ.isEmpty ) myType else  typ
   own.adopt(this)
 
@@ -52,12 +56,12 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
     }
 
   def dump( string :String): Unit = {
-    println(string + myType + "  " + path)
+    println(string + myType + "  " + path + " " + weight)
 
     for (atom <- atoms) {
       val len = atoms.map(_._1.length).max
       val name = atom._1
-      println("\t" + name + " " * (len - name.length) + " : " + atom._2)
+      println("\t" + name + " " * (len - name.length) + " : " + atom._2 + " : " + atom._2.weight )
     }
   }
   def dump:Unit = dump("")
@@ -261,6 +265,26 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
     res
   }
 
+
+  def mkMermaid:String = {
+    val lines = for(atom <- atoms.filterNot(_.isInstanceOf[ACTION[?,?]]))yield{
+      atom._2 match{
+        case ac:ACTION[?,?] =>
+          s"|   + ${atom._1} : ${atom._2.myType} ${atom._2.weight} --> ${ac.target}"
+        case data:DATA[?] => s"|   + ${atom._1} : ${atom._2.myType} ${atom._2.weight}"
+        case _ => ""
+      }
+    }
+
+    s"""
+       |classDiagram
+       |  class $fullType{
+       |    weight = $weight
+       ${lines.mkString("\n")}
+       |}
+       |""".stripMargin
+
+  }
 
   def getVar(key: String): Any = {own.getVar(key)}
 

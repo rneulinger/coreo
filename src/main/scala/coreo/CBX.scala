@@ -6,6 +6,8 @@ import com.microsoft.playwright.{Locator, Page}
 case class CBX[F <: FRM](b: By = Loc.Default)(using ref: Own[F])
   extends DATA[F](b) {
 
+  override def weight = 4
+
   override def loc(pg: Page): Locator = {
     by match {
       case Loc.Default =>

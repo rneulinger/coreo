@@ -5,7 +5,7 @@ import io.cucumber.datatable.DataTable
 import coreo.*
 
 class StepDefinitions extends ScalaDsl with EN {
-  var `/`: practice.Practice = _
+  var `/`: PwRoot = _
   val I = "I "
 
   def get(dest: String, table: DataTable, who: String = I): Unit = {

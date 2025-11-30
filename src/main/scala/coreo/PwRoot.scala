@@ -26,6 +26,27 @@ class PwRoot(val baseUrl: String) extends ROOT with CanOwn {
         adoptedFrms = adoptedFrms.appended(frm)
     }
 
+  def findAll( name:String) : Set[FRM] = {
+    val trimmed = name.trim
+
+    val hits = short.filter(_._1.contains(trimmed)).map(_._2) ++
+    full.filter(_._1.contains(trimmed)).map(_._2) ++
+    short.values.map(x => (x.getClass.getName -> x)).filter(_._1.contains(trimmed)).map(_._2) ++
+    full.values.map(x => (x.getClass.getName -> x)).filter(_._1.contains(trimmed)).map(_._2)
+    hits.toSet
+  }
+
+  def findUnique( name:String) : FRM = {
+    val res = findAll(name)
+    res.size match{
+      case 0 => throw IllegalArgumentException(s"Frame not found: $name")
+      case 1 => res.head
+      case _ =>
+        val hits = res.toList.map(_.getClass.getName).mkString(" | ")
+        throw IllegalArgumentException(s"Frame is ambiguous: $name: $hits")
+    }
+  }
+
   lazy val playwright: Playwright = Playwright.create()
 
   lazy val bOpts = new BrowserType.LaunchOptions().setHeadless(false)
@@ -104,14 +125,14 @@ class PwRoot(val baseUrl: String) extends ROOT with CanOwn {
   }
 
   final def dump(s: String = ""): Unit = {
-    println(atoms)
-    val hits = frms.filter(_._1.contains(s))
+    val hits = findAll(s)
     for (frm <- hits) {
         println()
-        frm._2.dump
+        frm.dump
     }
   }
 
   override def openUrl(path: String): Unit = pg.navigate(baseUrl + path)
   def gui: GUI = GUI(this)
 }
+

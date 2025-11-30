@@ -8,6 +8,7 @@ node_modules/
 /playwright/.auth/
 /.gradle/
 /build/
+/out/
 /burli.iml
 /burli.ipr
 /burli.iws
