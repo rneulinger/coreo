@@ -304,10 +304,10 @@ class StepDefinitions extends ScalaDsl with EN {
     }
   }
 
-  When("set {string} =@ {string}") { (obj: String, value: String) =>
+  When("set {string} =% {string}") { (obj: String, value: String) =>
     setRandom(obj, value, I)
   }
-  When("{word} set {string} =@ {string}") { (who: String, obj: String, value: String) =>
+  When("{word} set {string} =% {string}") { (who: String, obj: String, value: String) =>
     setRandom(obj, value, who)
   }
 

@@ -61,8 +61,8 @@ class PwRoot(val baseUrl: String) extends ROOT with CanOwn {
    * current view
    */
 
-  var currentFrm:FRM  = new FRM(this){}
-  val defaultFrm = currentFrm
+  val _Unknown = Unknown(this)
+  var currentFrm:FRM  = _Unknown
   /**
    * visit: push current view on stack, arg becomes current,
    * return: push curren tin history, pop and set current
@@ -99,7 +99,7 @@ class PwRoot(val baseUrl: String) extends ROOT with CanOwn {
     if (viewStack.nonEmpty) {
       currentFrm = viewStack.pop()
     } else{
-      currentFrm = defaultFrm
+      currentFrm = _Unknown
     }
   }
 
