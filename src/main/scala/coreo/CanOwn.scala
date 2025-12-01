@@ -30,4 +30,5 @@ trait CanOwn {
 
   def setVar(key:String, value:Any ):Unit
 
+  def findFrm(name:String):FRM
 }

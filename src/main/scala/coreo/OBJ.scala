@@ -21,5 +21,7 @@ abstract class OBJ {
     def apply( p:Page):Locator = l
   }
 
+  def findFrm(name:String):FRM
+
   def weight = 1
 }

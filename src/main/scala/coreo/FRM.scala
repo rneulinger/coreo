@@ -5,6 +5,7 @@ import com.microsoft.playwright.*
 abstract class FRM(override val own: CanOwn, typ:String = "")
   extends CHILD with CanOwn {
 
+  final def Self = getClass.getName
   def path: String = "" //
 
   override def weight = {
@@ -13,7 +14,6 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
 
   val fullType:String = if ( typ.isEmpty ) myType else  typ
   own.adopt(this)
-
 
   override def pg: Page = own.pg
 
@@ -48,7 +48,7 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
 
   def onto( frm:FRM):Unit = own.onto(frm)
 
-  def find( name:String ): Option[ATOM[?]] =
+  def findAtom(name:String ): Option[ATOM[?]] =
     if (atoms.keySet.contains(name)){
       Option(atoms(name))
     } else {
@@ -276,13 +276,34 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
       }
     }
 
-    s"""
+    val refs = for (atom <- atoms.filterNot(_.isInstanceOf[ACTION[?, ?]])) yield {
+      atom._2 match {
+        case ac: ACTION[?, ?] =>
+          if ac.target.trim.isEmpty then s"| ${fullType} --> Unknown : ${atom._1}"
+          else {
+            try{
+              val frm = findFrm(ac.target.trim)
+              s"|   + ${fullType} : ${atom._2.myType} ${atom._2.weight} --> ${frm.fullType} : ${atom._1}"
+            } catch {
+              case x:Exception =>
+                s"|   + ${fullType} : ${atom._2.myType} ${atom._2.weight} --> ${x.getMessage} : ${atom._1}"
+            }
+          }
+        case _ => ""
+      }
+    }
+
+    val res = s"""
        |classDiagram
        |  class $fullType{
        |    weight = $weight
        ${lines.mkString("\n")}
        |}
+       |
+       ${refs.filterNot(_.isEmpty).mkString("\n")}
        |""".stripMargin
+    Defs.toClipboard(res)
+    res
 
   }
 

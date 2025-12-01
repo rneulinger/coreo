@@ -187,7 +187,7 @@ class StepDefinitions extends ScalaDsl with EN {
   }
 
   def set(obj: String, value: String, who: String): Unit = {
-    val hit = /.currentFrm.find(obj)
+    val hit = /.currentFrm.findAtom(obj)
     hit match {
       case None =>
         println(s"current frame does not contain: $obj")
@@ -225,7 +225,7 @@ class StepDefinitions extends ScalaDsl with EN {
   }
 
   def click(obj: String, who: String = "") = {
-    val hit = /.currentFrm.find(obj)
+    val hit = /.currentFrm.findAtom(obj)
     hit match {
       case None =>
         println(s"current frame does not contain: $obj")
@@ -292,7 +292,7 @@ class StepDefinitions extends ScalaDsl with EN {
   }
 
   def setRandom(obj: String, value: String, who: String): Unit = {
-    val hit = /.currentFrm.find(obj)
+    val hit = /.currentFrm.findAtom(obj)
     hit match {
       case None =>
         println(s"current frame does not contain: $obj")

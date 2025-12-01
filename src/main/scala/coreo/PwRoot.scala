@@ -47,6 +47,7 @@ class PwRoot(val baseUrl: String) extends ROOT with CanOwn {
     }
   }
 
+  def findFrm(name:String):FRM = findUnique(name)
   lazy val playwright: Playwright = Playwright.create()
 
   lazy val bOpts = new BrowserType.LaunchOptions().setHeadless(false)
