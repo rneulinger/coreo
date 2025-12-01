@@ -135,5 +135,18 @@ class PwRoot(val baseUrl: String) extends ROOT with CanOwn {
 
   override def openUrl(path: String): Unit = pg.navigate(baseUrl + path)
   def gui: GUI = GUI(this)
+
+  def mermaidAll:Unit = {
+    import java.io.File
+    val path = "./build/mermaid"
+    File(path).mkdirs
+    for (frm <- frms){
+      val res = frm._2.mkMermaid
+      import java.nio.file.{Paths, Files}
+      import java.nio.charset.StandardCharsets
+
+      Files.write(Paths.get(s"$path/${frm._2.Self}.mermaid"), res.getBytes(StandardCharsets.UTF_8))
+    }
+  }
 }
 
