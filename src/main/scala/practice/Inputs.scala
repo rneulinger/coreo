@@ -13,10 +13,12 @@ final class Inputs(own: CanOwn) extends FRM(own) {
   override def path: String = "inputs"
 
   val `Display Inputs` = BTN(_.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Display Inputs")))
+  `Display Inputs`.target = Self
 
   def DisplayInputs = `Display Inputs` // alias
 
   val `Clear Inputs` = BTN(_.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Clear Inputs")))
+  `Clear Inputs`.target = "BMICalculator"
 
   def ClearInputs = `Clear Inputs` // alias
 

@@ -283,10 +283,10 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
           else {
             try{
               val frm = findFrm(ac.target.trim)
-              s"|   + ${fullType} : ${atom._2.myType} ${atom._2.weight} --> ${frm.fullType} : ${atom._1}"
+              s"|   ${fullType}  --> ${frm.fullType} : ${atom._1}"
             } catch {
               case x:Exception =>
-                s"|   + ${fullType} : ${atom._2.myType} ${atom._2.weight} --> ${x.getMessage} : ${atom._1}"
+                s"|   ${fullType}  --> ${x.getMessage} : ${atom._1}"
             }
           }
         case _ => ""
