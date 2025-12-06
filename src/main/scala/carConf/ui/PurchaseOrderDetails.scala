@@ -8,7 +8,7 @@ import com.microsoft.playwright.options.*
 class PurchaseOrderDetails(own:CanOwn ) extends FRM(own){
 
   // tag::fields[]
-  given ref: Own[PurchaseOrderDetails] = Own(this)
+  given ref: OWNER[PurchaseOrderDetails] = OWNER(this)
 
 
 

@@ -10,7 +10,7 @@ import coreo.*
 trait AddEditDelete[F <: FRM, T <: FRM] {
   self: F =>
 
-  def ref: Own[F]
+  def ref: OWNER[F]
 
   final val Add = BTN[F,T]()(using ref) // new Dialog
   final val Edit = BTN[F,T]()(using ref) // edit selected

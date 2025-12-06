@@ -12,7 +12,7 @@ import coreo.*
 trait CancelBackNext[F <: FRM, T <: FRM]() {
   self: F =>
 
-  def ref: Own[F]
+  def ref: OWNER[F]
 
   final val Cancel = BTN[F,T]()(using ref)
   final val Back = BTN[F,T]()(using ref)

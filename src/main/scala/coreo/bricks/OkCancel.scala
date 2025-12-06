@@ -11,7 +11,7 @@ import coreo.*
 trait OkCancel[F <: FRM, T <: FRM]() {
   self: F =>
 
-  def ref: Own[F]
+  def ref: OWNER[F]
 
   final val Ok = BTN[F,T]()(using ref)
   final val Cancel = BTN[F,T]()(using ref)

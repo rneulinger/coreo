@@ -4,7 +4,7 @@ import coreo.*
 
 final class BMICalculator(own: CanOwn) extends FRM(own, "BMI Calculator") {
   // tag::fields[]
-  given ref: Own[BMICalculator] = Own(this)
+  given ref: OWNER[BMICalculator] = OWNER(this)
 
   // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this
   override def path: String = "bmi"

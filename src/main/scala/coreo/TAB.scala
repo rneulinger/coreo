@@ -3,7 +3,7 @@ package coreo
 import com.microsoft.playwright.options.AriaRole
 import com.microsoft.playwright.{Locator, Page}
 
-case class TAB[F <: FRM](b: By = Loc.Default)(using ref: Own[F])
+case class TAB[F <: FRM](b: By = Loc.Default)(using ref: OWNER[F])
   extends ATOM[F](b) {
   override def loc(pg: Page): Locator = {
     by match {

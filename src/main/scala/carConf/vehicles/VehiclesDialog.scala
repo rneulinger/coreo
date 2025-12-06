@@ -8,7 +8,7 @@ import com.microsoft.playwright.options.*
 class VehiclesDialog(own:CanOwn ) extends FRM(own){
 
   // tag::fields[]
-  given ref: Own[VehiclesDialog] = Own(this)
+  given ref: OWNER[VehiclesDialog] = OWNER(this)
 
   val Vehicles = TBL(_.locator("#VehiclesTable"))
   val `Vehicle name` = TXT(_.locator("#VehicleName_input"))

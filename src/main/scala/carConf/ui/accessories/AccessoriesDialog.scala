@@ -8,7 +8,7 @@ import com.microsoft.playwright.options.*
 class AccessoriesDialog(own:CanOwn ) extends FRM(own){
 
   // tag::fields[]
-  given ref: Own[AccessoriesDialog] = Own(this)
+  given ref: OWNER[AccessoriesDialog] = OWNER(this)
 
 
 

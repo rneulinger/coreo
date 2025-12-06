@@ -7,7 +7,7 @@ import coreo.bricks.*
 
 final class Inputs(own: CanOwn) extends FRM(own) {
   // tag::fields[]
-  given ref: Own[Inputs] = Own(this)
+  given ref: OWNER[Inputs] = OWNER(this)
 
   // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this
   override def path: String = "inputs"

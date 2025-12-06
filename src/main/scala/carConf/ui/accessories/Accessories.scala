@@ -7,7 +7,7 @@ import com.microsoft.playwright.options.*
 class Accessories(own:CanOwn ) extends FRM(own) {
 
   // tag::fields[]
-  given ref: Own[Accessories] = Own(this)
+  given ref: OWNER[Accessories] = OWNER(this)
 
   val Accessories = TBL(_.locator("#AccessoryTable"))
 

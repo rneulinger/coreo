@@ -8,7 +8,7 @@ class Specials(own:CanOwn ) extends FRM(own)
  with coreo.bricks.NewChangDeleteDetailsCancelOK {
 
   // tag::fields[]
-  given ref: Own[Specials] = Own(this)
+  given ref: OWNER[Specials] = OWNER(this)
 
   val Specials = CBX(_.locator("#SpecialsCombo"))
   val Special = TXT(_.locator("#SpecialsArea"))

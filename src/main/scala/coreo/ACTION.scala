@@ -1,6 +1,6 @@
 package coreo
 
-abstract class ACTION[F <: FRM, T <: FRM](b: By)(using ref: Own[F])
+abstract class ACTION[F <: FRM, T <: FRM](b: By)(using ref: OWNER[F])
   extends ATOM[F](b) {
 
   override def weight = 2

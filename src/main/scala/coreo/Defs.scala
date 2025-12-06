@@ -31,7 +31,7 @@ enum Loc {
 type By = Loc | String | Function1[Page, Locator]
 
 /** wrapper for given / using i FRM */
-case class Own[+FRM](own: FRM)
+case class OWNER[+FRM](own: FRM)
 
 object Defs {
   /**

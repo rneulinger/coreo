@@ -5,7 +5,7 @@ import coreo.*
 trait AddEditDeleteUpDown[F <: FRM, T <: FRM] extends AddEditDelete[F,T] {
   self: F =>
 
-  def ref: Own[F]
+  def ref: OWNER[F]
 
   // buttons right
   final val MoveUp = BTN[F,T]()(using ref) // move selected up ! in 1st line

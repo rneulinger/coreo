@@ -12,7 +12,7 @@ class CarConfig(own: CanOwn)
 
   // tag::fields[]
 
-  given ref: Own[CarConfig] = Own(this)
+  given ref: OWNER[CarConfig] = OWNER(this)
 
   def byName( name:String ) : Page => Locator =
     _.getByRole(AriaRole.LINK,

@@ -5,7 +5,7 @@ import coreo.*
 class SpecialsDialog(own:CanOwn ) extends FRM(own){
 
   // tag::fields[]
-  given ref: Own[SpecialsDialog] = Own(this)
+  given ref: OWNER[SpecialsDialog] = OWNER(this)
 
   val Specials = TAB(_.locator("#SpecialsTable"))
 
