@@ -7,7 +7,7 @@ import coreo.*
  *
  * @tparam F owner of these buttons
  */
-trait AddEditDelete[F <: FRM, T <: FRM] {
+trait AddEditDelete[F <: FRM, T<:FRM] {
   self: F =>
 
   def ref: OWNER[F]

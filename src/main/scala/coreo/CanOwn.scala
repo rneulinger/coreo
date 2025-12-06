@@ -26,9 +26,4 @@ trait CanOwn {
 
   def onto( frm:FRM):Unit
 
-  def getVar(key:String ):Any
-
-  def setVar(key:String, value:Any ):Unit
-
-  def findFrm(name:String):FRM
 }

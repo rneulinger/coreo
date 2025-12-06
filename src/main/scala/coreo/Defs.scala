@@ -67,11 +67,11 @@ object Defs {
 
   def gen(inp: String, frm:String = "") = {
     val tr = frm.trim
-    val name = if tr.isEmpty then "NewFrame" else tr
+    val name = if tr.isEmpty then "New frame" else tr
     val cc = mkCamelCase(name)
     val p2 = if( cc == name) then "" else s", \"$name\""
 
-    val myFrm = cc
+    val myFrm = if cc.endsWith("_") then cc else cc + "_"
 
     import java.io.{StringWriter, PrintWriter}
 
@@ -109,10 +109,6 @@ object Defs {
         |import com.microsoft.playwright.*
         |import com.microsoft.playwright.options.*
         |
-        |/**
-        | * @param own owner of this frame
-        ${fields.mkString("|", "\n|", "" )}
-        | */
         |final class $myFrm ( own:CanOwn ) extends FRM(own${p2}){
         |  // tag::fields[]
         |  given ref: Own[$myFrm] = Own(this)

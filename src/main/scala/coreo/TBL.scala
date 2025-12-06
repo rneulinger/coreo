@@ -5,14 +5,11 @@ import com.microsoft.playwright.{Locator, Page}
 
 case class TBL[F <: FRM](b: By = Loc.Default)(using ref: OWNER[F])
   extends DATA[F](b) {
-
-  override def weight = 5
-
   override def loc(pg: Page): Locator = {
     by match {
       case Loc.Default =>
         val opt = Page.GetByRoleOptions()
-          .setName(cleanName)
+          .setName(fullName)
           .setExact(false)
         pg.getByRole(AriaRole.TABLE, opt)
 

@@ -36,7 +36,7 @@ abstract class ATOM[F <: FRM](b: By)(using ref: OWNER[F])
    * @return
    */
   //def defaultLocator:Locator
-  def cleanName: String = {
+  def fullName: String = {
 
     for (field <- own.getClass.getDeclaredFields) {
       field.setAccessible(true)
@@ -46,8 +46,7 @@ abstract class ATOM[F <: FRM](b: By)(using ref: OWNER[F])
           //println("My name im parent is: " + field.getName)
           return field.getName
             .replaceAll("\\$u0020", " ")
-            .replaceAll("\\$colon", "")
-            .replaceAll("\\$minus", " ") // TODO to be improved
+            .replaceAll("-", " ") // TODO to be improved
         }
       } catch {
         case e: IllegalAccessException =>
@@ -57,29 +56,10 @@ abstract class ATOM[F <: FRM](b: By)(using ref: OWNER[F])
     "NOT FOUND"
   }
 
-  def displayName: String = {
-
-    for (field <- own.getClass.getDeclaredFields) {
-      field.setAccessible(true)
-      try {
-        val value = field.get(own)
-        if (value eq this) {
-          //println("My name im parent is: " + field.getName)
-          return field.getName
-            .replaceAll("\\$u0020", " ")
-            .replaceAll("\\$colon", ":")
-            .replaceAll("\\$minus", "-") // TODO to be improved
-        }
-      } catch {
-        case e: IllegalAccessException =>
-          e.printStackTrace()
-      }
-    }
-    "NOT FOUND"
-  }
-
-  def shortName = Defs.mkCamelCase(cleanName)
-
+  def cleanName = shortName
+  def shortName = Defs.mkCamelCase(fullName)
+  def gen( value:Any ) = s"${value.toString}..42"
+  def random( value:String ) = s"${value}..42"
   own.adopt(this)
 
   final def click: F =
@@ -93,17 +73,6 @@ abstract class ATOM[F <: FRM](b: By)(using ref: OWNER[F])
   final def set(any: String): F = {
     loc(pg).fill(any.toString)
     own
-  }
-
-  final def random(any: String): F = {
-    val rand = gen(any)
-    own.setVar(shortName, rand)
-    loc(pg).fill(rand)
-    own
-  }
-
-  def gen(any: Any): String = {
-    any.toString+Math.random();
   }
 
 }

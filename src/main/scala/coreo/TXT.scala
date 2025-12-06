@@ -10,7 +10,7 @@ case class TXT[F <: FRM](b: By = Loc.Default)(using ref: OWNER[F])
     by match {
       case Loc.Default =>
         val opt = Page.GetByRoleOptions()
-          .setName(cleanName)
+          .setName(fullName)
           .setExact(false)
         pg.getByRole(AriaRole.TEXTBOX, opt)
 

@@ -9,12 +9,12 @@ import coreo.*
  * has buttons Cancel, Back Next
  */
 
-trait CancelBackNext[F <: FRM, T <: FRM]() {
+trait CancelBackNext[F <: FRM, C <: FRM, B <: FRM, N <: FRM]() {
   self: F =>
 
   def ref: OWNER[F]
 
-  final val Cancel = BTN[F,T]()(using ref)
-  final val Back = BTN[F,T]()(using ref)
-  final val Next = BTN[F,T]()(using ref)
+  final val Cancel = BTN[F,C]()(using ref)
+  final val Back = BTN[F,B]()(using ref)
+  final val Next = BTN[F,N]()(using ref)
 }

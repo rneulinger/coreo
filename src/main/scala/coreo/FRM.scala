@@ -5,21 +5,18 @@ import com.microsoft.playwright.*
 abstract class FRM(override val own: CanOwn, typ:String = "")
   extends CHILD with CanOwn {
 
-  final def Self = getClass.getName
+  def Self = getClass.getName
   def path: String = "" //
-
-  override def weight = {
-    atoms.map(_._2.weight).sum + 1
-  }
 
   val fullType:String = if ( typ.isEmpty ) myType else  typ
   own.adopt(this)
+
 
   override def pg: Page = own.pg
 
   private var adoptedAtoms = List[ATOM[?]]()
   lazy val atoms: Map[String, ATOM[?]] = {
-    val tmp = adoptedAtoms.map(a => a.displayName -> a).toMap
+    val tmp = adoptedAtoms.map(a => a.fullName -> a).toMap
     tmp
   }
 
@@ -56,24 +53,24 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
     }
 
   def dump( string :String): Unit = {
-    println(string + myType + "  " + path + " " + weight)
+    println(string + myType + "  " + path)
 
     for (atom <- atoms) {
       val len = atoms.map(_._1.length).max
       val name = atom._1
-      println("\t" + name + " " * (len - name.length) + " : " + atom._2 + " : " + atom._2.weight )
+      println("\t" + name + " " * (len - name.length) + " : " + atom._2)
     }
   }
   def dump:Unit = dump("")
 
   private def atomsMax = if atoms.isEmpty then 0 else atoms.keySet.map(_.length).max
-  private def shortMax = if atoms.isEmpty then 0 else atoms.values.map(_.cleanName.length).max
+  private def shortMax = if atoms.isEmpty then 0 else atoms.values.map(_.fullName.length).max
   private def typeMax = if atoms.isEmpty then 0 else atoms.values.map(_.myType.length).max
   private val BLANK = " ".charAt(0)
 
-  def mkAdd[F <: FRM, T <: FRM]: String = {
+  def mkAdd: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[F,T]])) yield {
+    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_,_]])) yield {
       s"""|| ${a._1.padTo(atomsMax, BLANK)} |   | ${a._2.myType.padTo(typeMax, BLANK)} |"""
     }
     val tbl = List(head) ::: lines.toList
@@ -85,9 +82,9 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
     Defs.toClipboard(res)
   }
 
-  def mkEdit[F <: FRM, T <: FRM]: String = {
+  def mkEdit: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[F,T]])) yield {
+    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_,_]])) yield {
       s"""|| ${a._1.padTo(atomsMax, BLANK)} |   | ${a._2.myType.padTo(typeMax, BLANK)} |"""
     }
     val tbl = List(head) ::: lines.toList
@@ -99,9 +96,9 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
     Defs.toClipboard(res)
   }
 
-  def mkNext[F <: FRM, T <: FRM]: String = {
+  def mkNext: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[F,T]])) yield {
+    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_,_]])) yield {
       s"""|| ${a._1.padTo(atomsMax, BLANK)} |   | ${a._2.myType.padTo(typeMax, BLANK)} |"""
     }
     val tbl = List(head) ::: lines.toList
@@ -113,9 +110,9 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
     Defs.toClipboard(res)
   }
 
-  def mkSet[F <: FRM, T <: FRM]:String = {
+  def mkSet:String = {
     val head = s"""|| ${"name".padTo(atomsMax," ".charAt(0))} |   | typ |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[F,T]]) ) yield {
+    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_,_]]) ) yield {
       s"""|| ${a._1.padTo(atomsMax,BLANK)} |   | ${a._2.myType.padTo(typeMax,BLANK)} |"""
     }
     val tbl = List(head) ::: lines.toList
@@ -126,7 +123,7 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
     Defs.toClipboard(res)
   }
 
-  def mkAct[F <: FRM, T <: FRM]:String = {
+  def mkAct:String = {
     val head = s"""|| ${"name".padTo(atomsMax," ".charAt(0))} | op | p1 | p2 | p3 | typ |"""
     val lines = for (a <- atoms) yield {
       s"""|| ${a._1.padTo(atomsMax,BLANK)} |    |    |    |    | ${a._2.myType.padTo(typeMax,BLANK)} |"""
@@ -139,9 +136,9 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
     Defs.toClipboard(res)
   }
 
-  def mkGet[F <: FRM, T <: FRM]:String = {
+  def mkGet:String = {
     val head = s"""|| ${"name".padTo(atomsMax,BLANK)} | op | ${"var".padTo(shortMax,BLANK)} |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[F,T]])) yield {
+    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_,_]])) yield {
       s"""|| ${a._1.padTo(atomsMax,BLANK)} |    | ${a._2.shortName.padTo(shortMax,BLANK)} |"""
     }
     val tbl = List(head) ::: lines.toList
@@ -152,7 +149,7 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
     Defs.toClipboard(res)
   }
 
-  def mkChk[F <: FRM, T <: FRM]:String = {
+  def mkChk:String = {
     val head = s"""|| ${"name".padTo(atomsMax," ".charAt(0))} | op | ref |"""
     val lines = for (a <- atoms) yield {
       s"""|| ${a._1.padTo(atomsMax,BLANK)} | == |     |"""
@@ -172,15 +169,13 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
    */
   def mkCs:String = {
     val lines = for (a <- atoms) yield {
-      val name = a._2.cleanName
-      val trueName = a._2.displayName
+      val name = a._2.fullName
       val short = Defs.mkCamelCase(name)
       val typ = a._2.myType
-      s"""|        $short = new $typ(this, \"$trueName\");"""
+      s"""|        $short = new $typ(this, \"$name\");"""
     }
     val decls = for (a <- atoms) yield {
-      val name = a._2.cleanName
-      val trueName = a._2.displayName
+      val name = a._2.fullName
       val short = Defs.mkCamelCase(name)
       val typ = a._2.myType
       s"""|    public readonly $typ $short;"""
@@ -190,14 +185,14 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
        |
        |using Coreo;
        |// ReSharper disable InconsistentNaming
-       |public class ${myType} : FRM{
+       |public class ${myType}_ : FRM{
        ${decls.mkString("\n")}
        |
-       |  public ${myType}( CanOwn own ):base(own) {
+       |  public ${myType}_( CanOwn own ):base(own) {
           ${lines.mkString("\n")}
        |  }
        |}
-       |// ${myType} _$myType = new $myType( this );
+       |// ${myType}_ _$myType = new $myType( this );
        |""".stripMargin
     Defs.toClipboard(res)
   }
@@ -208,14 +203,13 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
   def mkTs:String = {
     val Core="Coreo"
     val lines = for (a <- atoms) yield {
-      val name = a._2.cleanName
-      val trueName = a._2.displayName
+      val name = a._2.fullName
       val short = Defs.mkCamelCase(name)
       val typ = a._2.myType
-      s"""|        this.$short = new $Core.$typ(this, \"$trueName\");"""
+      s"""|        this.$short = new $Core.$typ(this, \"$name\");"""
     }
     val decls = for (a <- atoms) yield {
-      val name = a._2.cleanName
+      val name = a._2.fullName
       val short = Defs.mkCamelCase(name)
       val typ = a._2.myType
       s"""|    public readonly $short : $Core.$typ;"""
@@ -225,7 +219,7 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
                  |
                  |//import {BTN,TXT,FRM,CanOwn} from '../Core';
                  |
-                 |export class ${myType} extends $Core.FRM{
+                 |export class ${myType}_ extends $Core.FRM{
        ${decls.mkString("\n")}
                  |
                  |  constructor( own:$Core.CanOwn ){
@@ -233,7 +227,7 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
           ${lines.mkString("\n")}
                  |  }
                  |}
-                 |// ${myType} _$myType = new $myType( this );
+                 |// ${myType}_ _$myType = new $myType( this );
                  |}
                  |""".stripMargin
     Defs.toClipboard(res)
@@ -256,7 +250,7 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
        |
        |[,java]
        |----
-       |include::{SRI}/$mkInc${myType}.scala[tag=fields]
+       |include::{SRI}/$mkInc${myType}_.scala[tag=fields]
        |----
        |
        |
@@ -264,51 +258,4 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
     Defs.toClipboard(res)
     res
   }
-
-
-  def mkMermaid:String = {
-    val lines = for(atom <- atoms.filterNot(_.isInstanceOf[ACTION[?,?]]))yield{
-      atom._2 match{
-        case ac:ACTION[?,?] =>
-          s"|   + ${atom._1} : ${atom._2.myType} ${atom._2.weight} --> ${ac.target}"
-        case data:DATA[?] => s"|   + ${atom._1} : ${atom._2.myType} ${atom._2.weight}"
-        case _ => ""
-      }
-    }
-
-    val refs = for (atom <- atoms.filterNot(_.isInstanceOf[ACTION[?, ?]])) yield {
-      atom._2 match {
-        case ac: ACTION[?, ?] =>
-          if ac.target.trim.isEmpty then s"| ${fullType} --> Unknown : ${atom._1}"
-          else {
-            try{
-              val frm = findFrm(ac.target.trim)
-              s"|   ${fullType}  --> ${frm.fullType} : ${atom._1}"
-            } catch {
-              case x:Exception =>
-                s"|   ${fullType}  --> ${x.getMessage} : ${atom._1}"
-            }
-          }
-        case _ => ""
-      }
-    }
-
-    val res = s"""
-       |classDiagram
-       |  class $fullType{
-       |    weight = $weight
-       ${lines.mkString("\n")}
-       |}
-       |
-       ${refs.filterNot(_.isEmpty).mkString("\n")}
-       |""".stripMargin
-    Defs.toClipboard(res)
-    res
-
-  }
-
-  def getVar(key: String): Any = {own.getVar(key)}
-
-  def setVar(key: String, value: Any): Unit = {own.setVar(key, value)}
-
 }

@@ -10,7 +10,7 @@ case class MIT[F <: FRM, T <: FRM](b: By = Loc.Default)(using ref: OWNER[F])
     by match {
       case Loc.Default =>
         val opt = Page.GetByRoleOptions()
-          .setName(cleanName)
+          .setName(fullName)
           .setExact(false)
         pg.getByRole(AriaRole.MENUITEM, opt)
 

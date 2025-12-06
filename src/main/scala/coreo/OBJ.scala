@@ -20,8 +20,4 @@ abstract class OBJ {
   def page2Loc( l:Locator):Function1[Page, Locator] = new Function1[Page,Locator]{
     def apply( p:Page):Locator = l
   }
-
-  def findFrm(name:String):FRM
-
-  def weight = 1
 }

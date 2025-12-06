@@ -3,12 +3,24 @@ package coreo
 import scala.jdk.CollectionConverters.*
 import com.microsoft.playwright.*
 
-class PwRoot(val baseUrl: String) extends ROOT with CanOwn {
+class PwRoot(val baseUrl: String) extends CanOwn {
   def nameOfApp = "No Name"
   def predefBaseUrls = Map[String, String]()
 
   private var adoptedAtoms = List[ATOM[?]]()
-  lazy val atoms: Map[String, ATOM[?]] = adoptedAtoms.map(a => a.cleanName -> a).toMap
+  lazy val atoms: Map[String, ATOM[?]] = adoptedAtoms.map(a => a.fullName -> a).toMap
+
+  /**
+   * variables for test execution
+   */
+  private var VARS = Map[String, Any]()
+  def setVar( key:String, value:Any): Unit = {
+    val res = VARS + (key -> value)
+    VARS = res
+  }
+  def getVar( key:String): Any = {VARS.get(key)}
+  def getVarOrElse( key:String, default:Any): Any = {VARS.getOrElse(key, default)}
+
 
   private var adoptedFrms = List[FRM]()
   lazy val (short, full, frms)  = {
@@ -26,28 +38,6 @@ class PwRoot(val baseUrl: String) extends ROOT with CanOwn {
         adoptedFrms = adoptedFrms.appended(frm)
     }
 
-  def findAll( name:String) : Set[FRM] = {
-    val trimmed = name.trim
-
-    val hits = short.filter(_._1.contains(trimmed)).map(_._2) ++
-    full.filter(_._1.contains(trimmed)).map(_._2) ++
-    short.values.map(x => (x.getClass.getName -> x)).filter(_._1.contains(trimmed)).map(_._2) ++
-    full.values.map(x => (x.getClass.getName -> x)).filter(_._1.contains(trimmed)).map(_._2)
-    hits.toSet
-  }
-
-  def findUnique( name:String) : FRM = {
-    val res = findAll(name)
-    res.size match{
-      case 0 => throw IllegalArgumentException(s"Frame not found: $name")
-      case 1 => res.head
-      case _ =>
-        val hits = res.toList.map(_.getClass.getName).mkString(" | ")
-        throw IllegalArgumentException(s"Frame is ambiguous: $name: $hits")
-    }
-  }
-
-  def findFrm(name:String):FRM = findUnique(name)
   lazy val playwright: Playwright = Playwright.create()
 
   lazy val bOpts = new BrowserType.LaunchOptions().setHeadless(false)
@@ -83,8 +73,8 @@ class PwRoot(val baseUrl: String) extends ROOT with CanOwn {
    * current view
    */
 
-  val _Unknown = Unknown(this)
-  var currentFrm:FRM  = _Unknown
+  var currentFrm:FRM  = new FRM(this){}
+  val defaultFrm = currentFrm
   /**
    * visit: push current view on stack, arg becomes current,
    * return: push curren tin history, pop and set current
@@ -121,32 +111,19 @@ class PwRoot(val baseUrl: String) extends ROOT with CanOwn {
     if (viewStack.nonEmpty) {
       currentFrm = viewStack.pop()
     } else{
-      currentFrm = _Unknown
+      currentFrm = defaultFrm
     }
   }
 
   final def dump(s: String = ""): Unit = {
-    val hits = findAll(s)
+    println(atoms)
+    val hits = frms.filter(_._1.contains(s))
     for (frm <- hits) {
         println()
-        frm.dump
+        frm._2.dump
     }
   }
 
   override def openUrl(path: String): Unit = pg.navigate(baseUrl + path)
   def gui: GUI = GUI(this)
-
-  def mermaidAll:Unit = {
-    import java.io.File
-    val path = "./build/mermaid"
-    File(path).mkdirs
-    for (frm <- frms){
-      val res = frm._2.mkMermaid
-      import java.nio.file.{Paths, Files}
-      import java.nio.charset.StandardCharsets
-
-      Files.write(Paths.get(s"$path/${frm._2.Self}.mermaid"), res.getBytes(StandardCharsets.UTF_8))
-    }
-  }
 }
-

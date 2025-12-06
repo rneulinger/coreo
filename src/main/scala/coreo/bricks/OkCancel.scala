@@ -8,7 +8,7 @@ import coreo.*
  * @tparam F
  * has buttons Ok, Cancel
  */
-trait OkCancel[F <: FRM, T <: FRM]() {
+trait OkCancel[F <: FRM, T<:FRM]() {
   self: F =>
 
   def ref: OWNER[F]
@@ -16,4 +16,3 @@ trait OkCancel[F <: FRM, T <: FRM]() {
   final val Ok = BTN[F,T]()(using ref)
   final val Cancel = BTN[F,T]()(using ref)
 }
-
