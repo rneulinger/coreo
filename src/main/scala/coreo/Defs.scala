@@ -87,18 +87,15 @@ object Defs {
     def declFields(): Unit = {
       val Buttons = Set("Add", "Edit", "Delete", "Next", "Finish", "Cancel", "Back")
 
-      def getType( s:String) = if Buttons.contains(s) then "BTN(\"\")" else "TXT(\"\")"
+      def getType( s:String) = if Buttons.contains(s) then "BTN" else "TXT"
 
       // TODO there can be still a duplicate conflict in aliases
       for (fl <- fields.filter(_.nonEmpty)) {
         val f = (fl, mkCamelCase(fl))
         val typ = getType(f._1)
-        if (f._1 == f._2) { // mo alias
-          pw.println(s"  val ${f._1} = $typ")
-        } else {
-          pw.println(s"  val `${f._1}` = $typ")
-          pw.println(s"  def ${f._2} = `${f._1}` // alias")
-        }
+        val nm = if (f._1 == f._2) then "" else f._1 // TODO improve stability \"
+        pw.println(s"  val ${f._2} = $typ(\"$nm\")")
+        pw.println()
       }
     }
 
@@ -123,8 +120,13 @@ object Defs {
         |  // end::fields[]
         |}
         |
+        |object $myFrm
+        |{
+        |}
         |
-        |val _$cc = $myFrm(this)
+        |// val _${cc.dropRight(1)} = $myFrm(this)
+        |
+        |
         |""".stripMargin)
     pw.flush()
     sw.toString
