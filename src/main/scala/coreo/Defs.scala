@@ -61,7 +61,6 @@ object Defs {
     val selection = new StringSelection(text)
     val clipboard = Toolkit.getDefaultToolkit.getSystemClipboard
     clipboard.setContents(selection, null)
-    //println(s"Copied to clipboard: $text")
     text
   }
 

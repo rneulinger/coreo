@@ -6,9 +6,10 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
   extends CHILD with CanOwn {
 
   def Self = getClass.getName
+
   def path: String = "" //
 
-  val fullType:String = if ( typ.isEmpty ) myType else  typ
+  val fullType: String = if (typ.isEmpty) myType else typ
   own.adopt(this)
 
 
@@ -43,16 +44,16 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
     own.openUrl(path)
   }
 
-  def onto( frm:FRM):Unit = own.onto(frm)
+  def onto(frm: FRM): Unit = own.onto(frm)
 
-  def findAtom(name:String ): Option[ATOM[?]] =
-    if (atoms.keySet.contains(name)){
+  def findAtom(name: String): Option[ATOM[?]] =
+    if (atoms.keySet.contains(name)) {
       Option(atoms(name))
     } else {
       None
     }
 
-  def dump( string :String): Unit = {
+  def dump(string: String): Unit = {
     println(string + myType + "  " + path)
 
     for (atom <- atoms) {
@@ -61,201 +62,34 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
       println("\t" + name + " " * (len - name.length) + " : " + atom._2)
     }
   }
-  def dump:Unit = dump("")
 
-  private def atomsMax = if atoms.isEmpty then 0 else atoms.keySet.map(_.length).max
-  private def shortMax = if atoms.isEmpty then 0 else atoms.values.map(_.fullName.length).max
-  private def typeMax = if atoms.isEmpty then 0 else atoms.values.map(_.myType.length).max
-  private val BLANK = " ".charAt(0)
+  def dump: Unit = dump("")
 
-  def mkAdd: String = {
-    val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_,_]])) yield {
-      s"""|| ${a._1.padTo(atomsMax, BLANK)} |   | ${a._2.myType.padTo(typeMax, BLANK)} |"""
-    }
-    val tbl = List(head) ::: lines.toList
-    val res =
-      s"""
-         |* add: '$fullType'
-      ${tbl.mkString("\n")}
-         |""".stripMargin
-    Defs.toClipboard(res)
-  }
+  def mkAdd: String = Formatter(this).mkAdd
 
-  def mkEdit: String = {
-    val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_,_]])) yield {
-      s"""|| ${a._1.padTo(atomsMax, BLANK)} |   | ${a._2.myType.padTo(typeMax, BLANK)} |"""
-    }
-    val tbl = List(head) ::: lines.toList
-    val res =
-      s"""
-         |* edit: '$fullType'
-      ${tbl.mkString("\n")}
-         |""".stripMargin
-    Defs.toClipboard(res)
-  }
+  def mkEdit: String = Formatter(this).mkEdit
 
-  def mkNext: String = {
-    val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_,_]])) yield {
-      s"""|| ${a._1.padTo(atomsMax, BLANK)} |   | ${a._2.myType.padTo(typeMax, BLANK)} |"""
-    }
-    val tbl = List(head) ::: lines.toList
-    val res =
-      s"""
-         |* next: '$fullType'
-      ${tbl.mkString("\n")}
-         |""".stripMargin
-    Defs.toClipboard(res)
-  }
+  def mkNext: String = Formatter(this).mkNext
 
-  def mkSet:String = {
-    val head = s"""|| ${"name".padTo(atomsMax," ".charAt(0))} |   | typ |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_,_]]) ) yield {
-      s"""|| ${a._1.padTo(atomsMax,BLANK)} |   | ${a._2.myType.padTo(typeMax,BLANK)} |"""
-    }
-    val tbl = List(head) ::: lines.toList
-    val res = s"""
-      |* set: '$fullType'
-      ${tbl.mkString("\n")}
-      |""".stripMargin
-    Defs.toClipboard(res)
-  }
+  def mkSet: String = Formatter(this).mkSet
 
-  def mkAct:String = {
-    val head = s"""|| ${"name".padTo(atomsMax," ".charAt(0))} | op | p1 | p2 | p3 | typ |"""
-    val lines = for (a <- atoms) yield {
-      s"""|| ${a._1.padTo(atomsMax,BLANK)} |    |    |    |    | ${a._2.myType.padTo(typeMax,BLANK)} |"""
-    }
-    val tbl = List(head) ::: lines.toList
-    val res = s"""
-                 |* act: '$fullType'
-      ${tbl.mkString("\n")}
-                 |""".stripMargin
-    Defs.toClipboard(res)
-  }
+  def mkAct: String = Formatter(this).mkAct
 
-  def mkGet:String = {
-    val head = s"""|| ${"name".padTo(atomsMax,BLANK)} | op | ${"var".padTo(shortMax,BLANK)} |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_,_]])) yield {
-      s"""|| ${a._1.padTo(atomsMax,BLANK)} |    | ${a._2.shortName.padTo(shortMax,BLANK)} |"""
-    }
-    val tbl = List(head) ::: lines.toList
-    val res = s"""
-       |* get: '$fullType'
-       ${tbl.mkString("\n")}
-       |""".stripMargin
-    Defs.toClipboard(res)
-  }
+  def mkGet: String = Formatter(this).mkGet
 
-  def mkChk:String = {
-    val head = s"""|| ${"name".padTo(atomsMax," ".charAt(0))} | op | ref |"""
-    val lines = for (a <- atoms) yield {
-      s"""|| ${a._1.padTo(atomsMax,BLANK)} | == |     |"""
-    }
-    val tbl = List(head) ::: lines.toList
-    val res = s"""
-       |* chk: '$fullType'
-       ${tbl.mkString("\n")}
-       |""".stripMargin
+  def mkChk: String = Formatter(this).mkChk
 
-    Defs.toClipboard(res)
-
-  }
-
-  /**
-   * c sharp erzeugen
-   */
-  def mkCs:String = {
-    val lines = for (a <- atoms) yield {
-      val name = a._2.fullName
-      val short = Defs.mkCamelCase(name)
-      val typ = a._2.myType
-      s"""|        $short = new $typ(this, \"$name\");"""
-    }
-    val decls = for (a <- atoms) yield {
-      val name = a._2.fullName
-      val short = Defs.mkCamelCase(name)
-      val typ = a._2.myType
-      s"""|    public readonly $typ $short;"""
-    }
-
-    val res = s"""namespace Generic;
-       |
-       |using Coreo;
-       |// ReSharper disable InconsistentNaming
-       |public class ${myType}_ : FRM{
-       ${decls.mkString("\n")}
-       |
-       |  public ${myType}_( CanOwn own ):base(own) {
-          ${lines.mkString("\n")}
-       |  }
-       |}
-       |// ${myType}_ _$myType = new $myType( this );
-       |""".stripMargin
-    Defs.toClipboard(res)
-  }
+  def mkCs: String = Formatter(this).mkCs
 
   /**
    * typescript sharp erzeugen
    */
-  def mkTs:String = {
-    val Core="Coreo"
-    val lines = for (a <- atoms) yield {
-      val name = a._2.fullName
-      val short = Defs.mkCamelCase(name)
-      val typ = a._2.myType
-      s"""|        this.$short = new $Core.$typ(this, \"$name\");"""
-    }
-    val decls = for (a <- atoms) yield {
-      val name = a._2.fullName
-      val short = Defs.mkCamelCase(name)
-      val typ = a._2.myType
-      s"""|    public readonly $short : $Core.$typ;"""
-    }
-
-    val res = s"""namespace Generic{
-                 |
-                 |//import {BTN,TXT,FRM,CanOwn} from '../Core';
-                 |
-                 |export class ${myType}_ extends $Core.FRM{
-       ${decls.mkString("\n")}
-                 |
-                 |  constructor( own:$Core.CanOwn ){
-                 |    super(own)
-          ${lines.mkString("\n")}
-                 |  }
-                 |}
-                 |// ${myType}_ _$myType = new $myType( this );
-                 |}
-                 |""".stripMargin
-    Defs.toClipboard(res)
-  }
+  def mkTs: String = Formatter(this).mkCs
 
   /**
-   * create asciidoc snipped (copie to clipboard)
+   * create asciidoc snipped
+   *
    * @return
    */
-  def mkDoc:String= {
-    def mkLink = if path.isEmpty then "" else s"* http{ip}/$path[]"
-    def mkInc = if path.isEmpty then "" else s"$path/"
-    def mkArrow = if path.isEmpty then "" else " ->"
-    val res = s"""
-       |=== $myType$mkArrow
-       |
-       |$path
-       |
-       |image::$myType.png[]
-       |
-       |[,java]
-       |----
-       |include::{SRI}/$mkInc${myType}_.scala[tag=fields]
-       |----
-       |
-       |
-       |""".stripMargin
-    Defs.toClipboard(res)
-    res
-  }
+  def mkDoc: String = Formatter(this).mkDoc
 }
