@@ -4,6 +4,7 @@ import com.microsoft.playwright.*
 
 abstract class ATOM[F <: FRM](name:String, b: By)(using ref: OWNER[F])
   extends CHILD {
+  final val own: F = ref.own
   var by: By = b
 
   val uiName = if name.trim.isEmpty then fullName else name
@@ -15,8 +16,6 @@ abstract class ATOM[F <: FRM](name:String, b: By)(using ref: OWNER[F])
   final def parentType: String = own.getClass.getSimpleName
 
   final def pg: Page = own.pg
-
-  final val own: F = ref.own
 
   def loc(pg: Page): Locator
 
