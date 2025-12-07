@@ -6,6 +6,8 @@ abstract class ATOM[F <: FRM](name:String, b: By)(using ref: OWNER[F])
   extends CHILD {
   var by: By = b
 
+  val uiName = if name.trim.isEmpty then fullName else name
+
   def setBy(b: By): Unit = {
     by = b
   }
