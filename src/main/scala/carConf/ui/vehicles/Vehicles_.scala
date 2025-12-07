@@ -1,14 +1,14 @@
-package carConf.vehicles
+package carConf.ui.vehicles
 
 import coreo.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
 
-class Vehicles(own: CanOwn) extends FRM(own) {
+class Vehicles_(own: CanOwn) extends FRM(own) {
 
   // tag::fields[]
-  given ref: OWNER[Vehicles] = OWNER(this)
+  given ref: OWNER[Vehicles_] = OWNER(this)
 
   val Vehicles = TBL("",
     _.locator("#VehicleTablePanel"))
@@ -16,7 +16,7 @@ class Vehicles(own: CanOwn) extends FRM(own) {
   val BasePrice = TXT("Base Price",
     _.locator("#BasePrice_input"))
 
-  val SpecialPrice = TXT("Special Price",
+  val SpecialPrice = TXT("Special Price`",
     _.locator("#SpecialPrice_input"))
 
   val AccessoriesPrice = TXT("Accessories Price",
@@ -33,3 +33,5 @@ class Vehicles(own: CanOwn) extends FRM(own) {
 
   // end::fields[]
 }
+
+object Vehicles_ {}

@@ -14,13 +14,18 @@ class CarConfig(own: CanOwn)
 
   given ref: OWNER[CarConfig] = OWNER(this)
 
-  def byName( name:String ) : Page => Locator =
+  def byName(name: String): Page => Locator =
     _.getByRole(AriaRole.LINK,
       new Page.GetByRoleOptions().setName(name))
 
-  val VehiclesTab = TAB(byName("Vehicles"))
-  val SpecialsTab = TAB(byName("Specials"))
-  val AccessoriesTab = TAB(byName("Accessories"))
+  val VehiclesTab = TAB("", 
+    byName("Vehicles"))
+  
+  val SpecialsTab = TAB("", 
+    byName("Specials"))
+  
+  val AccessoriesTab = TAB("", 
+    byName("Accessories"))
 
   // end::fields[]
 }

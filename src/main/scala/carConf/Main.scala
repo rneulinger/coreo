@@ -1,7 +1,7 @@
 package carConf
 
 import coreo.*
-import carConf.specials.Specials
+import carConf.specials.Specials_
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
@@ -20,6 +20,7 @@ import carConf.accessories.*
 }
 */
 val s = "file:///C:/Projects/carconfigWeb/html/CarConfig.htm?lang=en#"
+
 class Main() extends PwRoot(s) {
   override def nameOfApp = "Car Configurator"
 
@@ -32,8 +33,8 @@ class Main() extends PwRoot(s) {
   val _VehiclesTab: TAB[CarConfig] = _CarConfig.VehiclesTab
   val _AccessoriesTab: TAB[CarConfig] = _CarConfig.AccessoriesTab
 
-  val _Specials = Specials(this)
-  val _SpecialsDialog = SpecialsDialog(this)
+  val _Specials = Specials_(this)
+  val _SpecialsDialog = SpecialsDialog_(this)
 
   val _Vehicles = Vehicles(this)
   val _VehiclesDialog = VehiclesDialog(this)
@@ -60,28 +61,30 @@ class Main() extends PwRoot(s) {
     case Help_LoadTestingModule
   }
 
-  def goto(mnu:Menu) = {
-    def click(s:String): Unit = {
+  def goto(mnu: Menu) = {
+    def click(s: String): Unit = {
       page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(s)).click()
     }
-    def click2(s:String, s2:String): Unit = {
+
+    def click2(s: String, s2: String): Unit = {
       click(s)
       click(s2)
     }
+
     mnu match {
       case Menu.File => click("File")
       case Menu.File_Reset => click2("File", "Reset")
       case Menu.Options => click("Options")
       case Menu.Options_Vehicles => click2("Options", "Vehicles...")
       case Menu.Options_Specials => click2("Options", "Specials...")
-      case Menu.Options_Accessories=> click2("Options", "Accessories...")
-      case Menu.PurchaseOrder => click("Purchase order" )
-      case Menu.PurchaseOrder_ViewSelectedDetails  => click2("Purchase order", "View selected details")
-      case Menu.PurchaseOrder_SendOrder => click2("Purchase order","Send order")
+      case Menu.Options_Accessories => click2("Options", "Accessories...")
+      case Menu.PurchaseOrder => click("Purchase order")
+      case Menu.PurchaseOrder_ViewSelectedDetails => click2("Purchase order", "View selected details")
+      case Menu.PurchaseOrder_SendOrder => click2("Purchase order", "Send order")
       case Menu.Help => click("Help")
-      case Menu.Help_Info => click2("Help","Info")
-      case Menu.Help_Buggy => click2("Help","Buggy")
-      case Menu.Help_LoadTestingModule => click2("Help","Load testing mode")
+      case Menu.Help_Info => click2("Help", "Info")
+      case Menu.Help_Buggy => click2("Help", "Buggy")
+      case Menu.Help_LoadTestingModule => click2("Help", "Load testing mode")
     }
   }
 }

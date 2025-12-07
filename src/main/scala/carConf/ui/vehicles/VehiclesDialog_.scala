@@ -1,14 +1,14 @@
-package carConf.vehicles
+package carConf.ui.vehicles
 
 import coreo.*
 import coreo.bricks.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
-class VehiclesDialog(own: CanOwn) extends FRM(own) {
+class VehiclesDialog_(own: CanOwn) extends FRM(own) {
 
   // tag::fields[]
-  given ref: OWNER[VehiclesDialog] = OWNER(this)
+  given ref: OWNER[VehiclesDialog_] = OWNER(this)
 
   val Vehicles = TBL("",
     _.locator("#VehiclesTable"))
@@ -39,3 +39,5 @@ class VehiclesDialog(own: CanOwn) extends FRM(own) {
 
   // end::fields[]
 }
+
+object VehiclesDialog_ {}

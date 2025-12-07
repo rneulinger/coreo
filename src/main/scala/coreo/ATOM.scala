@@ -2,7 +2,7 @@ package coreo
 
 import com.microsoft.playwright.*
 
-abstract class ATOM[F <: FRM](b: By)(using ref: OWNER[F])
+abstract class ATOM[F <: FRM](name:String, b: By)(using ref: OWNER[F])
   extends CHILD {
   var by: By = b
 

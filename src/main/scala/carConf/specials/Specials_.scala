@@ -1,23 +1,26 @@
-package carConf.vehicles
+package carConf.specials
 
 import coreo.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
-
-class Vehicles(own: CanOwn) extends FRM(own) {
+class Specials_(own: CanOwn) extends FRM(own)
+  with coreo.bricks.NewChangDeleteDetailsCancelOK {
 
   // tag::fields[]
-  given ref: OWNER[Vehicles] = OWNER(this)
+  given ref: OWNER[Specials_] = OWNER(this)
 
-  val Vehicles = TBL("",
-    _.locator("#VehicleTablePanel"))
+  val Specials = CBX("",
+    _.locator("#SpecialsCombo"))
+
+  val Special = TXT("",
+    _.locator("#SpecialsArea"))
 
   val BasePrice = TXT("Base Price",
     _.locator("#BasePrice_input"))
 
   val SpecialPrice = TXT("Special Price",
-    _.locator("#SpecialPrice_input"))
+    _.getByText("$4,045.00")) // Wrong
 
   val AccessoriesPrice = TXT("Accessories Price",
     _.locator("#AccessoryPrice_input"))
@@ -29,7 +32,12 @@ class Vehicles(own: CanOwn) extends FRM(own) {
     _.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("-5%")))
 
   val FinalPrice = TXT("Final Price",
-    _.locator("#CalculatedPrice_input"))
+    _.getByText("$3,438.25")) // Wrong
 
   // end::fields[]
+
+}
+
+object Specials_ {
+
 }

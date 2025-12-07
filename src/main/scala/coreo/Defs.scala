@@ -87,7 +87,7 @@ object Defs {
     def declFields(): Unit = {
       val Buttons = Set("Add", "Edit", "Delete", "Next", "Finish", "Cancel", "Back")
 
-      def getType( s:String) = if Buttons.contains(s) then "BTN()" else "TXT()"
+      def getType( s:String) = if Buttons.contains(s) then "BTN(\"\")" else "TXT(\"\")"
 
       // TODO there can be still a duplicate conflict in aliases
       for (fl <- fields.filter(_.nonEmpty)) {

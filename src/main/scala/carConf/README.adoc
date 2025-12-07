@@ -36,7 +36,7 @@ image::Specials.png[]
 
 [,java]
 ----
-include::specials/Specials.scala[tag=fields]
+include::specials/Specials_.scala[tag=fields]
 ----
 
 === Specials Dialog
@@ -45,7 +45,7 @@ image::SpecialsDialog.png[]
 
 [,java]
 ----
-include::specials/SpecialsDialog.scala[tag=fields]
+include::specials/SpecialsDialog_.scala[tag=fields]
 ----
 
 == Accessories

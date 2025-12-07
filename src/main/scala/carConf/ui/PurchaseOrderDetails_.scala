@@ -1,4 +1,4 @@
-package carConf
+package carConf.ui
 
 import coreo.*
 import coreo.bricks.*
@@ -31,12 +31,16 @@ class PurchaseOrderDetails_(own: CanOwn) extends FRM(own) {
 
   val CollectionExWorks = TXT("Collection ex works")
 
+  val CollectionExVendor = TXT("Collection ex vendor")
+
   val Deliver = TXT("")
 
-  val SendPurchaseOrder = TXT("Send purchase order")
+  val SendPurchasEorder = TXT("Send purchas eorder")
 
   val Cancel = BTN("")
 
 
   // end::fields[]
 }
+
+object PurchaseOrderDetails_ {}
