@@ -21,7 +21,7 @@ import carConf.accessories.*
 */
 val s = "file:///C:/Projects/carconfigWeb/html/CarConfig.htm?lang=en#"
 
-class Main() extends PwRoot(s) {
+class Main extends PwRoot(s) {
   override def nameOfApp = "Car Configurator"
 
   override def predefBaseUrls = Map("Local" -> s)

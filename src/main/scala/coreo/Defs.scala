@@ -68,7 +68,7 @@ object Defs {
     val tr = frm.trim
     val name = if tr.isEmpty then "New frame" else tr
     val cc = mkCamelCase(name)
-    val p2 = if( cc == name) then "" else s", \"$name\""
+    val p2 = if cc == name then "" else s", \"$name\""
 
     val myFrm = if cc.endsWith("_") then cc else cc + "_"
 
@@ -92,7 +92,7 @@ object Defs {
       for (fl <- fields.filter(_.nonEmpty)) {
         val f = (fl, mkCamelCase(fl))
         val typ = getType(f._1)
-        val nm = if (f._1 == f._2) then "" else f._1 // TODO improve stability \"
+        val nm = if f._1 == f._2 then "" else f._1 // TODO improve stability \"
         pw.println(s"  val ${f._2} = $typ(\"$nm\")")
         pw.println()
       }
@@ -105,7 +105,7 @@ object Defs {
         |import com.microsoft.playwright.*
         |import com.microsoft.playwright.options.*
         |
-        |final class $myFrm ( own:CanOwn ) extends FRM(own${p2}){
+        |final class $myFrm ( own:CanOwn ) extends FRM(own$p2){
         |  // tag::fields[]
         |  given ref: Own[$myFrm] = Own(this)
         |  // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this

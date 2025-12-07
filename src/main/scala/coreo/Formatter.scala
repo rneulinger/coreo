@@ -1,13 +1,13 @@
 package coreo
 
 class Formatter(val frm: FRM) {
-  def atoms = frm.atoms
+  private def atoms = frm.atoms
 
-  def fullType = frm.fullType
+  private def fullType = frm.fullType
 
-  def myType = frm.myType
+  private def myType = frm.myType
 
-  def path = frm.path
+  private def path = frm.path
 
   private val BLANK = " ".charAt(0)
 
@@ -23,7 +23,7 @@ class Formatter(val frm: FRM) {
    */
   def mkAdd: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_, _]])) yield {
+    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[?, ?]])) yield {
       s"""|| ${a._1.padTo(atomsMax, BLANK)} |   | ${a._2.myType.padTo(typeMax, BLANK)} |"""
     }
     val tbl = List(head) ::: lines.toList
@@ -39,7 +39,7 @@ class Formatter(val frm: FRM) {
    */
   def mkEdit: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_, _]])) yield {
+    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[?, ?]])) yield {
       s"""|| ${a._1.padTo(atomsMax, BLANK)} |   | ${a._2.myType.padTo(typeMax, BLANK)} |"""
     }
     val tbl = List(head) ::: lines.toList
@@ -55,7 +55,7 @@ class Formatter(val frm: FRM) {
    */
   def mkNext: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_, _]])) yield {
+    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[?, ?]])) yield {
       s"""|| ${a._1.padTo(atomsMax, BLANK)} |   | ${a._2.myType.padTo(typeMax, BLANK)} |"""
     }
     val tbl = List(head) ::: lines.toList
@@ -71,7 +71,7 @@ class Formatter(val frm: FRM) {
    */
   def mkSet: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_, _]])) yield {
+    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[?, ?]])) yield {
       s"""|| ${a._1.padTo(atomsMax, BLANK)} |   | ${a._2.myType.padTo(typeMax, BLANK)} |"""
     }
     val tbl = List(head) ::: lines.toList
@@ -103,7 +103,7 @@ class Formatter(val frm: FRM) {
    */
   def mkGet: String = {
     val head = s"""|| ${"name".padTo(atomsMax, BLANK)} | op | ${"var".padTo(shortMax, BLANK)} |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_, _]])) yield {
+    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[?, ?]])) yield {
       s"""|| ${a._1.padTo(atomsMax, BLANK)} |    | ${a._2.shortName.padTo(shortMax, BLANK)} |"""
     }
     val tbl = List(head) ::: lines.toList

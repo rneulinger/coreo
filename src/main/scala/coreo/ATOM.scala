@@ -60,7 +60,7 @@ abstract class ATOM[F <: FRM](name:String, b: By)(using ref: OWNER[F])
   def cleanName = shortName
   def shortName = Defs.mkCamelCase(fullName)
   def gen( value:Any ) = s"${value.toString}..42"
-  def random( value:String ) = s"${value}..42"
+  def random( value:String ) = s"$value .. 42"
   own.adopt(this)
 
   final def click: F =
@@ -72,7 +72,7 @@ abstract class ATOM[F <: FRM](name:String, b: By)(using ref: OWNER[F])
   }
 
   final def set(any: String): F = {
-    loc(pg).fill(any.toString)
+    loc(pg).fill(any)
     own
   }
 

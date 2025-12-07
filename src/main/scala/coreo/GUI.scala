@@ -1,11 +1,11 @@
 package coreo
 
 import javax.swing.event.{ListSelectionEvent, ListSelectionListener}
-
 import javax.swing.*
 import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
 import java.awt.*
+import scala.compiletime.uninitialized
 
 /**
  * explorer
@@ -35,7 +35,7 @@ class GUI(ui: PwRoot) {
   // Add the tabbed pane to the frame
   mainFrame.add(tabbedPane)
 
-  var currentFrm: FRM = _
+  var currentFrm: FRM = uninitialized
 
   private def mkUI(): Unit = {
     val layout = BorderLayout()

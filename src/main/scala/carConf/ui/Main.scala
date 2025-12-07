@@ -20,7 +20,7 @@ import com.microsoft.playwright.options.*
 */
 val s = "file:///C:/Projects/burli/carconfigWeb/html/CarConfig.htm?lang=en#"
 
-class Main() extends PwRoot(s) {
+class Main extends PwRoot(s) {
 
   // TODO Mene
   val _CarConfig = CarConfig_(this)
