@@ -17,6 +17,10 @@ class Formatter(val frm: FRM) {
 
   private def typeMax = if atoms.isEmpty then 0 else atoms.values.map(_.myType.length).max
 
+  /**
+   * Add block for Gherkin
+   * @return
+   */
   def mkAdd: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
     val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_, _]])) yield {
@@ -29,6 +33,10 @@ class Formatter(val frm: FRM) {
        |""".stripMargin
   }
 
+  /**
+   * Edit block for Gherkin
+   * @return
+   */
   def mkEdit: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
     val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_, _]])) yield {
@@ -41,6 +49,10 @@ class Formatter(val frm: FRM) {
        |""".stripMargin
   }
 
+  /**
+   * Next block for Gherkin
+   * @return
+   */
   def mkNext: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
     val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_, _]])) yield {
@@ -53,6 +65,10 @@ class Formatter(val frm: FRM) {
        |""".stripMargin
   }
 
+  /**
+   * Set block for Gherkin
+   * @return
+   */
   def mkSet: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
     val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_, _]])) yield {
@@ -65,6 +81,10 @@ class Formatter(val frm: FRM) {
        |""".stripMargin
   }
 
+  /**
+   * Action block for Gherkin
+   * @return
+   */
   def mkAct: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} | op | p1 | p2 | p3 | typ |"""
     val lines = for (a <- atoms) yield {
@@ -77,6 +97,10 @@ class Formatter(val frm: FRM) {
        |""".stripMargin
   }
 
+  /**
+   * Get block for Gherkin
+   * @return
+   */
   def mkGet: String = {
     val head = s"""|| ${"name".padTo(atomsMax, BLANK)} | op | ${"var".padTo(shortMax, BLANK)} |"""
     val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[BTN[_, _]])) yield {
@@ -89,6 +113,10 @@ class Formatter(val frm: FRM) {
        |""".stripMargin
   }
 
+  /**
+   * Chk block for Gherkin
+   * @return
+   */
   def mkChk: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} | op | ref |"""
     val lines = for (a <- atoms) yield {
@@ -103,7 +131,7 @@ class Formatter(val frm: FRM) {
   }
 
   /**
-   * c sharp erzeugen
+   * C# erzeugen
    */
   def mkCs: String = {
     val lines = for (a <- atoms) yield {

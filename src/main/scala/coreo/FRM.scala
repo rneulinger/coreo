@@ -64,32 +64,4 @@ abstract class FRM(override val own: CanOwn, typ:String = "")
   }
 
   def dump: Unit = dump("")
-
-  def mkAdd: String = Formatter(this).mkAdd
-
-  def mkEdit: String = Formatter(this).mkEdit
-
-  def mkNext: String = Formatter(this).mkNext
-
-  def mkSet: String = Formatter(this).mkSet
-
-  def mkAct: String = Formatter(this).mkAct
-
-  def mkGet: String = Formatter(this).mkGet
-
-  def mkChk: String = Formatter(this).mkChk
-
-  def mkCs: String = Formatter(this).mkCs
-
-  /**
-   * typescript sharp erzeugen
-   */
-  def mkTs: String = Formatter(this).mkCs
-
-  /**
-   * create asciidoc snipped
-   *
-   * @return
-   */
-  def mkDoc: String = Formatter(this).mkDoc
 }

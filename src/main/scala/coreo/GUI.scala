@@ -125,7 +125,7 @@ class GUI(ui: PwRoot) {
     val add = JButton("Add Gherkin")
     add.addActionListener(new ActionListener {
       def actionPerformed(e: ActionEvent): Unit = {
-        text.setText(Defs.toClipboard(currentFrm.mkAdd))
+        text.setText(Defs.toClipboard(Formatter(currentFrm).mkAdd))
       }
     })
     add.setToolTipText("create an Add block to be used in Gherkin")
@@ -133,7 +133,7 @@ class GUI(ui: PwRoot) {
     val edit = JButton("Edit Gherkin")
     edit.addActionListener(new ActionListener {
       def actionPerformed(e: ActionEvent): Unit = {
-        text.setText(Defs.toClipboard(currentFrm.mkEdit))
+        text.setText(Defs.toClipboard(Formatter(currentFrm).mkEdit))
       }
     })
     edit.setToolTipText("create an Edit block to be used in Gherkin")
@@ -141,7 +141,7 @@ class GUI(ui: PwRoot) {
     val next = JButton("Next Gherkin")
     next.addActionListener(new ActionListener {
       def actionPerformed(e: ActionEvent): Unit = {
-        text.setText(Defs.toClipboard(currentFrm.mkNext))
+        text.setText(Defs.toClipboard(Formatter(currentFrm).mkNext))
       }
     })
     next.setToolTipText("create an Next block to be used in Gherkin")
@@ -149,7 +149,7 @@ class GUI(ui: PwRoot) {
     val set = JButton("Set Gherkin")
     set.addActionListener(new ActionListener {
       def actionPerformed(e: ActionEvent): Unit = {
-        text.setText(Defs.toClipboard(currentFrm.mkSet))
+        text.setText(Defs.toClipboard(Formatter(currentFrm).mkSet))
       }
     })
     set.setToolTipText("create a Set block to be used in Gherkin")
@@ -157,7 +157,7 @@ class GUI(ui: PwRoot) {
     val get = JButton("Get Gherkin")
     get.addActionListener(new ActionListener {
       def actionPerformed(e: ActionEvent): Unit = {
-        text.setText(Defs.toClipboard(currentFrm.mkGet))
+        text.setText(Defs.toClipboard(Formatter(currentFrm).mkGet))
       }
     })
     get.setToolTipText("create a Get block to be used in Gherkin")
@@ -165,7 +165,7 @@ class GUI(ui: PwRoot) {
     val chk = JButton("Check Gherkin")
     chk.addActionListener(new ActionListener {
       def actionPerformed(e: ActionEvent): Unit = {
-        text.setText(Defs.toClipboard(currentFrm.mkChk))
+        text.setText(Defs.toClipboard(Formatter(currentFrm).mkChk))
       }
     })
     chk.setToolTipText("create a Chk block to be used in Gherkin")
@@ -174,7 +174,7 @@ class GUI(ui: PwRoot) {
     act.setToolTipText("create an Act block to be used in Gherkin")
     act.addActionListener(new ActionListener {
       def actionPerformed(e: ActionEvent): Unit = {
-        text.setText(Defs.toClipboard(currentFrm.mkAct))
+        text.setText(Defs.toClipboard(Formatter(currentFrm).mkAct))
       }
     })
 
@@ -183,7 +183,7 @@ class GUI(ui: PwRoot) {
     doc.setToolTipText("create a Asciidoc snippet")
     doc.addActionListener(new ActionListener {
       def actionPerformed(e: ActionEvent): Unit = {
-        text.setText(Defs.toClipboard(currentFrm.mkDoc))
+        text.setText(Defs.toClipboard(Formatter(currentFrm).mkDoc))
       }
     })
 
@@ -192,7 +192,7 @@ class GUI(ui: PwRoot) {
     cs.setToolTipText("create C # definition for that frame")
     cs.addActionListener(new ActionListener {
       def actionPerformed(e: ActionEvent): Unit = {
-        text.setText(Defs.toClipboard(currentFrm.mkCs))
+        text.setText(Defs.toClipboard(Formatter(currentFrm).mkCs))
       }
     })
 
@@ -200,7 +200,7 @@ class GUI(ui: PwRoot) {
     ts.setToolTipText("create TypeScript definition for that frame")
     ts.addActionListener(new ActionListener {
       def actionPerformed(e: ActionEvent): Unit = {
-        text.setText(Defs.toClipboard(currentFrm.mkTs))
+        text.setText(Defs.toClipboard(Formatter(currentFrm).mkTs))
       }
     })
 
