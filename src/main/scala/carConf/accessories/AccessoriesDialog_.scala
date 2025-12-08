@@ -5,10 +5,10 @@ import coreo.bricks.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
-class AccessoriesDialog(own: CanOwn) extends FRM(own) {
+class AccessoriesDialog_(own: CanOwn) extends FRM(own) {
 
   // tag::fields[]
-  given ref: OWNER[AccessoriesDialog] = OWNER(this)
+  given ref: OWNER[AccessoriesDialog_] = OWNER(this)
 
 
   val AccessoryName = TXT("Accessory name")
@@ -17,16 +17,16 @@ class AccessoriesDialog(own: CanOwn) extends FRM(own) {
 
   val Price = TXT("")
 
-  val New = BTN()
+  val New = BTN("")
 
-  val Change = BTN();
+  val Change = BTN("")
   Change.target = "MyDialog"
 
-  val Delete = BTN()
+  val Delete = BTN("")
 
-  val Ok = BTN()
+  val Ok = BTN("")
 
-  val Cancel = BTN()
+  val Cancel = BTN("")
 
   // end::fields[]
 }

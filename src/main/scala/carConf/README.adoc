@@ -54,7 +54,7 @@ image::Accessories.png[]
 
 [,java]
 ----
-include::accessories/Accessories.scala[tag=fields]
+include::accessories/Accessories_.scala[tag=fields]
 ----
 
 === Accessories Dialog
@@ -63,7 +63,7 @@ image::AccessoriesDialog.png[]
 
 [,java]
 ----
-include::accessories/AccessoriesDialog.scala[tag=fields]
+include::accessories/AccessoriesDialog_.scala[tag=fields]
 ----
 
 == Selection details

@@ -17,9 +17,9 @@ final class BMICalculator_(own: CanOwn) extends FRM(own, "BMI Calculator") {
 
   val Weight = TXT("")
 
-  val Calculate = BTN()
+  val Calculate = BTN("")
 
-  val Clear = BTN()
+  val Clear = BTN("")
 
   // end::fields[]
 }

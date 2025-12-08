@@ -1,0 +1,23 @@
+== Predefined Actions
+
+=== Commit / Rollback
+
+* Ok
+* Cancel
+
+=== CRUD
+
+* Create
+* Read
+* Update
+* Delete
+
+=== Wizzards
+
+* Next
+* Previous
+
+=== History
+
+* Back
+

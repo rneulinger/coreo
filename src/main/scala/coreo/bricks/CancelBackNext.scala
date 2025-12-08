@@ -14,7 +14,7 @@ trait CancelBackNext[F <: FRM, C <: FRM, B <: FRM, N <: FRM]() {
 
   def ref: OWNER[F]
 
-  final val Cancel = BTN[F,C]()(using ref)
-  final val Back = BTN[F,B]()(using ref)
-  final val Next = BTN[F,N]()(using ref)
+  final val Cancel = BTN[F,C]("")(using ref)
+  final val Back = BTN[F,B]("")(using ref)
+  final val Next = BTN[F,N]("")(using ref)
 }

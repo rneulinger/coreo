@@ -39,8 +39,8 @@ class Main extends PwRoot(s) {
   val _Vehicles = Vehicles(this)
   val _VehiclesDialog = VehiclesDialog(this)
 
-  val _Accessories = Accessories(this)
-  val _AccessoriesDialog = AccessoriesDialog(this)
+  val _Accessories = Accessories_(this)
+  val _AccessoriesDialog = AccessoriesDialog_(this)
 
   object specials {
   }
@@ -61,7 +61,7 @@ class Main extends PwRoot(s) {
     case Help_LoadTestingModule
   }
 
-  def goto(mnu: Menu) = {
+  def goto(mnu: Menu):Unit = {
     def click(s: String): Unit = {
       page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(s)).click()
     }
