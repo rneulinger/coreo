@@ -10,7 +10,7 @@ import com.microsoft.playwright.{Locator, Page}
  * @tparam F
  */
 case class PWD_Repeat[F <: FRM](name:String,b: By = Loc.Default)(using ref: OWNER[F])
-  extends DATA[F](name,b) {
+  extends DATA[F](b) {
 
   override def loc(pg: Page): Locator = ???
 }

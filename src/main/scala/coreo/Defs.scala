@@ -107,7 +107,7 @@ object Defs {
         |
         |final class $myFrm ( own:CanOwn ) extends FRM(own$p2){
         |  // tag::fields[]
-        |  given ref: Own[$myFrm] = Own(this)
+        |  given ref: OWNER[$myFrm] = OWNER(this)
         |  // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this
         |  override def path: String = ""
         |""".stripMargin)

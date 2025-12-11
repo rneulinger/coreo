@@ -5,7 +5,7 @@ import com.microsoft.playwright.{Locator, Page}
 import com.microsoft.playwright.options.AriaRole
 
 case class MIT[F <: FRM, T <: FRM](name:String, b: By = Loc.Default)(using ref: OWNER[F])
-  extends ACTION[F,T](name, b) {
+  extends ACTION[F,T](b) {
   override def loc(pg: Page): Locator = {
     by match {
       case Loc.Default =>

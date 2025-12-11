@@ -135,13 +135,13 @@ class Formatter(val frm: FRM) {
    */
   def mkCs: String = {
     val lines = for (a <- atoms) yield {
-      val name = a._2.fullName
+      val name = a._2.uiName
       val short = Defs.mkCamelCase(name)
       val typ = a._2.myType
       s"""|        $short = new $typ(this, \"$name\");"""
     }
     val decls = for (a <- atoms) yield {
-      val name = a._2.fullName
+      val name = a._2.uiName
       val short = Defs.mkCamelCase(name)
       val typ = a._2.myType
       s"""|    public readonly $typ $short;"""
@@ -168,13 +168,13 @@ class Formatter(val frm: FRM) {
   def mkTs: String = {
     val Core = "Coreo"
     val lines = for (a <- atoms) yield {
-      val name = a._2.fullName
+      val name = a._2.uiName
       val short = Defs.mkCamelCase(name)
       val typ = a._2.myType
       s"""|        this.$short = new $Core.$typ(this, \"$name\");"""
     }
     val decls = for (a <- atoms) yield {
-      val name = a._2.fullName
+      val name = a._2.uiName
       val short = Defs.mkCamelCase(name)
       val typ = a._2.myType
       s"""|    public readonly $short : $Core.$typ;"""

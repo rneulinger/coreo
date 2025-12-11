@@ -2,12 +2,14 @@ package coreo
 
 import com.microsoft.playwright.*
 
-abstract class ATOM[F <: FRM](name:String, b: By)(using ref: OWNER[F])
+abstract class ATOM[F <: FRM]( b: By)(using ref: OWNER[F])
   extends CHILD {
   final val own: F = ref.own
   var by: By = b
 
-  val uiName = if name.trim.isEmpty then fullName else name
+  def name:String
+  final def uiName = if name.trim.isEmpty then fullName else name
+  //println( "UiName:"+uiName)
 
   def setBy(b: By): Unit = {
     by = b
@@ -46,8 +48,6 @@ abstract class ATOM[F <: FRM](name:String, b: By)(using ref: OWNER[F])
         if (value eq this) {
           //println("My name im parent is: " + field.getName)
           return field.getName
-            .replaceAll("\\$u0020", " ")
-            .replaceAll("-", " ") // TODO to be improved
         }
       } catch {
         case e: IllegalAccessException =>
