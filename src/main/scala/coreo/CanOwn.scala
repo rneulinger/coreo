@@ -3,7 +3,7 @@ package coreo
 import com.microsoft.playwright.*
 
 /**
- * either Root or FRM
+ * either Root or WIN
  */
 trait CanOwn {
   /**
@@ -24,6 +24,6 @@ trait CanOwn {
 
   def openUrl(path: String): Unit
 
-  def onto( frm:FRM):Unit
+  def onto(frm: WIN): Unit
 
 }

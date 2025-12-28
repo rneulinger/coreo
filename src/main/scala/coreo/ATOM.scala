@@ -2,12 +2,13 @@ package coreo
 
 import com.microsoft.playwright.*
 
-abstract class ATOM[F <: FRM]( b: By)(using ref: OWNER[F])
+abstract class ATOM[F <: WIN](b: By)(using ref: OWNER[F])
   extends CHILD {
   final val own: F = ref.own
   var by: By = b
 
-  def name:String
+  def name: String
+
   final def uiName = if name.trim.isEmpty then fullName else name
   //println( "UiName:"+uiName)
 
@@ -23,7 +24,7 @@ abstract class ATOM[F <: FRM]( b: By)(using ref: OWNER[F])
 
   def loc: Locator = loc(own.pg)
 
-  def flash:F = {
+  def flash: F = {
     loc.evaluate("element => {" +
       "element.style.transition = 'background-color 0.3s ease';" +
       "element.style.backgroundColor = 'yellow';" +
@@ -58,9 +59,13 @@ abstract class ATOM[F <: FRM]( b: By)(using ref: OWNER[F])
   }
 
   def cleanName = shortName
+
   def shortName = Defs.mkCamelCase(fullName)
-  def gen( value:Any ) = s"${value.toString}..42"
-  def random( value:String ) = s"$value .. 42"
+
+  def gen(value: Any) = s"${value.toString}..42"
+
+  def random(value: String) = s"$value .. 42"
+
   own.adopt(this)
 
   final def click: F =
@@ -71,8 +76,8 @@ abstract class ATOM[F <: FRM]( b: By)(using ref: OWNER[F])
     own
   }
 
-  final def set(any: String): F = {
-    loc(pg).fill(any)
+  def set(any: Any): F = {
+    loc(pg).fill(any.toString)
     own
   }
 

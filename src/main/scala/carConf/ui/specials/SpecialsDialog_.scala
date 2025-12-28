@@ -2,7 +2,7 @@ package carConf.ui.specials
 
 import coreo.*
 
-class SpecialsDialog_(own: CanOwn) extends FRM(own) {
+class SpecialsDialog_(own: CanOwn) extends DLG(own) {
 
   // tag::fields[]
   given ref: OWNER[SpecialsDialog_] = OWNER(this)

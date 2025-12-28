@@ -1,11 +1,11 @@
 package coreo
 
 
-import com.microsoft.playwright.{Locator, Page}
 import com.microsoft.playwright.options.AriaRole
+import com.microsoft.playwright.{Locator, Page}
 
-case class MIT[F <: FRM, T <: FRM](name:String, b: By = Loc.Default)(using ref: OWNER[F])
-  extends ACTION[F,T](b) {
+case class MIT[F <: WIN, T <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
+  extends ACTION[F, T](b) {
   override def loc(pg: Page): Locator = {
     by match {
       case Loc.Default =>

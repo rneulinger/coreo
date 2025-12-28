@@ -1,6 +1,6 @@
 package coreo
 
-class Formatter(val frm: FRM) {
+class Formatter(val frm: WIN) {
   private def atoms = frm.atoms
 
   private def fullType = frm.fullType
@@ -19,6 +19,7 @@ class Formatter(val frm: FRM) {
 
   /**
    * Add block for Gherkin
+   *
    * @return
    */
   def mkAdd: String = {
@@ -35,6 +36,7 @@ class Formatter(val frm: FRM) {
 
   /**
    * Edit block for Gherkin
+   *
    * @return
    */
   def mkEdit: String = {
@@ -51,6 +53,7 @@ class Formatter(val frm: FRM) {
 
   /**
    * Next block for Gherkin
+   *
    * @return
    */
   def mkNext: String = {
@@ -67,6 +70,7 @@ class Formatter(val frm: FRM) {
 
   /**
    * Set block for Gherkin
+   *
    * @return
    */
   def mkSet: String = {
@@ -83,6 +87,7 @@ class Formatter(val frm: FRM) {
 
   /**
    * Action block for Gherkin
+   *
    * @return
    */
   def mkAct: String = {
@@ -99,6 +104,7 @@ class Formatter(val frm: FRM) {
 
   /**
    * Get block for Gherkin
+   *
    * @return
    */
   def mkGet: String = {
@@ -115,6 +121,7 @@ class Formatter(val frm: FRM) {
 
   /**
    * Chk block for Gherkin
+   *
    * @return
    */
   def mkChk: String = {
@@ -134,11 +141,13 @@ class Formatter(val frm: FRM) {
    * C# erzeugen
    */
   def mkCs: String = {
+    val path = if frm.path.trim.isEmpty then "" else s"\npublic override String path(){ return \"${frm.path.trim}\"; }\n"
     val lines = for (a <- atoms) yield {
       val name = a._2.uiName
       val short = Defs.mkCamelCase(name)
+      val n = if name == short then "" else name
       val typ = a._2.myType
-      s"""|        $short = new $typ(this, \"$name\");"""
+      s"""|        $short = new $typ(this, \"$n\");"""
     }
     val decls = for (a <- atoms) yield {
       val name = a._2.uiName
@@ -146,10 +155,15 @@ class Formatter(val frm: FRM) {
       val typ = a._2.myType
       s"""|    public readonly $typ $short;"""
     }
+    val recs = for (a <- atoms.filter(_._2.isInstanceOf[DATA[?]])) yield {
+      val name = a._2.uiName
+      val short = Defs.mkCamelCase(name)
+      "    Object " + short
+    }
 
-    s"""namespace Generic;
+    s"""namespace Ridux.Generic;
        |
-       |using Coreo;
+       |using Ridux.Coreo;
        |// ReSharper disable InconsistentNaming
        |public class ${myType}_ : FRM{
        ${decls.mkString("\n")}
@@ -157,8 +171,11 @@ class Formatter(val frm: FRM) {
        |  public ${myType}_( CanOwn own ):base(own) {
           ${lines.mkString("\n")}
        |  }
+       |  $path
+       |  public record Rec ${recs.mkString("(", ",\n|", ");")}
        |}
-       |// ${myType}_ _$myType = new $myType( this );
+       |// public readonly ${myType}_ _$myType
+       |// _$myType = new ${myType}_( this );
        |""".stripMargin
   }
 

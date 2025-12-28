@@ -1,12 +1,15 @@
 package coreo
 
-import scala.jdk.CollectionConverters.*
 import com.microsoft.playwright.*
 
-class PwRoot(val baseUrl: String) extends ROOT  {
+import scala.jdk.CollectionConverters.*
+
+class PwRoot(val baseUrl: String) extends ROOT {
   def nameOfApp = "No Name"
+
   def predefBaseUrls = Map[String, String]()
 
+  def Self = this
 
   lazy val playwright: Playwright = Playwright.create()
 
@@ -44,5 +47,6 @@ class PwRoot(val baseUrl: String) extends ROOT  {
    */
 
   override def openUrl(path: String): Unit = pg.navigate(baseUrl + path)
+
   def gui: GUI = GUI(this)
 }

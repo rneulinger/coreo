@@ -8,7 +8,7 @@ import com.microsoft.playwright.{Locator, Page}
 import com.microsoft.playwright.options.AriaRole
 
 
-case class FLT[F <: FRM](name:String, b: By = Loc.Default)(using ref: OWNER[F])
+case class FLT[F <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
   extends DATA[F](b) {
   override def loc(pg: Page): Locator = {
     by match {

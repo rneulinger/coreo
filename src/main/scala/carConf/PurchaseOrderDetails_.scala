@@ -5,7 +5,7 @@ import coreo.bricks.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
-class PurchaseOrderDetails_(own: CanOwn) extends FRM(own) {
+class PurchaseOrderDetails_(own: CanOwn) extends DLG(own) {
 
   // tag::fields[]
   given ref: OWNER[PurchaseOrderDetails_] = OWNER(this)

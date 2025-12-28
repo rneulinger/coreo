@@ -6,5 +6,6 @@ abstract class CHILD
   extends OBJ {
 
   def weight = 1
+
   def own: CanOwn
 }

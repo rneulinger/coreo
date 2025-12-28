@@ -1,5 +1,5 @@
 package coreo
 
-abstract class DATA[F <: FRM](b: By)(using ref: OWNER[F])
+abstract class DATA[F <: WIN](b: By)(using ref: OWNER[F])
   extends ATOM[F](b) {
 }

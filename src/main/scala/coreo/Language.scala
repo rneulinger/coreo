@@ -193,7 +193,7 @@ object Language:
   //end::crud[]
 
   //tag::abrev[]
-  val OBJ = Set(BTN, TXT);
+  val OBJ = Set(BTN, TXT)
   val `*` = env.`*` // no context required
   val KDB = env.keyboard
   val BTN = env.button

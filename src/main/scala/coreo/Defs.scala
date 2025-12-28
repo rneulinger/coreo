@@ -1,6 +1,7 @@
 package coreo
 
 import com.microsoft.playwright.*
+
 import scala.jdk.CollectionConverters.*
 
 //def gotoPath( path: String = "/"): Unit = {
@@ -31,7 +32,7 @@ enum Loc {
 type By = Loc | String | Function1[Page, Locator]
 
 /** wrapper for given / using i FRM */
-case class OWNER[+FRM](own: FRM)
+case class OWNER[+WIN](own: WIN)
 
 object Defs {
   /**
@@ -64,7 +65,9 @@ object Defs {
     text
   }
 
-  def gen(inp: String, frm:String = "") = {
+  def gen(inp: String, frm: String = "", path: String = "") = {
+    val Buttons = Set("Add", "Edit", "Delete", "Next", "Finish", "Cancel", "Back")
+
     val tr = frm.trim
     val name = if tr.isEmpty then "New frame" else tr
     val cc = mkCamelCase(name)
@@ -72,8 +75,9 @@ object Defs {
 
     val myFrm = if cc.endsWith("_") then cc else cc + "_"
 
-    import java.io.{StringWriter, PrintWriter}
+    import java.io.{PrintWriter, StringWriter}
 
+    val baseClass = if path.isEmpty then "DLG" else "FRM"
     val sw = new StringWriter()
     val pw = new PrintWriter(sw)
 
@@ -84,9 +88,8 @@ object Defs {
       throw IllegalArgumentException("Duplicate(s) in field(s) definitions")
 
     def declFields(): Unit = {
-      val Buttons = Set("Add", "Edit", "Delete", "Next", "Finish", "Cancel", "Back")
 
-      def getType( s:String) = if Buttons.contains(s) then "BTN" else "TXT"
+      def getType(s: String) = if Buttons.contains(s) then "BTN" else "TXT"
 
       // TODO there can be still a duplicate conflict in aliases
       for (fl <- fields.filter(_.nonEmpty)) {
@@ -98,43 +101,70 @@ object Defs {
       }
     }
 
+    def mkRec(): String = {
+      val tmp = for (fl <- fields.filter(_.nonEmpty).filterNot(Buttons.contains)) yield {
+        "" + mkCamelCase(fl) + ": Any"
+      }
+      s"""
+           ${tmp.mkString("|  case class Rec(", "\n|  ,", "\n| ){}")}
+         |""".stripMargin
+
+    }
+
+    def classWithPath = {
+      if baseClass == "DLG" then ""
+      else
+        s"""// $path
+           | override def path: String = $myFrm.path
+           |""".stripMargin
+    }
+
+    def objectWithPath = {
+      if baseClass == "DLG" then ""
+      else
+        s"""override def path: String = "$path"
+           |""".stripMargin
+    }
+
+
     pw.println(
-      s"""// ${"-"* 20}  $myFrm
-        |import coreo.*
-        |import coreo.bricks.*
-        |import com.microsoft.playwright.*
-        |import com.microsoft.playwright.options.*
-        |
-        |final class $myFrm ( own:CanOwn ) extends FRM(own$p2){
-        |  // tag::fields[]
-        |  given ref: OWNER[$myFrm] = OWNER(this)
-        |  // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this
-        |  override def path: String = ""
-        |""".stripMargin)
+      s"""// ${"-" * 20}  $myFrm
+         |import coreo.*
+         |import coreo.bricks.*
+         |import com.microsoft.playwright.*
+         |import com.microsoft.playwright.options.*
+         |
+         |// tag::fields[]
+         |final class $myFrm ( own:CanOwn ) extends $baseClass(own$p2){
+         |  $classWithPath
+         |""".stripMargin)
 
     declFields()
 
     pw.println(
       s"""
-        |  // end::fields[]
-        |}
-        |
-        |object $myFrm
-        |{
-        |}
-        |
-        |// val _${cc.dropRight(1)} = $myFrm(this)
-        |
-        |
-        |""".stripMargin)
+         |  // end::fields[]
+         |  given ref: OWNER[$myFrm] = OWNER(this)
+         |}
+         |
+         |object $myFrm extends Static
+         |{
+         |$objectWithPath
+         |${mkRec()}
+         |}
+         |
+         |// val _$cc = $myFrm(this)
+         |
+         |
+         |""".stripMargin)
     pw.flush()
     sw.toString
   }
 
   /**
    *
-   * @param s1
-   * @param s2
+   * @param s1 first string
+   * @param s2 second string
    * @return
    * println(levenshtein("kitten", "sitting")) // Output: 3
    * println(levenshtein("scala", "scala")) // Output: 0
@@ -166,6 +196,6 @@ object Defs {
 
 }
 
-def gen( s:String ):Unit = Defs.toClipboard(Defs.gen(s))
+def gen(s: String): Unit = Defs.toClipboard(Defs.gen(s))
 
 

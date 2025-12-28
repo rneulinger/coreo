@@ -3,11 +3,12 @@ package coreo
 import com.microsoft.playwright.options.AriaRole
 import com.microsoft.playwright.{Locator, Page}
 
-case class BTN[F <: FRM,T <: FRM](name:String, b: By = Loc.Default)(using ref: OWNER[F])
-  extends ACTION[F,T](b) {
+case class BTN[F <: WIN, T <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
+  extends ACTION[F, T](b) {
 
   override def loc(pg: Page): Locator = {
     by match {
+      case id: String => pg.locator(s"[id=\"$id\"]")
       case Loc.Default =>
         val opt = Page.GetByRoleOptions()
           .setName(fullName)

@@ -4,7 +4,7 @@ import coreo.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
-class Accessories_(own: CanOwn) extends FRM(own) {
+class Accessories_(own: CanOwn) extends DLG(own) {
 
   // tag::fields[]
 

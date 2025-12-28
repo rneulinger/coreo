@@ -1,10 +1,8 @@
 package coreo
 
-import javax.swing.event.{ListSelectionEvent, ListSelectionListener}
-import javax.swing.*
-import javax.swing.event.DocumentEvent
-import javax.swing.event.DocumentListener
 import java.awt.*
+import javax.swing.*
+import javax.swing.event.{DocumentEvent, DocumentListener, ListSelectionEvent, ListSelectionListener}
 import scala.compiletime.uninitialized
 
 /**
@@ -14,7 +12,10 @@ import scala.compiletime.uninitialized
  */
 class GUI(ui: PwRoot) {
 
-  import javax.swing.*, java.awt.event.*, java.awt.*
+  import java.awt.*
+  import java.awt.event.*
+  import javax.swing.*
+
   val mainFrame = new JFrame(s"UI ${ui.nameOfApp}")
   //val frmModel = new JFrame(s"UI ${ui.nameOfApp}")
 
@@ -35,7 +36,7 @@ class GUI(ui: PwRoot) {
   // Add the tabbed pane to the frame
   mainFrame.add(tabbedPane)
 
-  var currentFrm: FRM = uninitialized
+  var currentFrm: WIN = uninitialized
 
   private def mkUI(): Unit = {
     val layout = BorderLayout()
@@ -113,12 +114,14 @@ class GUI(ui: PwRoot) {
     val southPanel = JPanel()
     southPanel.setPreferredSize(new Dimension(200, 400))
     southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS)); // Vertical alignment
+
     def mkSouthScroll = {
       val res = JScrollPane(text)
       res.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED)
       res.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED)
       res
     }
+
     southPanel.add(mkSouthScroll, BorderLayout.SOUTH)
     frmModel.add(southPanel, BorderLayout.SOUTH)
 
@@ -329,8 +332,10 @@ class GUI(ui: PwRoot) {
     val northPanel = JPanel()
     northPanel.setPreferredSize(new Dimension(200, 50))
     northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.X_AXIS)); // Vertical alignment
-    val name = JTextField("MyFrm_")
+    val name = JTextField("dialog name")
     northPanel.add(name)
+    val path = JTextField("path")
+    northPanel.add(path)
     frmGen.add(northPanel, BorderLayout.NORTH)
 
     val westPanel = JPanel()
@@ -356,8 +361,9 @@ class GUI(ui: PwRoot) {
       def actionPerformed(e: ActionEvent) = {
 
         val txt = atoms.getText
-        val out = Defs.gen(txt, name.getText)
+        val out = Defs.gen(txt, name.getText, path.getText)
         output.setText(out)
+        Defs.toClipboard(out)
 
       }
     })

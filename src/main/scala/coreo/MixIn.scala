@@ -1,0 +1,4 @@
+package coreo
+
+trait MixIn {
+}
