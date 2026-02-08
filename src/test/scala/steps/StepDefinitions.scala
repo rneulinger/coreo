@@ -5,7 +5,7 @@ import io.cucumber.datatable.DataTable
 import coreo.*
 
 class StepDefinitions extends ScalaDsl with EN {
-  var `/`: PwRoot = _
+  var `/`: PwApp = _
   val I = "I "
 
   def get(dest: String, table: DataTable, who: String = I): Unit = {
@@ -187,13 +187,13 @@ class StepDefinitions extends ScalaDsl with EN {
   }
 
   def set(obj: String, value: String, who: String): Unit = {
-    val hit = /.currentFrm.findAtom(obj)
+    val hit = /.currentWin.findAtom(obj)
     hit match {
       case None =>
         println(s"current frame does not contain: $obj")
-        println("->" + /.currentFrm.atoms.keySet)
+        println("->" + /.currentWin.atoms.keySet)
       case Some(atom) =>
-        println(s"I set ${atom.cleanName} = $value in ${/.currentFrm.myType}")
+        println(s"I set ${atom.cleanName} = $value in ${/.currentWin.myType}")
         atom.set(value)
     }
   }
@@ -225,13 +225,13 @@ class StepDefinitions extends ScalaDsl with EN {
   }
 
   def click(obj: String, who: String = "") = {
-    val hit = /.currentFrm.findAtom(obj)
+    val hit = /.currentWin.findAtom(obj)
     hit match {
       case None =>
         println(s"current frame does not contain: $obj")
-        println("->" + /.currentFrm.atoms.keySet)
+        println("->" + /.currentWin.atoms.keySet)
       case Some(atom) =>
-        println(s"I click on ${atom.cleanName} in ${/.currentFrm.myType}")
+        println(s"I click on ${atom.cleanName} in ${/.currentWin.myType}")
         atom.click
     }
   }
@@ -292,14 +292,14 @@ class StepDefinitions extends ScalaDsl with EN {
   }
 
   def setRandom(obj: String, value: String, who: String): Unit = {
-    val hit = /.currentFrm.findAtom(obj)
+    val hit = /.currentWin.findAtom(obj)
     hit match {
       case None =>
         println(s"current frame does not contain: $obj")
-        println("->" + /.currentFrm.atoms.keySet)
+        println("->" + /.currentWin.atoms.keySet)
       case Some(atom) =>
         val rand = atom.gen(value)
-        println(s"I set ${atom.cleanName} = $rand in ${/.currentFrm.myType}")
+        println(s"I set ${atom.cleanName} = $rand in ${/.currentWin.myType}")
         atom.random(value)
     }
   }

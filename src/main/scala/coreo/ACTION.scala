@@ -5,6 +5,14 @@ abstract class ACTION[F <: WIN, T <: WIN](b: By)(using ref: OWNER[F])
 
   override def weight = 2
 
-  var target: String = ""
-  lazy val action: Option[T] = None // TODO implememt lookup
+  var target: Static = Unknown_
+
+  lazy val action: Option[T] = None // TODO implement lookup
+
+  override def click: F =
+    super.click
+    if target != Unknown_ then
+      own.onto(own.findWin(target))
+    own
+
 }

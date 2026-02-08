@@ -2,6 +2,7 @@ package coreo
 
 import com.microsoft.playwright.*
 
+import java.util.regex.Pattern
 import scala.jdk.CollectionConverters.*
 
 //def gotoPath( path: String = "/"): Unit = {
@@ -27,9 +28,28 @@ enum Loc {
   case Exact
   case Contains
   case Default
+  case Label
 }
 
-type By = Loc | String | Function1[Page, Locator]
+case class Opt(name: String = "", exact: Boolean = false) {
+
+}
+
+def opt(name: String | Pattern = "", exact: Boolean = false): Opt = {
+  val opt = Page.GetByRoleOptions()
+  name match {
+    case x: String => opt.setName(x)
+    case x: Pattern => opt.setName(x)
+  }
+  opt.setExact(exact)
+  ???
+}
+
+/**
+ *
+ */
+type By = Boolean | Double | Loc | String | ((Page) => Locator)
+
 
 /** wrapper for given / using i FRM */
 case class OWNER[+WIN](own: WIN)
@@ -65,7 +85,7 @@ object Defs {
     text
   }
 
-  def gen(inp: String, frm: String = "", path: String = "") = {
+  def gen(inp: String, frm: String = "", path: String = "", pack: String = "") = {
     val Buttons = Set("Add", "Edit", "Delete", "Next", "Finish", "Cancel", "Back")
 
     val tr = frm.trim
@@ -126,16 +146,28 @@ object Defs {
            |""".stripMargin
     }
 
+    def includePack = {
+      if pack.isEmpty then ""
+      else s"include $pack.*"
+    }
+
+    def overrideApp = {
+      if pack.isEmpty then ""
+      else s"override def app:App = root.asInstanceOf[App]"
+
+    }
 
     pw.println(
       s"""// ${"-" * 20}  $myFrm
-         |import coreo.*
-         |import coreo.bricks.*
          |import com.microsoft.playwright.*
          |import com.microsoft.playwright.options.*
+         |import coreo.*
+         |import coreo.bricks.*
+         |$includePack
          |
          |// tag::fields[]
-         |final class $myFrm ( own:CanOwn ) extends $baseClass(own$p2){
+         |final class $myFrm ( own:CanOwn )
+         |  extends $baseClass(own$p2){
          |  $classWithPath
          |""".stripMargin)
 
@@ -145,6 +177,7 @@ object Defs {
       s"""
          |  // end::fields[]
          |  given ref: OWNER[$myFrm] = OWNER(this)
+         |  $overrideApp
          |}
          |
          |object $myFrm extends Static

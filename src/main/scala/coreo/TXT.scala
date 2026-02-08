@@ -13,8 +13,9 @@ case class TXT[F <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
 
       case Loc.Default =>
         val opt = Page.GetByRoleOptions()
-          .setName(fullName)
+          .setName(uiName)
           .setExact(false)
+
         pg.getByRole(AriaRole.TEXTBOX, opt)
 
       case f: Function1[Page, Locator] =>
@@ -50,7 +51,7 @@ case class TXT[F <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
 
   own
 
-  // asignment
+  // assignment
   override def set(txt: Any = ""): F = {
     loc.fill(txt.toString)
     own

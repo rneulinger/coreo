@@ -2,15 +2,24 @@ package coreo
 
 import com.microsoft.playwright.*
 
-abstract class WIN(override val own: CanOwn, typ: String = "")
+abstract class WIN(override val own: CanOwn, ui: String = "")
   extends CHILD with CanOwn {
+  def app = own.app.asInstanceOf[PwApp]
 
   def Self = getClass.getName
 
-  val fullType: String = if (typ.isEmpty) myType else typ
+  final def findWin(name: String): WIN = own.findWin(name)
+
+  val fullType: String = if (ui.isEmpty) myType else ui
   own.adopt(this)
 
   def path: String
+
+  def pathAbs = path.trim match {
+    case "" => ""
+    case x if x startsWith ("/") => x
+    case x => "/" + x
+  }
 
   override def pg: Page = own.pg
 
@@ -40,12 +49,40 @@ abstract class WIN(override val own: CanOwn, typ: String = "")
 
   def onto(frm: WIN): Unit = own.onto(frm)
 
-  def findAtom(name: String): Option[ATOM[?]] =
+  /**
+   *
+   * @param name
+   * @return
+   */
+  def findAtom(name: String): Option[ATOM[?]] = {
     if (atoms.keySet.contains(name)) {
-      Option(atoms(name))
+      Option(atoms(name)) // exact match
     } else {
-      None
+      val hits = atoms.values.toList.filter(_.name.contains(name))
+      if hits.length == 1 then
+        Option(hits.head) // contains match unique
+      else
+        None
     }
+  }
+
+  /**
+   * if there is an exact match this one is returned
+   * else those which contains name
+   *
+   * @param name
+   * @return
+   */
+  def findAtoms(name: String): List[ATOM[?]] = {
+    if (atoms.keySet.contains(name)) {
+      List(atoms(name)) // exact match
+    } else {
+      val res = for (n <- atoms.keySet.toList.filter(_.contains(name))) yield {
+        atoms(n)
+      }
+      res
+    }
+  }
 
   def dump(string: String): Unit = {
     println(string + myType + "  " + path)
@@ -58,4 +95,9 @@ abstract class WIN(override val own: CanOwn, typ: String = "")
   }
 
   def dump: Unit = dump("")
+
+  def setVar(key: String, value: Any): Unit = own.setVar(key, value)
+
+  def getVar(key: String): String = own.getVar(key)
+
 }

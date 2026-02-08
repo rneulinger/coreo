@@ -3,6 +3,10 @@ package coreo
 class Formatter(val frm: WIN) {
   private def atoms = frm.atoms
 
+  private def datas = frm.datas
+
+  private def actions = frm.actions
+
   private def fullType = frm.fullType
 
   private def myType = frm.myType
@@ -142,40 +146,67 @@ class Formatter(val frm: WIN) {
    */
   def mkCs: String = {
     val path = if frm.path.trim.isEmpty then "" else s"\npublic override String path(){ return \"${frm.path.trim}\"; }\n"
+
     val lines = for (a <- atoms) yield {
       val name = a._2.uiName
-      val short = Defs.mkCamelCase(name)
+      //      val short = Defs.mkCamelCase(name)
+      val short = Defs.mkCamelCase(a._2.fullName)
       val n = if name == short then "" else name
       val typ = a._2.myType
-      s"""|        $short = new $typ(this, \"$n\");"""
+      s"""|        $short = $typ(\"$n\");"""
     }
+
     val decls = for (a <- atoms) yield {
       val name = a._2.uiName
-      val short = Defs.mkCamelCase(name)
+      //val short = Defs.mkCamelCase(name)
+      val short = Defs.mkCamelCase(a._2.fullName)
       val typ = a._2.myType
       s"""|    public readonly $typ $short;"""
     }
+
     val recs = for (a <- atoms.filter(_._2.isInstanceOf[DATA[?]])) yield {
       val name = a._2.uiName
-      val short = Defs.mkCamelCase(name)
-      "    Object " + short
+      //      val short = Defs.mkCamelCase(name)
+      val short = Defs.mkCamelCase(a._2.fullName)
+      "    string? " + short + " = null"
     }
 
-    s"""namespace Ridux.Generic;
-       |
-       |using Ridux.Coreo;
+    val targets = {
+      def dropTrailingUnderscore(s: String): String = {
+        if s.endsWith("_") then s.dropRight(1) else s
+      }
+
+      val res = for (a <- atoms.filter(_._2.isInstanceOf[ACTION[?, ?]])) yield {
+        val short = Defs.mkCamelCase(a._2.fullName)
+        a._2 match {
+          case x: ACTION[?, ?] if x.target == Unknown_
+          => ""
+          case x: ACTION[?, ?]
+          => s"""$short.target = "${dropTrailingUnderscore(x.target.simple)}";"""
+        }
+      }
+      res.filterNot(_.isEmpty).toList.sorted.mkString("\n")
+    }
+
+    s"""
        |// ReSharper disable InconsistentNaming
        |public class ${myType}_ : FRM{
-       ${decls.mkString("\n")}
-       |
-       |  public ${myType}_( CanOwn own ):base(own) {
+       |  // tag::fields[]
+       |  public ${myType}_( PwApp app ):base(app) {
           ${lines.mkString("\n")}
+       |
+       |  $targets
        |  }
        |  $path
-       |  public record Rec ${recs.mkString("(", ",\n|", ");")}
+       |  // end::fields[]
+       |  public record Rec${recs.mkString("(\n", ",\n|", ")\n:GenRec")}
+       |  {
+       |      public Rec fromTable(DataTable table) { return table.CreateInstance<Rec>(); }
+       |  }
+       |  public override Rec rec() { return new Rec(); }
+       |  public override App app() { return (App)base.app(); }
+       ${decls.mkString("\n")}
        |}
-       |// public readonly ${myType}_ _$myType
-       |// _$myType = new ${myType}_( this );
        |""".stripMargin
   }
 
@@ -215,7 +246,7 @@ class Formatter(val frm: WIN) {
   }
 
   /**
-   * create asciidoc snipped (copie to clipboard)
+   * create AsciiDoc snipped (copy to clipboard)
    *
    * @return
    */

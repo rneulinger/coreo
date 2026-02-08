@@ -20,7 +20,7 @@ class AccessoriesDialog_(own: CanOwn) extends DLG(own) {
   val New = BTN("")
 
   val Change = BTN("")
-  Change.target = "MyDialog"
+  //Change.target = "MyDialog"
 
   val Delete = BTN("")
 

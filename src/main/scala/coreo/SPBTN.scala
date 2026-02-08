@@ -15,7 +15,7 @@ case class SPBTN[F <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F
         val opt = Page.GetByRoleOptions()
           .setName(fullName)
           .setExact(false)
-        pg.getByRole(AriaRole.TEXTBOX, opt)
+        pg.getByRole(AriaRole.SPINBUTTON, opt)
 
       case f: Function1[Page, Locator] =>
         f(pg)

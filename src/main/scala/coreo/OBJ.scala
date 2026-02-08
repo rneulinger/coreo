@@ -5,7 +5,9 @@ import com.microsoft.playwright.{Locator, Page}
 abstract class OBJ {
   def pg: Page
 
-  def myType: String = this.getClass.getSimpleName.reverse.dropWhile(_.toString == "_").reverse.mkString("")
+  def myType: String = this.getClass.getSimpleName
+    .reverse.dropWhile(_.toString == "_")
+    .reverse.mkString("")
 
   protected def pre = {
     val cla = this.getClass
@@ -14,8 +16,9 @@ abstract class OBJ {
     s"$n $t"
   }
 
-  def log(msg: Any) =
-    println(pre + "." + msg)
+  final def simple: String = this.getClass.getSimpleName
+
+  def log(msg: Any) = println(pre + "." + msg)
 
   def page2Loc(l: Locator): Function1[Page, Locator] = new Function1[Page, Locator] {
     def apply(p: Page): Locator = l

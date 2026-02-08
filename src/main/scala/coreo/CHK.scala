@@ -19,11 +19,11 @@ case class CHK[F <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
     }
   }
 
-  def check: F = {
-    println(s"")
-    own
-  }
-
-  def uncheck: F =
-    own
+  //  def check: F = {
+  //    println(s"")
+  //    own
+  //  }
+  //
+  //  def uncheck: F =
+  //    own
 }

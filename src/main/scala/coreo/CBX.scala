@@ -15,18 +15,21 @@ case class CBX[F <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
           .setExact(false)
         pg.getByRole(AriaRole.COMBOBOX, opt)
 
+      case Loc.Label =>
+        pg.getByLabel(fullName)
+
       case f: Function1[Page, Locator] =>
         f(pg)
     }
   }
 
-  def check: F = {
-    println(s"")
-    own
-  }
+  //  def check: F = {
+  //    println(s"")
+  //    own
+  //  }
 
-  def uncheck: F =
-    own
+  //  def uncheck: F =
+  //    own
 
   override def set(str: Any): F = {
     loc(pg).click()

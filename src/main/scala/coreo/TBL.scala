@@ -7,6 +7,7 @@ case class TBL[F <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
   extends DATA[F](b) {
   override def loc(pg: Page): Locator = {
     by match {
+      case id: String => pg.locator(s"[id=\"$id\"]")
       case Loc.Default =>
         val opt = Page.GetByRoleOptions()
           .setName(fullName)

@@ -7,6 +7,8 @@ abstract class ATOM[F <: WIN](b: By)(using ref: OWNER[F])
   final val own: F = ref.own
   var by: By = b
 
+  final def app: PwApp = own.app.asInstanceOf[PwApp]
+
   def name: String
 
   final def uiName = if name.trim.isEmpty then fullName else name
@@ -40,9 +42,11 @@ abstract class ATOM[F <: WIN](b: By)(using ref: OWNER[F])
    * @return
    */
   //def defaultLocator:Locator
-  def fullName: String = {
+  final def fullName: String = {
 
-    for (field <- own.getClass.getDeclaredFields) {
+    //val allFields = own.getClass.getDeclaredFields
+    val allFields = ReflectUtils.allInstanceFields(own.getClass)
+    for (field <- allFields) {
       field.setAccessible(true)
       try {
         val value = field.get(own)
@@ -55,6 +59,8 @@ abstract class ATOM[F <: WIN](b: By)(using ref: OWNER[F])
           e.printStackTrace()
       }
     }
+    // search in base classes
+    own.getClass
     "NOT FOUND"
   }
 
@@ -68,7 +74,11 @@ abstract class ATOM[F <: WIN](b: By)(using ref: OWNER[F])
 
   own.adopt(this)
 
-  final def click: F =
+  def click: F =
+    loc(pg).click()
+    own
+
+  final def clickFail: F =
     loc(pg).click()
     own
 
@@ -76,10 +86,89 @@ abstract class ATOM[F <: WIN](b: By)(using ref: OWNER[F])
     own
   }
 
+  def check: F =
+    loc(pg).check()
+    own
+
+  def uncheck: F =
+    loc(pg).uncheck()
+    own
+
   def set(any: Any): F = {
     loc(pg).fill(any.toString)
     own
   }
 
+  final def get(): F = {
+    get(shortName)
+  }
+
+  def get(key: String): F = {
+    val txt = loc.textContent()
+    own.setVar(key, txt)
+    own
+  }
+
 }
 
+
+import java.lang.reflect.{Field, Modifier}
+
+object ReflectUtils {
+
+  /** Returns all declared fields from `clazz` and every superclass (excluding java.lang.Object).
+   * By default, includes interface fields and makes each field accessible.
+   *
+   * @param clazz             The class to inspect
+   * @param includeInterfaces Whether to include fields declared on interfaces (usually static finals)
+   * @param makeAccessible    Whether to call setAccessible(true) on each field
+   * @return Seq[Field]
+   */
+  def allDeclaredFields(
+                         clazz: Class[_],
+                         includeInterfaces: Boolean = true,
+                         makeAccessible: Boolean = true
+                       ): Seq[Field] = {
+
+    val seen = scala.collection.mutable.Set[Field]()
+    val acc = scala.collection.mutable.ArrayBuffer[Field]()
+
+    // Walk superclasses
+    var c: Class[_] = clazz
+    while (c != null && c != classOf[Object]) {
+      for (f <- c.getDeclaredFields) {
+        if (makeAccessible) f.setAccessible(true)
+        if (!seen.contains(f)) {
+          acc += f
+          seen += f
+        }
+      }
+      c = c.getSuperclass
+    }
+
+    // Optionally include interface fields (typically public static final)
+    if (includeInterfaces) {
+      def visitInterfaces(cls: Class[_]): Unit = {
+        for (intf <- cls.getInterfaces) {
+          for (f <- intf.getDeclaredFields) {
+            if (makeAccessible) f.setAccessible(true)
+            if (!seen.contains(f)) {
+              acc += f
+              seen += f
+            }
+          }
+          // Recurse into parent interfaces
+          visitInterfaces(intf)
+        }
+      }
+
+      visitInterfaces(clazz)
+    }
+
+    acc.toSeq
+  }
+
+  /** Convenience: only instance (non-static) fields */
+  def allInstanceFields(clazz: Class[_]): Seq[Field] =
+    allDeclaredFields(clazz).filterNot(f => Modifier.isStatic(f.getModifiers))
+}

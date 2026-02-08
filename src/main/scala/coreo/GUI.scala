@@ -10,7 +10,7 @@ import scala.compiletime.uninitialized
  *
  * @param ui to work on
  */
-class GUI(ui: PwRoot) {
+class GUI(ui: PwApp) {
 
   import java.awt.*
   import java.awt.event.*
@@ -336,6 +336,8 @@ class GUI(ui: PwRoot) {
     northPanel.add(name)
     val path = JTextField("path")
     northPanel.add(path)
+    val pack = JTextField("pack")
+    northPanel.add(pack)
     frmGen.add(northPanel, BorderLayout.NORTH)
 
     val westPanel = JPanel()
@@ -361,7 +363,7 @@ class GUI(ui: PwRoot) {
       def actionPerformed(e: ActionEvent) = {
 
         val txt = atoms.getText
-        val out = Defs.gen(txt, name.getText, path.getText)
+        val out = Defs.gen(txt, name.getText, path.getText, pack.getText)
         output.setText(out)
         Defs.toClipboard(out)
 
