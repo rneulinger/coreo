@@ -8,8 +8,11 @@ import com.microsoft.playwright.{Locator, Page}
 import com.microsoft.playwright.options.AriaRole
 
 
-case class FLT[F <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
-  extends DATA[F](b) {
+class FLT[F <: WIN](name: String, b: By = false)(using ref: OWNER[F])
+  extends DATA[F](name, b) {
+  override def ariaRole: AriaRole = AriaRole.TEXTBOX
+
+  /*
   override def loc(pg: Page): Locator = {
     by match {
       case Loc.Default =>
@@ -22,4 +25,5 @@ case class FLT[F <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
         f(pg)
     }
   }
+   */
 }

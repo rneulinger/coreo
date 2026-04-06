@@ -90,7 +90,8 @@ abstract class WIN(override val own: CanOwn, ui: String = "")
     for (atom <- atoms) {
       val len = atoms.map(_._1.length).max
       val name = atom._1
-      println("\t" + name + " " * (len - name.length) + " : " + atom._2)
+
+        println("\t" + name + " " * (len - name.length) + " : " + atom._2.myType + " " + atom._2.name)
     }
   }
 

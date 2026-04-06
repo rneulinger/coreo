@@ -1,30 +1,51 @@
 package coreo
 
 import com.microsoft.playwright.*
+import com.microsoft.playwright.options.*
 
-abstract class ATOM[F <: WIN](b: By)(using ref: OWNER[F])
+
+
+import java.lang.annotation.{Retention, RetentionPolicy, Target, ElementType}
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(Array(ElementType.TYPE, ElementType.METHOD))
+final class UiName(val value: String) extends scala.annotation.StaticAnnotation
+
+import java.util.regex.Pattern
+
+abstract class ATOM[F <: WIN](n:String, b: By)(using ref: OWNER[F])
   extends CHILD {
+  def ariaRole:AriaRole = AriaRole.GENERIC
   final val own: F = ref.own
-  var by: By = b
-
+  final val name =  n.trim
   final def app: PwApp = own.app.asInstanceOf[PwApp]
+  final def nameUi: String = if name.trim.isEmpty then fullName else name
 
-  def name: String
+  final var lfunc: (Page => Locator) = {
+    b match{
+      case false  => (p:Page) => p.getByText(nameUi)
+      case true => (p:Page) => p.getByText(nameUi)
+      case id:String => (p:Page) => p.getByTestId(nameUi)
+      case idx:Double if idx >= 1 => (p:Page) => p.getByTestId(nameUi).nth(idx.toInt)
+      case idx:Double if idx < 1 => (p:Page) => p.getByTestId(nameUi).nth(-(idx.toInt))
+      case pat:Pattern => (p:Page) => p.getByText(pat)
+      case func: (Page => Locator) => func
+    }
+  }
 
-  final def uiName = if name.trim.isEmpty then fullName else name
   //println( "UiName:"+uiName)
 
-  def setBy(b: By): Unit = {
-    by = b
+  final def setLoc(loc: Page => Locator): Unit = {
+    this.lfunc = loc;
   }
 
   final def parentType: String = own.getClass.getSimpleName
 
   final def pg: Page = own.pg
 
-  def loc(pg: Page): Locator
+  final def loc(pg: Page): Locator = lfunc(pg)
 
-  def loc: Locator = loc(own.pg)
+  final def loc: Locator = loc(own.pg)
 
   def flash: F = {
     loc.evaluate("element => {" +
@@ -125,7 +146,7 @@ object ReflectUtils {
    * @return Seq[Field]
    */
   def allDeclaredFields(
-                         clazz: Class[_],
+                         clazz: Class[?],
                          includeInterfaces: Boolean = true,
                          makeAccessible: Boolean = true
                        ): Seq[Field] = {
@@ -134,7 +155,7 @@ object ReflectUtils {
     val acc = scala.collection.mutable.ArrayBuffer[Field]()
 
     // Walk superclasses
-    var c: Class[_] = clazz
+    var c: Class[?] = clazz
     while (c != null && c != classOf[Object]) {
       for (f <- c.getDeclaredFields) {
         if (makeAccessible) f.setAccessible(true)
@@ -148,7 +169,7 @@ object ReflectUtils {
 
     // Optionally include interface fields (typically public static final)
     if (includeInterfaces) {
-      def visitInterfaces(cls: Class[_]): Unit = {
+      def visitInterfaces(cls: Class[?]): Unit = {
         for (intf <- cls.getInterfaces) {
           for (f <- intf.getDeclaredFields) {
             if (makeAccessible) f.setAccessible(true)
@@ -169,6 +190,17 @@ object ReflectUtils {
   }
 
   /** Convenience: only instance (non-static) fields */
-  def allInstanceFields(clazz: Class[_]): Seq[Field] =
+  def allInstanceFields(clazz: Class[?]): Seq[Field] =
     allDeclaredFields(clazz).filterNot(f => Modifier.isStatic(f.getModifiers))
+}
+
+object Loc {
+  def byText[F <: WIN]( idx:Int = 0):(ATOM[F] => (Page => Locator) )
+  = (atom:ATOM[F]) => (p:Page) => p.getByText(atom.nameUi).nth(idx)
+  def byPattern[F <: WIN]( pattern: Pattern, idx:Int = 0):(ATOM[F] => (Page => Locator) )
+  = (atom:ATOM[F]) => (p:Page) => p.getByText(pattern).nth(idx)
+  def byId[F <: WIN]( id:String ):(ATOM[F] => (Page => Locator) )
+  = (atom:ATOM[F]) => (p:Page) => p.getByTestId(id)
+  def byRole[F <: WIN](idx:Int = 0 ):(ATOM[F] => (Page => Locator) )
+  = (atom:ATOM[F]) => (p:Page) => p.getByRole(atom.ariaRole).nth(idx)
 }

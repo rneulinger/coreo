@@ -3,8 +3,11 @@ package coreo
 import com.microsoft.playwright.options.AriaRole
 import com.microsoft.playwright.{Locator, Page}
 
-case class LST[F <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
-  extends DATA[F](b) {
+class LST[F <: WIN](name: String, b: By = false)(using ref: OWNER[F])
+  extends DATA[F](name, b) {
+  override def ariaRole: AriaRole = AriaRole.LISTBOX
+
+  /*
   override def loc(pg: Page): Locator = {
     by match {
       case Loc.Default =>
@@ -17,4 +20,6 @@ case class LST[F <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
         f(pg)
     }
   }
+
+   */
 }

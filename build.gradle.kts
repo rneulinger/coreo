@@ -12,8 +12,14 @@ dependencies {
     implementation("org.scala-lang:scala3-library_3:3.7.3")
     implementation("com.microsoft.playwright:playwright:1.53.0")
 
+    testImplementation("io.cucumber:cucumber-java8:7.34.3")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:7.34.3")
+
+    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+
     // Cucumber für Scala 3
-    testImplementation("io.cucumber:cucumber-scala_3:8.31.0")
+    implementation("io.cucumber:cucumber-scala_3:8.31.0")
     testImplementation("io.cucumber:cucumber-junit:7.27.0")
     testImplementation("org.scalatest:scalatest_3:3.2.19")
     testImplementation("junit:junit:4.13.2")

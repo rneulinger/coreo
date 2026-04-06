@@ -381,4 +381,46 @@ class GUI(ui: PwApp) {
   mainFrame.setVisible(true)
 
 
+  def saveProperties(): Unit = {
+    import java.util.Properties
+    import java.io.FileOutputStream
+    import scala.util.Using
+
+    val props = new Properties()
+    props.setProperty("app.name", "GenCoreo")
+    props.setProperty("app.version", "1.0.0")
+    props.setProperty("path", "path")
+
+    // Safely write using Using.resource (closes the stream automatically)
+    Using.resource(new FileOutputStream("application.properties")) { out =>
+      props.store(out, "App settings") // writes ISO-8859-1 with \uXXXX escapes for non-ASCII
+    }
+  }
+
+  def loadSaveProps(): Unit = {
+    import java.util.Properties
+    import java.io.{FileInputStream, FileOutputStream}
+    import scala.util.Using
+
+    val props = new Properties()
+
+    // Load existing properties (if file exists)
+    Using.resource(new FileInputStream("application.properties")) { in =>
+      props.load(in)
+    }
+
+    // Update values
+    props.setProperty("app.version", "1.0.1")
+    props.setProperty("feature.enabled", "true")
+
+    // Save back
+    Using.resource(new FileOutputStream("application.properties")) { out =>
+      props.store(out, "Updated settings")
+    }
+  }
+}
+
+object GUI {
+  val name = "GenCoreo"
+  val version = "0.0.1"
 }

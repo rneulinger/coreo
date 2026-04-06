@@ -1,11 +1,13 @@
 package steps
 
+import scala.compiletime.uninitialized
 import io.cucumber.scala.{EN, PendingException, ScalaDsl}
 import io.cucumber.datatable.DataTable
 import coreo.*
 
+
 class StepDefinitions extends ScalaDsl with EN {
-  var `/`: PwApp = _
+  var `/`: PwApp = uninitialized
   val I = "I "
 
   def get(dest: String, table: DataTable, who: String = I): Unit = {
@@ -14,7 +16,7 @@ class StepDefinitions extends ScalaDsl with EN {
     println(/.frms.keySet.contains(dest))
     // /.set(string)
   }
-
+/*
   When("get:") { (table: DataTable) =>
   }
   When("{word} get:") { (who: String, table: DataTable) =>
@@ -323,5 +325,7 @@ class StepDefinitions extends ScalaDsl with EN {
     /.browser.close()
     / = null
   }
+
+ */
 }
 

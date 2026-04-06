@@ -1,6 +1,7 @@
 package coreo
 
-import com.microsoft.playwright.{Locator, Page}
+import com.microsoft.playwright.*
+import com.microsoft.playwright.options.*
 
 /**
  * password repeated 
@@ -9,8 +10,9 @@ import com.microsoft.playwright.{Locator, Page}
  * @param ref
  * @tparam F
  */
-case class PWD_Repeat[F <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
-  extends DATA[F](b) {
+class PWD_Repeat[F <: WIN](name: String, b: By = false)(using ref: OWNER[F])
+  extends DATA[F](name, b) {
+  override def ariaRole: AriaRole = AriaRole.TEXTBOX
 
-  override def loc(pg: Page): Locator = ???
+  //override def loc(pg: Page): Locator = ???
 }

@@ -1,14 +1,13 @@
-package steps
+package coreo
 
 import com.microsoft.playwright.Page
 import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
-import coreo.{Defs, PwApp}
 import io.cucumber.datatable.DataTable
 import io.cucumber.scala.{EN, PendingException, ScalaDsl}
 
 import scala.jdk.CollectionConverters.*
 
-trait StepsCucumber
+trait GherkinScala
   extends ScalaDsl
     with EN {
 
@@ -24,8 +23,7 @@ trait StepsCucumber
     println(/.frms.keySet.contains(dlg))
     // /.set(string)
   }
-
-  /*
+/*
   When("get:") {
     (data: DataTable) =>
   }
@@ -434,6 +432,11 @@ trait StepsCucumber
   When("{word} pause") { (client: String) =>
     pause(client)
   }
-  
-   */
+
+ */
+}
+
+class GherkinScalaImpl extends GherkinScala {
+
+  override def getClient(name: String): PwApp = ???
 }

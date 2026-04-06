@@ -148,7 +148,7 @@ class Formatter(val frm: WIN) {
     val path = if frm.path.trim.isEmpty then "" else s"\npublic override String path(){ return \"${frm.path.trim}\"; }\n"
 
     val lines = for (a <- atoms) yield {
-      val name = a._2.uiName
+      val name = a._2.nameUi
       //      val short = Defs.mkCamelCase(name)
       val short = Defs.mkCamelCase(a._2.fullName)
       val n = if name == short then "" else name
@@ -157,7 +157,7 @@ class Formatter(val frm: WIN) {
     }
 
     val decls = for (a <- atoms) yield {
-      val name = a._2.uiName
+      val name = a._2.nameUi
       //val short = Defs.mkCamelCase(name)
       val short = Defs.mkCamelCase(a._2.fullName)
       val typ = a._2.myType
@@ -165,7 +165,7 @@ class Formatter(val frm: WIN) {
     }
 
     val recs = for (a <- atoms.filter(_._2.isInstanceOf[DATA[?]])) yield {
-      val name = a._2.uiName
+      val name = a._2.nameUi
       //      val short = Defs.mkCamelCase(name)
       val short = Defs.mkCamelCase(a._2.fullName)
       "    string? " + short + " = null"
@@ -216,13 +216,13 @@ class Formatter(val frm: WIN) {
   def mkTs: String = {
     val Core = "Coreo"
     val lines = for (a <- atoms) yield {
-      val name = a._2.uiName
+      val name = a._2.nameUi
       val short = Defs.mkCamelCase(name)
       val typ = a._2.myType
       s"""|        this.$short = new $Core.$typ(this, \"$name\");"""
     }
     val decls = for (a <- atoms) yield {
-      val name = a._2.uiName
+      val name = a._2.nameUi
       val short = Defs.mkCamelCase(name)
       val typ = a._2.myType
       s"""|    public readonly $short : $Core.$typ;"""

@@ -2,9 +2,8 @@ package coreo
 
 import com.microsoft.playwright.*
 
-import java.io.PrintWriter
-import scala.io.Source
 import scala.jdk.CollectionConverters.*
+import java.io.PrintWriter
 
 class PwApp(val baseUrl: String) extends AnyApp {
   def nameOfApp = "No Name"
@@ -70,7 +69,6 @@ class PwApp(val baseUrl: String) extends AnyApp {
 
   def gui: GUI = GUI(this)
 
-
   def writeTextToFile(s: String, f: String): Unit = {
     //  println( f)
     val writer = new PrintWriter(f)
@@ -79,7 +77,12 @@ class PwApp(val baseUrl: String) extends AnyApp {
   }
 
 
-  def genAllTs(): Unit = {
+  def capitalizeFirst(s: String): String =
+    if (s.isEmpty) s
+    else s.head.toUpper + s.tail
+
+  def genAllTs(name:String): Unit = {
+    val capName = capitalizeFirst(name)
     val decl = for (f <- frms) yield {
       val fn = f._2.myType + "_.ts"
       val code = Formatter(f._2).mkTs
@@ -102,14 +105,14 @@ class PwApp(val baseUrl: String) extends AnyApp {
         ""
       }
     }
-    val TsApp =
+    val res =
       s"""namespace Generic{
          |
          |//using Core;
          |
          |// ReSharper disable InconsistentNaming
          |
-         |export class TsApp extends Core.ROOT
+         |export class $capName extends Core.ROOT
          |{
        ${decl.toList.filter(_.nonEmpty).sorted.distinct.mkString("\n")}
          |constructor( baseUrl:String ){
@@ -118,11 +121,13 @@ class PwApp(val baseUrl: String) extends AnyApp {
          |}
          |}
          |}""".stripMargin
-    writeTextToFile(TsApp, "build/TsApp.ts")
+    writeTextToFile(res, s"build/$capName.ts")
 
   }
 
-  def genAllCs(appName:String): Unit = {
+  def genAllCs(name:String): Unit = {
+    val capName = capitalizeFirst(name)
+
     val decl = for (f <- frms) yield {
       val fn = f._2.myType + "_.cs"
       val code = Formatter(f._2).mkCs
@@ -145,14 +150,14 @@ class PwApp(val baseUrl: String) extends AnyApp {
         ""
       }
     }
-    val csApp =
+    val res =
       s"""namespace Generic;
          |
          |using Core;
          |
          |// ReSharper disable InconsistentNaming
          |
-         |export class ${appName} : ROOT
+         |export class $capName : ROOT
          |{
        ${decl.toList.filter(_.nonEmpty).sorted.distinct.mkString("\n")}
          |constructor( string baseUrl ){
@@ -160,45 +165,20 @@ class PwApp(val baseUrl: String) extends AnyApp {
          |}
          |}
          |""".stripMargin
-    writeTextToFile(csApp, s"build/$appName.cs")
+    writeTextToFile(res, s"build/$capName.cs")
   }
 
-  lazy val gotos = short
-    .values
-    .filter(_.path != "")
-    .toList
-    .sortBy(_.path)
-
-  def gotoAll = {
-    for (frm <- gotos) {
-      frm match {
-        case x: Goto => x.goto
-      }
-    }
-  }
-
-  def allGotos = {
-    for (frm <- gotos) {
-      println(frm.path)
-    }
-  }
-
-
-  /**
-   * generate C# code to build/cs
-   *
-   * @return
-   */
-  def genCsToBuild(appName:String) = {
+  def genCsToBuild(name: String): Unit = {
+    val capName = capitalizeFirst(name)
     val dest = "build/cs/"
 
-    def dropAppPrefix(s: String) =
-      if s.startsWith(s"$appName.") then s.substring(appName.length + 1) else s
+    def dropName(s: String) =
+      if s.startsWith(s"$name.") then s.substring(name.length + 1) else s
 
     def allPacks: List[String] = {
       val res = for (frm <- short) yield frm._2.getClass.getPackage.getName
 
-      res.toList.distinct.sorted.filterNot(_ == "coreo").map(dropAppPrefix(_))
+      res.toList.distinct.sorted.filterNot(_ == "coreo").map(dropName(_))
     }
 
     def mkDirectory(any: Any): String = {
@@ -210,7 +190,7 @@ class PwApp(val baseUrl: String) extends AnyApp {
     for (frm <- short) {
       java.io.File(dest).mkdirs()
       val code =
-        s"""namespace ${s"$appName." + dropAppPrefix(frm._2.getClass.getPackage.getName)};
+        s"""namespace ${s"$capName." + dropName(frm._2.getClass.getPackage.getName)};
            |using Coreo;
            |
            |${Formatter(frm._2).mkCs}
@@ -246,7 +226,7 @@ class PwApp(val baseUrl: String) extends AnyApp {
 
       val app =
         s"""
-           |namespace $appName;
+           |namespace $capName;
            |using Microsoft.Playwright;
            |using Coreo;
            |
@@ -263,11 +243,11 @@ class PwApp(val baseUrl: String) extends AnyApp {
            |
            |}
            |""".stripMargin
-      writeTextToFile(app, dest + s"$appName/App.cs")
+      writeTextToFile(app, dest + s"$capName/App.cs")
     }
   }
 
-  def mkMermaids(appName:String) = {
+  def mkMermaids():Unit = {
     for (frm <- short) {
       val path = "build/mermaid/" + frm._2.getClass.getPackageName.replace(".", "/")
       println(path)
@@ -281,7 +261,7 @@ class PwApp(val baseUrl: String) extends AnyApp {
     val incs = for (frm <- short.values.toList.sortBy(_.getClass.getName)) yield {
       val path = "" + frm.getClass.getName.replace(".", "/")
       val cn = frm.getClass.getName
-      val name = if cn.startsWith(s"$appName.") then cn.drop(6) else cn
+      val name = cn
       s"""== $name
          |[mermaid]
          |----
@@ -299,14 +279,10 @@ class PwApp(val baseUrl: String) extends AnyApp {
          |""".stripMargin
     writeTextToFile(adoc, s"build/mermaid/Mermaids.adoc")
   }
+
 }
 
 
 object PwApp {
-  @main def runGui(): Unit = {
-    val app = new PwApp("") {
 
-    }
-    app.gui
-  }
 }

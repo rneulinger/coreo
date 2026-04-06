@@ -2,8 +2,8 @@ package coreo
 
 import com.microsoft.playwright.{Locator, Page}
 
-case class CAL[F <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
-  extends DATA[F](b) {
+class CAL[F <: WIN](name: String, b: By = "")(using ref: OWNER[F])
+  extends DATA[F](name, b) {
 
-  override def loc(pg: Page): Locator = ???
+  //override def loc(pg: Page): Locator = ???
 }

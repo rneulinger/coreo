@@ -23,13 +23,18 @@ import scala.jdk.CollectionConverters.*
 //  BrowserLauncher.main(BaseUrl + path)
 //}
 
-enum Loc {
-  //case Id(id:String)
-  case Exact
-  case Contains
-  case Default
-  case Label
-}
+/**
+ * Boolean => false byText contains, true byText exact
+ * String  => id getByTestId
+ * Pattern => getByText pattern
+ * Double idx >= 1 byText contains[idx]
+ * Double idx <= -1 byText exact[-idx]
+ * Double 0 <= idx < 1  fraction as int 0.1 = 1  0.21 = 21 etc
+ * Double -1 < idx < 0 tdb
+ *
+ */
+
+type By = Boolean | Double | String | Pattern | (Page => Locator) | (ATOM[_] => Locator)
 
 case class Opt(name: String = "", exact: Boolean = false) {
 
@@ -44,11 +49,6 @@ def opt(name: String | Pattern = "", exact: Boolean = false): Opt = {
   opt.setExact(exact)
   ???
 }
-
-/**
- *
- */
-type By = Boolean | Double | Loc | String | ((Page) => Locator)
 
 
 /** wrapper for given / using i FRM */
@@ -131,6 +131,13 @@ object Defs {
 
     }
 
+    def mkImpl():String = {
+      s"""  trait Impl {
+         |    self: PwApp =>
+         |    val ${mkCamelCase(cc)} = ${mkCamelCase(cc)}_(this)
+         |  }
+         |""".stripMargin
+    }
     def classWithPath = {
       if baseClass == "DLG" then ""
       else
@@ -148,12 +155,12 @@ object Defs {
 
     def includePack = {
       if pack.isEmpty then ""
-      else s"include $pack.*"
+      else s"import $pack.*"
     }
 
     def overrideApp = {
       if pack.isEmpty then ""
-      else s"override def app:App = root.asInstanceOf[App]"
+      else s"override def app:App = super.app.asInstanceOf[$pack.App]"
 
     }
 
@@ -184,11 +191,9 @@ object Defs {
          |{
          |$objectWithPath
          |${mkRec()}
+         |
+         |${mkImpl()}
          |}
-         |
-         |// val _$cc = $myFrm(this)
-         |
-         |
          |""".stripMargin)
     pw.flush()
     sw.toString

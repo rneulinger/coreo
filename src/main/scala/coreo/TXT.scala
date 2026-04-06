@@ -3,9 +3,11 @@ package coreo
 import com.microsoft.playwright.options.AriaRole
 import com.microsoft.playwright.{Locator, Page}
 
-case class TXT[F <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
-  extends DATA[F](b) {
+class TXT[F <: WIN](name: String, b: By = false)(using ref: OWNER[F])
+  extends DATA[F](name, b) {
+  override def ariaRole: AriaRole = AriaRole.TEXTBOX
 
+  /*
   override def loc(pg: Page): Locator = {
     by match {
       case id: String =>
@@ -23,6 +25,8 @@ case class TXT[F <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
     }
   }
 
+
+   */
   def rightClick: F =
     log("rightClick")
     own
@@ -31,25 +35,25 @@ case class TXT[F <: WIN](name: String, b: By = Loc.Default)(using ref: OWNER[F])
     log("doubleClick")
     own
 
-  def isEmpty: F = ???
+  def isEmpty: F =
+    ???
+    own
 
-  own
+  def nonEmpty: F =
+    ???
+    own
 
-  def nonEmpty: F = ???
+  def maxLength(n: Integer): F =
+    ???
+    own
 
-  own
+  def contains(snip: Any): F =
+    ???
+    own
 
-  def maxLength(n: Integer): F = ???
-
-  own
-
-  def contains(snip: Any): F = ???
-
-  own
-
-  def matches(regex: String): F = ???
-
-  own
+  def matches(regex: String): F =
+    ???
+    own
 
   // assignment
   override def set(txt: Any = ""): F = {

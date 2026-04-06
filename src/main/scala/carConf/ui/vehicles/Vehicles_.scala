@@ -10,26 +10,26 @@ class Vehicles_(own: CanOwn) extends DLG(own) {
   // tag::fields[]
   given ref: OWNER[Vehicles_] = OWNER(this)
 
-  val Vehicles = TBL("",
-    _.locator("#VehicleTablePanel"))
+  val Vehicles = TBL("", (p:Page) => p.
+    locator("#VehicleTablePanel"))
 
-  val BasePrice = TXT("Base Price",
-    _.locator("#BasePrice_input"))
+  val BasePrice = TXT("Base Price", (p:Page) => p.
+    locator("#BasePrice_input"))
 
-  val SpecialPrice = TXT("Special Price`",
-    _.locator("#SpecialPrice_input"))
+  val SpecialPrice = TXT("Special Price`", (p:Page) => p.
+    locator("#SpecialPrice_input"))
 
-  val AccessoriesPrice = TXT("Accessories Price",
-    _.locator("#AccessoryPrice_input"))
+  val AccessoriesPrice = TXT("Accessories Price", (p:Page) => p.
+    locator("#AccessoryPrice_input"))
 
-  val Discount = TXT("",
-    _.locator("#DiscountValue_input"))
+  val Discount = TXT("", (p:Page) => p.
+    locator("#DiscountValue_input"))
 
-  val FivePercent = BTN("-5%",
-    _.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("-5%")))
+  val FivePercent = BTN("-5%", (p:Page) => p.
+    getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("-5%")))
 
-  val FinalPrice = TXT("Final Price",
-    _.locator("#CalculatedPrice_input"))
+  val FinalPrice = TXT("Final Price", (p:Page) => p.
+    locator("#CalculatedPrice_input"))
 
   // end::fields[]
 }
