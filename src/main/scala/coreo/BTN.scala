@@ -8,22 +8,9 @@ class BTN[F <: WIN, T <: WIN](name: String, b:By=false)(using ref: OWNER[F])
 
   override def ariaRole: AriaRole = AriaRole.BUTTON
 
-  /*
-  override def loc(pg: Page): Locator = {
-    by match {
-      case id:String if id.trim.isEmpty =>
-        val opt = Page.GetByRoleOptions()
-          .setName(fullName)
-          .setExact(false)
-        pg.getByRole(AriaRole.BUTTON, opt)
+  def this()(using ref: OWNER[F]) =
+    this("")
 
-      case id: String => pg.locator(s"[id=\"$id\"]")
-
-      case f: Function1[Page, Locator] =>
-        f(pg)
-    }
-  }
-  */
 }
 
 

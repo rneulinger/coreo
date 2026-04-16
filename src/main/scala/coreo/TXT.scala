@@ -5,6 +5,10 @@ import com.microsoft.playwright.{Locator, Page}
 
 class TXT[F <: WIN](name: String, b: By = false)(using ref: OWNER[F])
   extends DATA[F](name, b) {
+
+  def this()(using ref: OWNER[F]) =
+    this("")
+
   override def ariaRole: AriaRole = AriaRole.TEXTBOX
 
   /*

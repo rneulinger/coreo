@@ -3,14 +3,6 @@ package coreo
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
-
-
-import java.lang.annotation.{Retention, RetentionPolicy, Target, ElementType}
-
-@Retention(RetentionPolicy.RUNTIME)
-@Target(Array(ElementType.TYPE, ElementType.METHOD))
-final class UiName(val value: String) extends scala.annotation.StaticAnnotation
-
 import java.util.regex.Pattern
 
 abstract class ATOM[F <: WIN](n:String, b: By)(using ref: OWNER[F])

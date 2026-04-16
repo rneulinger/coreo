@@ -34,7 +34,7 @@ import scala.jdk.CollectionConverters.*
  *
  */
 
-type By = Boolean | Double | String | Pattern | (Page => Locator) | (ATOM[_] => Locator)
+type By = Boolean | Double | String | Pattern | (Page => Locator) | (ATOM[?] => Locator)
 
 case class Opt(name: String = "", exact: Boolean = false) {
 
@@ -236,4 +236,39 @@ object Defs {
 
 def gen(s: String): Unit = Defs.toClipboard(Defs.gen(s))
 
+
+import scala.util.matching.Regex
+
+object CamelCaseRegexBuilder {
+
+  def toWhitespaceTolerantRegex(input: String): Regex = {
+    require(input != null && input.nonEmpty, "Input cannot be null or empty")
+
+    // Split camelCase / PascalCase into words
+    val wordPattern =
+      "[A-Z]?[a-z]+|[A-Z]+(?=[A-Z]|$)".r
+
+    val words = wordPattern
+      .findAllMatchIn(input)
+      .map(m => Regex.quote(m.matched))
+      .toList
+
+    // Join with optional whitespace
+    val pattern = "^" + words.mkString("\\s*") + "$"
+
+    // Case-insensitive regex
+    new Regex("(?i)" + pattern)
+  }
+
+  def test(): Unit = {
+
+    val regex = CamelCaseRegexBuilder.toWhitespaceTolerantRegex("MyTestValue")
+
+    println(regex.matches("my test value")) // true
+    println(regex.matches("MyTestValue")) // true
+    println(regex.matches("MY  TEST   VALUE")) // true
+    println(regex.matches("My   TestValue")) // true
+    println(regex.matches("MyTest Other")) // false
+  }
+}
 

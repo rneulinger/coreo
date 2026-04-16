@@ -7,20 +7,23 @@ import com.microsoft.playwright.options.*
 class Accessories_(own: CanOwn) extends DLG(own) {
 
   // tag::fields[]
-  given ref: OWNER[Accessories_] = OWNER(this)
 
+  @Ui("Base price")
   val BasePrice = TXT("Base price", (p:Page) => p.
     locator("#BasePrice_input"))
 
+  @Ui("Special price")
   val SpecialPrice = TXT("Special price", (p:Page) => p.
     getByText("$4,045.00")) // wrong
 
+  @Ui("Accessories price")
   val AccessoriesPrice = TXT("Accessories price", (p:Page) => p.
     locator("#AccessoryPrice_input"))
 
   val Discount = TXT("", (p:Page) => p.
     locator("#DiscountValue_input"))
 
+  @Ui("-5%")
   val FivePercent = BTN("-5%", (p:Page) => p.
     getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("-5%")))
 
@@ -30,10 +33,8 @@ class Accessories_(own: CanOwn) extends DLG(own) {
   val AddAccessoriesPriceToFinalPrice = CBX("Add accessories price to final price", (p:Page) => p.
     getByRole(AriaRole.CHECKBOX, new Page.GetByRoleOptions().setName("Add accessories price to")))
 
-  val Accessories = TBL("", (p:Page) => p.
+  val Accessories = TBL((p:Page) => p.
     locator("#AccessoryTable"))
-
-
-
   // end::fields[]
+  given ref: OWNER[Accessories_] = OWNER(this)
 }
