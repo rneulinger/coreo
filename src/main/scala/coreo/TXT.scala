@@ -3,34 +3,12 @@ package coreo
 import com.microsoft.playwright.options.AriaRole
 import com.microsoft.playwright.{Locator, Page}
 
-class TXT[F <: WIN](name: String, b: By = null)(using ref: OWNER[F])
-  extends DATA[F](name, b) {
+class TXT[F <: WIN](b: By = null)(using ref: OWNER[F])
+  extends DATA[F](b) {
 
-  def this()(using ref: OWNER[F]) =
-    this("")
 
   override def ariaRole: AriaRole = AriaRole.TEXTBOX
 
-  /*
-  override def loc(pg: Page): Locator = {
-    by match {
-      case id: String =>
-        pg.locator(s"[id=\"$id\"]").getByRole(AriaRole.TEXTBOX)
-
-      case Loc.Default =>
-        val opt = Page.GetByRoleOptions()
-          .setName(uiName)
-          .setExact(false)
-
-        pg.getByRole(AriaRole.TEXTBOX, opt)
-
-      case f: Function1[Page, Locator] =>
-        f(pg)
-    }
-  }
-
-
-   */
   def rightClick: F =
     log("rightClick")
     own

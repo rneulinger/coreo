@@ -9,17 +9,17 @@ final class BMICalculator_(own: CanOwn) extends FRM(own, "BMI Calculator") {
   // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this
   override def path: String = "bmi"
 
-  val Gender = TXT("")
+  val Gender = TXT()
 
-  val Age = TXT("")
+  val Age = TXT()
 
-  val Height = TXT("")
+  val Height = TXT()
 
-  val Weight = TXT("")
+  val Weight = TXT()
 
-  val Calculate = BTN("")
+  val Calculate = BTN()
 
-  val Clear = BTN("")
+  val Clear = BTN()
 
   // end::fields[]
 }

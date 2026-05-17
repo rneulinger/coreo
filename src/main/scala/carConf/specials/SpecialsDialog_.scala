@@ -5,27 +5,22 @@ import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
 
+// tag::fields[]
 class SpecialsDialog_(own: CanOwn) extends DLG(own) {
 
-  // tag::fields[]
-  given ref: OWNER[SpecialsDialog_] = OWNER(this)
 
-  val ModelName = TXT("Model name", (p:Page) => p.
-    locator("#SpecialsName99_input"))
+  val ModelName = TXT(_.locator("#SpecialsName99_input"))
 
-  val Price = TXT("", (p:Page) => p. 
-    locator("#SpecialsPrice99_input"))
+  val Price = TXT( _.locator("#SpecialsPrice99_input"))
   
-  val Description = TXT("", (p:Page) => p.
-    locator("#SpecialsDialogArea99"))
+  val Description = TXT(_.locator("#SpecialsDialogArea99"))
 
-  val Accessories = TBL("", (p:Page) => p.
-    locator("#AccessoryTable99"))
+  val Accessories = TBL( _.locator("#AccessoryTable99"))
 
-  val Specials = TAB("", (p:Page) => p.
-    locator("#SpecialsTable"))
+  val Specials = TAB(_.locator("#SpecialsTable"))
 
   // end::fields[]
+  given ref: OWNER[SpecialsDialog_] = OWNER(this)
 
 }
 

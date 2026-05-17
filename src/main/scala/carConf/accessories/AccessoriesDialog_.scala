@@ -11,7 +11,7 @@ class AccessoriesDialog_(own: CanOwn) extends DLG(own) {
   given ref: OWNER[AccessoriesDialog_] = OWNER(this)
 
 
-  val AccessoryName = TXT("Accessory name")
+  val AccessoryName = TXT()
 
   val ID = TXT()
 

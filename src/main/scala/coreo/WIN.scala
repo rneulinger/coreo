@@ -101,4 +101,8 @@ abstract class WIN(override val own: CanOwn, ui: String = "")
 
   def getVar(key: String): String = own.getVar(key)
 
+//  def TAB_(func:Page => Locator):TAB[?,?] = ???
+//  def BTN_(func:Page => Locator):BTN[?,?] = ???
+//  def TXT_(func:Page => Locator):TXT[?] = ???
+//  def TBL_(func:Page => Locator):TBL[?] = ???
 }

@@ -10,32 +10,23 @@ class VehiclesDialog(own: CanOwn) extends DLG(own) {
   // tag::fields[]
   given ref: OWNER[VehiclesDialog] = OWNER(this)
 
-  val Vehicles = TBL("", (p:Page) => p.
-    locator("#VehiclesTable"))
+  val Vehicles = TBL( _.locator("#VehiclesTable"))
 
-  val VehicleName = TXT("Vehicle name", (p:Page) => p.
-    locator("#VehicleName_input"))
+  val VehicleName = TXT(_.locator("#VehicleName_input"))
 
-  val ID = TXT("", (p:Page) => p.
-    locator("#VehicleId_input"))
+  val ID = TXT( _.locator("#VehicleId_input"))
 
-  val Price = TXT("", (p:Page) => p.
-    locator("#VehiclePrice_input"))
+  val Price = TXT( _.locator("#VehiclePrice_input"))
 
-  val New = BTN("", (p:Page) => p.
-    getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("New")))
+  val New = BTN(_.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("New")))
 
-  val Change = BTN("", (p:Page) => p.
-    getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Change")))
+  val Change = BTN(_.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Change")))
 
-  val Delete = BTN("", (p:Page) => p.
-    getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Delete")))
+  val Delete = BTN(_.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Delete")))
 
-  val OK = BTN("", (p:Page) => p.
-    getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("OK")))
+  val OK = BTN(_.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("OK")))
 
-  val Cancel = BTN("", (p:Page) => p.
-    getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")))
+  val Cancel = BTN(_.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")))
 
   // end::fields[]
 }

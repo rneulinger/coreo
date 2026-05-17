@@ -8,19 +8,19 @@ class SpecialsDialog_(own: CanOwn) extends DLG(own) {
   // tag::fields[]
   given ref: OWNER[SpecialsDialog_] = OWNER(this)
 
-  val Specials = TAB("", (p:Page) => p.
+  val Specials = TAB( _.
     locator("#SpecialsTable"))
 
-  val ModelName = TXT("Model name", (p:Page) => p.
+  val ModelName = TXT(_.
     locator("#SpecialsName99_input"))
 
-  val Price = TXT("", (p:Page) => p.
+  val Price = TXT( _.
     locator("#SpecialsPrice99_input"))
 
-  val Description = TXT("", (p:Page) => p.
+  val Description = TXT( _.
     locator("#SpecialsDialogArea99"))
 
-  val Accessories = TBL("", (p:Page) => p.
+  val Accessories = TBL( _.
     locator("#AccessoryTable99"))
 
   // end::fields[]

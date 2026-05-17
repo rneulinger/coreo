@@ -13,6 +13,6 @@ trait OkCancel[F <: WIN, OK <: WIN, C <: WIN]() {
 
   def ref: OWNER[F]
 
-  final val Ok = BTN[F, OK]("")(using ref)
-  final val Cancel = BTN[F, C]("")(using ref)
+  final val Ok = BTN[F, OK]()(using ref)
+  final val Cancel = BTN[F, C]()(using ref)
 }

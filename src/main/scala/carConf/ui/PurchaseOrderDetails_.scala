@@ -11,33 +11,33 @@ class PurchaseOrderDetails_(own: CanOwn) extends DLG(own) {
   given ref: OWNER[PurchaseOrderDetails_] = OWNER(this)
 
 
-  val SelectedVehicle = TXT("Selected vehicle")
+  val SelectedVehicle = TXT()
 
-  val Price = TXT("")
+  val Price = TXT()
 
-  val Discount = TXT("")
+  val Discount = TXT()
 
-  val Total = TXT("")
+  val Total = TXT()
 
-  val SelectedSpecial = TXT("Selected special")
+  val SelectedSpecial = TXT()
 
-  val PriceSpecialDetails = TXT("Price special details")
+  val PriceSpecialDetails = TXT()
 
-  val SelectedAccessory = TXT("Selected accessory")
+  val SelectedAccessory = TXT()
 
-  val Result = TXT("")
+  val Result = TXT()
 
-  val FinalPrice = TXT("Final price")
+  val FinalPrice = TXT()
 
-  val CollectionExWorks = TXT("Collection ex works")
+  val CollectionExWorks = TXT()
 
-  val CollectionExVendor = TXT("Collection ex vendor")
+  val CollectionExVendor = TXT()
 
-  val Deliver = TXT("")
+  val Deliver = TXT()
 
-  val SendPurchasEorder = TXT("Send purchas eorder")
+  val SendPurchasEorder = TXT()
 
-  val Cancel = BTN("")
+  val Cancel = BTN()
 
 
   // end::fields[]

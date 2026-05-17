@@ -5,11 +5,11 @@ import com.microsoft.playwright.options.*
 
 import java.util.regex.Pattern
 
-abstract class ATOM[F <: WIN](n:String, b: By, idx:Int=0)(using ref: OWNER[F])
+abstract class ATOM[F <: WIN](b: By, idx:Int=0)(using ref: OWNER[F])
   extends CHILD {
   def ariaRole:AriaRole = AriaRole.GENERIC
   final val own: F = ref.own
-  final val name =  n.trim
+  val name:String =  ???
   final def app: PwApp = own.app.asInstanceOf[PwApp]
   final def nameUi: String = if name.trim.isEmpty then fullName else name
 

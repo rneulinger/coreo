@@ -10,11 +10,11 @@ class AccessoriesDialog_(own: CanOwn) extends DLG(own) {
   // tag::fields[]
   given ref: OWNER[AccessoriesDialog_] = OWNER(this)
 
-  val AccessoryName = TXT("Accessory name")
+  val AccessoryName = TXT()
 
-  val ID = TXT("")
+  val ID = TXT()
 
-  val Price = TXT("")
+  val Price = TXT()
 
   // end::fields[]
 }

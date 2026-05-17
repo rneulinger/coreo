@@ -10,28 +10,29 @@ class Specials_(own: CanOwn) extends DLG(own)
   // tag::fields[]
   given ref: OWNER[Specials_] = OWNER(this)
 
-  val Specials = CBX("", (p:Page) => p.
+  val Specials = CBX( _.
     locator("#SpecialsCombo"))
 
-  val Special = TXT("", (p:Page) => p.
+  val Special = TXT(_.
     locator("#SpecialsArea"))
 
-  val BasePrice = TXT("Base Price", (p:Page) => p.
+  val BasePrice = TXT(_.
     locator("#BasePrice_input"))
 
-  val SpecialPrice = TXT("Special Price", (p:Page) => p.
+  val SpecialPrice = TXT(_.
     getByText("$4,045.00")) // Wrong
 
-  val AccessoriesPrice = TXT("Accessories Price", (p:Page) => p.
+  val AccessoriesPrice = TXT(_.
     locator("#AccessoryPrice_input"))
 
-  val Discount = TXT("", (p:Page) => p.
+  val Discount = TXT(_.
     locator("#DiscountValue_input"))
 
-  val FivePercent = BTN("-5%", (p:Page) => p.
+  @Ui("-5%")
+  val FivePercent = BTN(_.
     getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("-5%")))
 
-  val FinalPrice = TXT("Final Price", (p:Page) => p.
+  val FinalPrice = TXT( _.
     getByText("$3,438.25")) // Wrong
 
   // end::fields[]

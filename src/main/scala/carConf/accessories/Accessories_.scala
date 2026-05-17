@@ -9,32 +9,24 @@ class Accessories_(own: CanOwn) extends DLG(own) {
   // tag::fields[]
 
   @Ui("Base price")
-  val BasePrice = TXT("Base price", (p:Page) => p.
-    locator("#BasePrice_input"))
+  val BasePrice = TXT(_.locator("#BasePrice_input"))
 
   @Ui("Special price")
-  val SpecialPrice = TXT("Special price", (p:Page) => p.
-    getByText("$4,045.00")) // wrong
+  val SpecialPrice = TXT(_.getByText("$4,045.00")) // wrong
 
   @Ui("Accessories price")
-  val AccessoriesPrice = TXT("Accessories price", (p:Page) => p.
-    locator("#AccessoryPrice_input"))
+  val AccessoriesPrice = TXT( _.locator("#AccessoryPrice_input"))
 
-  val Discount = TXT("", (p:Page) => p.
-    locator("#DiscountValue_input"))
+  val Discount = TXT(_.locator("#DiscountValue_input"))
 
   @Ui("-5%")
-  val FivePercent = BTN("-5%", (p:Page) => p.
-    getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("-5%")))
+  val FivePercent = BTN(_.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("-5%")))
 
-  val FinalPrice = TXT("Final price", (p:Page) => p.
-    getByText("$3,236.00")) // Wrong
+  val FinalPrice = TXT(_.getByText("$3,236.00")) // Wrong
 
-  val AddAccessoriesPriceToFinalPrice = CBX("Add accessories price to final price", (p:Page) => p.
-    getByRole(AriaRole.CHECKBOX, new Page.GetByRoleOptions().setName("Add accessories price to")))
+  val AddAccessoriesPriceToFinalPrice = CBX(_.getByRole(AriaRole.CHECKBOX, new Page.GetByRoleOptions().setName("Add accessories price to")))
 
-  val Accessories = TBL("", (p:Page) => p.
-    locator("#AccessoryTable"))
+  val Accessories = TBL( _.locator("#AccessoryTable"))
   // end::fields[]
   given ref: OWNER[Accessories_] = OWNER(this)
 }
