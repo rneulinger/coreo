@@ -1,5 +1,0 @@
-package coreo
-
-trait IsOwned {
-
-}

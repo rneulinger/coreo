@@ -13,20 +13,20 @@ class AccessoriesDialog_(own: CanOwn) extends DLG(own) {
 
   val AccessoryName = TXT("Accessory name")
 
-  val ID = TXT
+  val ID = TXT()
 
-  val Price = TXT
+  val Price = TXT()
 
-  val New = BTN
+  val New = BTN()
 
-  val Change = BTN
+  val Change = BTN()
   //Change.target = "MyDialog"
 
-  val Delete = BTN
+  val Delete = BTN()
 
-  val Ok = BTN
+  val Ok = BTN()
 
-  val Cancel = BTN
+  val Cancel = BTN()
 
   // end::fields[]
 }

@@ -33,7 +33,7 @@ class Accessories_(own: CanOwn) extends DLG(own) {
   val AddAccessoriesPriceToFinalPrice = CBX("Add accessories price to final price", (p:Page) => p.
     getByRole(AriaRole.CHECKBOX, new Page.GetByRoleOptions().setName("Add accessories price to")))
 
-  val Accessories = TBL((p:Page) => p.
+  val Accessories = TBL("", (p:Page) => p.
     locator("#AccessoryTable"))
   // end::fields[]
   given ref: OWNER[Accessories_] = OWNER(this)
