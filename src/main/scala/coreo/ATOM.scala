@@ -5,7 +5,7 @@ import com.microsoft.playwright.options.*
 
 import java.util.regex.Pattern
 
-abstract class ATOM[F <: WIN](n:String, b: By)(using ref: OWNER[F])
+abstract class ATOM[F <: WIN](n:String, b: By, idx:Int=0)(using ref: OWNER[F])
   extends CHILD {
   def ariaRole:AriaRole = AriaRole.GENERIC
   final val own: F = ref.own
@@ -15,12 +15,7 @@ abstract class ATOM[F <: WIN](n:String, b: By)(using ref: OWNER[F])
 
   final var lfunc: (Page => Locator) = {
     b match{
-      case false  => (p:Page) => p.getByText(nameUi)
-      case true => (p:Page) => p.getByText(nameUi)
-      case id:String => (p:Page) => p.getByTestId(nameUi)
-      case idx:Double if idx >= 1 => (p:Page) => p.getByTestId(nameUi).nth(idx.toInt)
-      case idx:Double if idx < 1 => (p:Page) => p.getByTestId(nameUi).nth(-(idx.toInt))
-      case pat:Pattern => (p:Page) => p.getByText(pat)
+      case null  => (p:Page) => p.getByText(nameUi)
       case func: (Page => Locator) => func
     }
   }

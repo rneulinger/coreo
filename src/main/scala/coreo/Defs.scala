@@ -34,7 +34,7 @@ import scala.jdk.CollectionConverters.*
  *
  */
 
-type By = Boolean | Double | String | Pattern | (Page => Locator) | (ATOM[?] => Locator)
+type By =  (Page => Locator) | (ATOM[?] => (Page => Locator))
 
 case class Opt(name: String = "", exact: Boolean = false) {
 
