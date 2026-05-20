@@ -47,9 +47,9 @@ trait CanOwn {
 
   def onto(frm: WIN): Unit
 
-  def atoms: Map[String, ATOM[?]]
+  def atoms: Map[String, Ctrl[?]]
 
-  final def datas: Map[String, ATOM[?]] = atoms
+  final def datas: Map[String, Ctrl[?]] = atoms
     .filter(_._2.isInstanceOf[DATA[?]])
     .collect { case d: (String, DATA[?]) => d }
 

@@ -23,8 +23,8 @@ abstract class WIN(override val own: CanOwn, ui: String = "")
 
   override def pg: Page = own.pg
 
-  private var adoptedAtoms = List[ATOM[?]]()
-  lazy val atoms: Map[String, ATOM[?]] = {
+  private var adoptedAtoms = List[Ctrl[?]]()
+  lazy val atoms: Map[String, Ctrl[?]] = {
     val tmp = adoptedAtoms.map(a => a.fullName -> a).toMap
     tmp
   }
@@ -33,7 +33,7 @@ abstract class WIN(override val own: CanOwn, ui: String = "")
 
   final def adopt(obj: OBJ): Unit =
     obj match {
-      case atom: ATOM[_] => adoptedAtoms = adoptedAtoms.appended(atom)
+      case ctrl: Ctrl[_] => adoptedAtoms = adoptedAtoms.appended(ctrl)
       case frm: WIN => own.adopt(obj)
     }
 
@@ -54,7 +54,7 @@ abstract class WIN(override val own: CanOwn, ui: String = "")
    * @param name
    * @return
    */
-  def findAtom(name: String): Option[ATOM[?]] = {
+  def findAtom(name: String): Option[Ctrl[?]] = {
     if (atoms.keySet.contains(name)) {
       Option(atoms(name)) // exact match
     } else {
@@ -73,7 +73,7 @@ abstract class WIN(override val own: CanOwn, ui: String = "")
    * @param name
    * @return
    */
-  def findAtoms(name: String): List[ATOM[?]] = {
+  def findAtoms(name: String): List[Ctrl[?]] = {
     if (atoms.keySet.contains(name)) {
       List(atoms(name)) // exact match
     } else {

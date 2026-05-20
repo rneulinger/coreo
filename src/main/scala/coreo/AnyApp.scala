@@ -3,10 +3,10 @@ package coreo
 abstract class AnyApp extends OBJ with CanOwn {
   def app: AnyApp = this
 
-  private var adoptedAtoms = List[ATOM[?]]()
+  private var adoptedAtoms = List[Ctrl[?]]()
   private var adoptedFrms = List[WIN]()
 
-  lazy val atoms: Map[String, ATOM[?]] = adoptedAtoms.map(a => a.fullName -> a).toMap
+  lazy val atoms: Map[String, Ctrl[?]] = adoptedAtoms.map(a => a.fullName -> a).toMap
 
   lazy val (short, full, frms) = {
     val short = adoptedFrms.map(a => a.myType -> a).toMap
@@ -67,8 +67,8 @@ abstract class AnyApp extends OBJ with CanOwn {
 
   final def adopt(obj: OBJ): Unit =
     obj match {
-      case atom: ATOM[_] =>
-        adoptedAtoms = adoptedAtoms.appended(atom)
+      case ctrl: Ctrl[_] =>
+        adoptedAtoms = adoptedAtoms.appended(ctrl)
 
       case frm: WIN =>
         adoptedFrms = adoptedFrms.appended(frm)
