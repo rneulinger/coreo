@@ -1,6 +1,6 @@
 package coreo
 
-abstract class ACTION[F <: WIN, T <: WIN](b: By)(using ref: OWNER[F])
+abstract class Action[F <: Dlg, T <: Dlg](b: By)(using ref: OWNER[F])
   extends Ctrl[F](b) {
 
   override def weight = 2

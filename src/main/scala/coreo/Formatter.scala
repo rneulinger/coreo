@@ -1,6 +1,6 @@
 package coreo
 
-class Formatter(val frm: WIN) {
+class Formatter(val frm: Dlg) {
   private def atoms = frm.atoms
 
   private def datas = frm.datas
@@ -164,7 +164,7 @@ class Formatter(val frm: WIN) {
       s"""|    public readonly $typ $short;"""
     }
 
-    val recs = for (a <- atoms.filter(_._2.isInstanceOf[DATA[?]])) yield {
+    val recs = for (a <- atoms.filter(_._2.isInstanceOf[Data[?]])) yield {
       val name = a._2.nameUi
       //      val short = Defs.mkCamelCase(name)
       val short = Defs.mkCamelCase(a._2.fullName)
@@ -176,12 +176,12 @@ class Formatter(val frm: WIN) {
         if s.endsWith("_") then s.dropRight(1) else s
       }
 
-      val res = for (a <- atoms.filter(_._2.isInstanceOf[ACTION[?, ?]])) yield {
+      val res = for (a <- atoms.filter(_._2.isInstanceOf[Action[?, ?]])) yield {
         val short = Defs.mkCamelCase(a._2.fullName)
         a._2 match {
-          case x: ACTION[?, ?] if x.target == Unknown_
+          case x: Action[?, ?] if x.target == Unknown_
           => ""
-          case x: ACTION[?, ?]
+          case x: Action[?, ?]
           => s"""$short.target = "${dropTrailingUnderscore(x.target.simple)}";"""
         }
       }

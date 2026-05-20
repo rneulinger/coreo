@@ -2,7 +2,7 @@ package coreo.bricks
 
 import coreo.*
 
-trait NewChangDeleteDetailsCancelOK[F <: WIN]() {
+trait NewChangDeleteDetailsCancelOK[F <: Dlg]() {
   self: F =>
 
   def ref: OWNER[F]

@@ -4,7 +4,7 @@ abstract class AnyApp extends OBJ with CanOwn {
   def app: AnyApp = this
 
   private var adoptedAtoms = List[Ctrl[?]]()
-  private var adoptedFrms = List[WIN]()
+  private var adoptedFrms = List[Dlg]()
 
   lazy val atoms: Map[String, Ctrl[?]] = adoptedAtoms.map(a => a.fullName -> a).toMap
 
@@ -20,14 +20,14 @@ abstract class AnyApp extends OBJ with CanOwn {
    * @param name
    * @return
    */
-  def findWinByPath(name: String): List[WIN] = {
+  def findWinByPath(name: String): List[Dlg] = {
     adoptedFrms.filter(_.path.contains(name)).toList
   }
   //  def findByUiName( name:String):List[WIN] = {
   //    adoptedFrms.filter(_.contains(name)).toList
   //  }
 
-  def findWin(name: String): WIN = {
+  def findWin(name: String): Dlg = {
     val byPath = findWinByPath(name)
     if byPath.length == 1 then return byPath.head
 
@@ -70,27 +70,27 @@ abstract class AnyApp extends OBJ with CanOwn {
       case ctrl: Ctrl[_] =>
         adoptedAtoms = adoptedAtoms.appended(ctrl)
 
-      case frm: WIN =>
+      case frm: Dlg =>
         adoptedFrms = adoptedFrms.appended(frm)
     }
 
-  var currentWin: WIN = new WIN(this) {}
-  val defaultWin = currentWin
+  var currentDlg: Dlg = new Dlg(this) {}
+  val defaultWin = currentDlg
 
-  def findAtoms(name: String) = currentWin.findAtoms(name)
+  def findAtoms(name: String) = currentDlg.findAtoms(name)
 
-  def findAtom(name: String) = currentWin.findAtom(name)
+  def findAtom(name: String) = currentDlg.findAtom(name)
 
   /**
    * visit: push current view on stack, arg becomes current,
    * return: push curren tin history, pop and set current
    */
-  val winStack = scala.collection.mutable.Stack[WIN]()
-  val winHistory = scala.collection.mutable.Stack[WIN]()
+  val winStack = scala.collection.mutable.Stack[Dlg]()
+  val winHistory = scala.collection.mutable.Stack[Dlg]()
 
-  def onto(frm: WIN): Unit = {
-    winStack.push(currentWin)
-    currentWin = frm
+  def onto(frm: Dlg): Unit = {
+    winStack.push(currentDlg)
+    currentDlg = frm
     println("changed to frm:" + frm.myType)
     println(frm.dump)
   }
@@ -105,7 +105,7 @@ abstract class AnyApp extends OBJ with CanOwn {
       println(hits)
       if hits.size == 1 then
         hits.head.match {
-          case frm: WIN => frm.goto()
+          case frm: Dlg => frm.goto()
           case _ => println(s"${hits.head} is not of type Goto")
         }
     }
@@ -114,7 +114,7 @@ abstract class AnyApp extends OBJ with CanOwn {
       if (frms.keySet.contains(dest)) {
         val frm = frms(dest)
         frm match {
-          case f: WIN => f.goto()
+          case f: Dlg => f.goto()
           case _ => throw Exception(s"goto not supported: $frm has no path")
         }
       } else {
@@ -132,7 +132,7 @@ abstract class AnyApp extends OBJ with CanOwn {
       println(hits)
       if hits.size == 1 then
         hits.head.match {
-          case frm: WIN => frm.goto()
+          case frm: Dlg => frm.goto()
           case _ => println(s"${hits.head} is not of type Goto")
         }
     }
@@ -145,7 +145,7 @@ abstract class AnyApp extends OBJ with CanOwn {
       }
   }
 
-  def findRelationsFor(win: WIN): Map[ACTION[?, ?], WIN] = {
+  def findRelationsFor(dlg: Dlg): Map[Action[?, ?], Dlg] = {
     val res = for (frm <- frms; act <- frm._2.actions) yield {
       act._2 -> frm._2
     }
@@ -154,14 +154,14 @@ abstract class AnyApp extends OBJ with CanOwn {
       //      println( x._1.target + " " + x._2.Self)
     }
     //println( win.fullType)
-    nonEmpty.filter(_._1.target.name == win.Self)
+    nonEmpty.filter(_._1.target.name == dlg.Self)
   }
 
   def back: Unit = {
     if (winStack.nonEmpty) {
-      currentWin = winStack.pop()
+      currentDlg = winStack.pop()
     } else {
-      currentWin = defaultWin
+      currentDlg = defaultWin
     }
   }
 
@@ -174,27 +174,27 @@ abstract class AnyApp extends OBJ with CanOwn {
     }
   }
 
-  def mkMermaid(win: WIN): String = {
-    val className = if win.simple.trim.isEmpty then "_" else win.simple
+  def mkMermaid(dlg: Dlg): String = {
+    val className = if dlg.simple.trim.isEmpty then "_" else dlg.simple
 
-    val recs = for (a <- win.datas) yield {
+    val recs = for (a <- dlg.datas) yield {
       val name = a._2.fullName
       val short = Defs.mkCamelCase(name)
       "| " + a._2.simple + " " + short
     }
-    val acts = for (a <- win.actions) yield {
+    val acts = for (a <- dlg.actions) yield {
       val name = a._2.fullName
       val short = Defs.mkCamelCase(name)
       "| " + a._2.simple + " " + short
     }
 
-    val links = findRelationsFor(win)
+    val links = findRelationsFor(dlg)
 
     def incoming = for (l <- links) yield {
       className + " <-- " + l._2.simple + " : " + l._1.fullName
     }
 
-    def outgoing = for (l <- win.actions.filterNot(_._2.target.name == Unknown_.name)) yield {
+    def outgoing = for (l <- dlg.actions.filterNot(_._2.target.name == Unknown_.name)) yield {
       def last = l._2.target.name.split("\\.")
       //      last(last.length -1) + " <-- " +  win.simple + " : "+ l._2.uiName
       className + " --> " + last(last.length - 1) + " : " + l._2.fullName
@@ -202,7 +202,7 @@ abstract class AnyApp extends OBJ with CanOwn {
     }
 
     s"""classDiagram
-       |  note for $className "${win.Self}"
+       |  note for $className "${dlg.Self}"
        |
        |class $className{
           ${recs.mkString("\n")}

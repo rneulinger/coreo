@@ -2,7 +2,7 @@ package coreo.bricks
 
 import coreo.*
 
-trait CancelNext[F <: WIN, C <: WIN, N <: WIN]() {
+trait CancelNext[F <: Dlg, C <: Dlg, N <: Dlg]() {
   self: F =>
 
   def ref: OWNER[F]

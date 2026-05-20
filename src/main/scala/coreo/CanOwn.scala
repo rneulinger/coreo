@@ -23,9 +23,9 @@ trait CanOwn {
     moduleField.get(null).asInstanceOf[Static] // the singleton instance (companion object)
   }
 
-  def findWin(name: String): WIN
+  def findWin(name: String): Dlg
 
-  final def findWin(comp: Static): WIN = {
+  final def findWin(comp: Static): Dlg = {
     comp match {
       case Unknown_ =>
         println(Unknown_)
@@ -45,17 +45,17 @@ trait CanOwn {
 
   def openUrl(path: String): Unit
 
-  def onto(frm: WIN): Unit
+  def onto(frm: Dlg): Unit
 
   def atoms: Map[String, Ctrl[?]]
 
   final def datas: Map[String, Ctrl[?]] = atoms
-    .filter(_._2.isInstanceOf[DATA[?]])
-    .collect { case d: (String, DATA[?]) => d }
+    .filter(_._2.isInstanceOf[Data[?]])
+    .collect { case d: (String, Data[?]) => d }
 
-  final def actions: Map[String, ACTION[?, ?]] = atoms
-    .filter(_._2.isInstanceOf[ACTION[?, ?]])
-    .collect { case a: (String, ACTION[?, ?]) => a }
+  final def actions: Map[String, Action[?, ?]] = atoms
+    .filter(_._2.isInstanceOf[Action[?, ?]])
+    .collect { case a: (String, Action[?, ?]) => a }
 
   def setVar(key: String, value: Any): Unit
 

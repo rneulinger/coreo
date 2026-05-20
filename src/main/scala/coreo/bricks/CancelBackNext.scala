@@ -9,7 +9,7 @@ import coreo.*
  * has buttons Cancel, Back Next
  */
 
-trait CancelBackNext[F <: WIN, C <: WIN, B <: WIN, N <: WIN]() {
+trait CancelBackNext[F <: Dlg, C <: Dlg, B <: Dlg, N <: Dlg]() {
   self: F =>
 
   def ref: OWNER[F]

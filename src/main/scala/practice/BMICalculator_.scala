@@ -2,7 +2,7 @@ package practice
 
 import coreo.*
 
-final class BMICalculator_(own: CanOwn) extends WIN(own, "BMI Calculator") {
+final class BMICalculator_(own: CanOwn) extends Dlg(own, "BMI Calculator") {
   // tag::fields[]
   given ref: OWNER[BMICalculator_] = OWNER(this)
 

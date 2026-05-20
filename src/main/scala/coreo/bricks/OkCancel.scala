@@ -8,7 +8,7 @@ import coreo.*
  * @tparam F
  * has buttons Ok, Cancel
  */
-trait OkCancel[F <: WIN, OK <: WIN, C <: WIN]() {
+trait OkCancel[F <: Dlg, OK <: Dlg, C <: Dlg]() {
   self: F =>
 
   def ref: OWNER[F]

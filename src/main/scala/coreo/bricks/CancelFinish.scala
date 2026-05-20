@@ -2,7 +2,7 @@ package coreo.bricks
 
 import coreo.*
 
-trait CancelFinish[F <: WIN, C <: WIN, OK <: WIN]() {
+trait CancelFinish[F <: Dlg, C <: Dlg, OK <: Dlg]() {
   self: F =>
 
   def ref: OWNER[F]

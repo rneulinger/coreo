@@ -8,7 +8,7 @@ import coreo.*
  * @tparam F owner of these buttons
  */
 //tag::fields[]
-trait AddEditDelete[F <: WIN, A <: WIN, E <: WIN, D <: WIN] {
+trait AddEditDelete[F <: Dlg, A <: Dlg, E <: Dlg, D <: Dlg] {
   self: F =>
 
 

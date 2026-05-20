@@ -8,7 +8,7 @@ import coreo.*
  * @tparam F owner of these buttons
  */
 
-trait AddEditDeleteMoveUpMoveDown[F <: WIN, A <: WIN, E <: WIN, D <: WIN, UP <: WIN, DOWN <: WIN] extends AddEditDelete[F, A, E, D] {
+trait AddEditDeleteMoveUpMoveDown[F <: Dlg, A <: Dlg, E <: Dlg, D <: Dlg, UP <: Dlg, DOWN <: Dlg] extends AddEditDelete[F, A, E, D] {
   self: F =>
 
   def ref: OWNER[F]

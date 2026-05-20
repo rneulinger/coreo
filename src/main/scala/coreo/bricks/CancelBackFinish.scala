@@ -9,7 +9,7 @@ import coreo.*
  * has buttons Cancel, Back Next
  */
 
-trait CancelBackFinish[F <: WIN, C <: WIN, B <: WIN, N <: WIN]() {
+trait CancelBackFinish[F <: Dlg, C <: Dlg, B <: Dlg, N <: Dlg]() {
   self: F =>
 
   final val Cancel = Btn[F, C]()(using ref)

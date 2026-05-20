@@ -36,7 +36,7 @@ class GUI(ui: PwApp) {
   // Add the tabbed pane to the frame
   mainFrame.add(tabbedPane)
 
-  var currentFrm: WIN = uninitialized
+  var currentFrm: Dlg = uninitialized
 
   private def mkUI(): Unit = {
     val layout = BorderLayout()

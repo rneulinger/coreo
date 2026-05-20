@@ -5,7 +5,7 @@ import coreo.bricks.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
-class VehiclesDialog(own: CanOwn) extends WIN(own) {
+class VehiclesDialog(own: CanOwn) extends Dlg(own) {
 
   // tag::fields[]
   given ref: OWNER[VehiclesDialog] = OWNER(this)

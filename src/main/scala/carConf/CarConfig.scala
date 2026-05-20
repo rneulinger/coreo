@@ -8,7 +8,7 @@ import com.microsoft.playwright.{Locator, Page}
 import scala.language.postfixOps
 
 class CarConfig(own: CanOwn)
-  extends WIN(own) {
+  extends Dlg(own) {
 
   // tag::fields[]
 

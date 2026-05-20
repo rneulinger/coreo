@@ -2,13 +2,13 @@ package coreo
 
 import com.microsoft.playwright.*
 
-abstract class WIN(override val own: CanOwn, ui: String = "")
+abstract class Dlg(override val own: CanOwn, ui: String = "")
   extends CHILD with CanOwn {
   def app = own.app.asInstanceOf[PwApp]
 
   def Self = getClass.getName
 
-  final def findWin(name: String): WIN = own.findWin(name)
+  final def findWin(name: String): Dlg = own.findWin(name)
 
   val fullType: String = if (ui.isEmpty) myType else ui
   own.adopt(this)
@@ -16,7 +16,7 @@ abstract class WIN(override val own: CanOwn, ui: String = "")
   def path: String = ""
 
   def goto():Unit = ???
-    
+
   def pathAbs = path.trim match {
     case "" => ""
     case x if x startsWith ("/") => x
@@ -36,10 +36,10 @@ abstract class WIN(override val own: CanOwn, ui: String = "")
   final def adopt(obj: OBJ): Unit =
     obj match {
       case ctrl: Ctrl[_] => adoptedAtoms = adoptedAtoms.appended(ctrl)
-      case frm: WIN => own.adopt(obj)
+      case frm: Dlg => own.adopt(obj)
     }
 
-  def onto: WIN = {
+  def onto: Dlg = {
     own.onto(this)
     Thread.sleep(200)
     this
@@ -49,7 +49,7 @@ abstract class WIN(override val own: CanOwn, ui: String = "")
     own.openUrl(path)
   }
 
-  def onto(frm: WIN): Unit = own.onto(frm)
+  def onto(frm: Dlg): Unit = own.onto(frm)
 
   /**
    *
@@ -104,7 +104,7 @@ abstract class WIN(override val own: CanOwn, ui: String = "")
   def getVar(key: String): String = own.getVar(key)
 
 //  def TAB(func:Page => Locator):TAB[?,?] = ???
-def BTN[F <: WIN, T <: WIN](func:Page => Locator=null, idx:Int=0):Btn[F,T] = ???
+def BTN[F <: Dlg, T <: Dlg](func:Page => Locator=null, idx:Int=0):Btn[F,T] = ???
 def TXT(func:Page => Locator=null, idx:Int=0):Txt[?] = ???
 def CBX(func:Page => Locator=null, idx:Int=0):Cbx[?] = ???
 //  def TBL(func:Page => Locator):TBL[?] = ???

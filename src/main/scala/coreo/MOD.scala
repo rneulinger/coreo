@@ -7,7 +7,7 @@ package coreo
  * @param ret return target
  * @param typ
  */
-abstract class MOD(own: CanOwn, ret: Static, typ: String = "") extends WIN(own, typ)
+abstract class MOD(own: CanOwn, ret: Static, typ: String = "") extends Dlg(own, typ)
   with bricks.CancelFinish {
 
   Cancel.target = ret // discard -> back to PTT setting
