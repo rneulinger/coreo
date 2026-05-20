@@ -14,6 +14,6 @@ trait AddEditDeleteMoveUpMoveDown[F <: WIN, A <: WIN, E <: WIN, D <: WIN, UP <: 
   def ref: OWNER[F]
 
   // buttons right
-  final val MoveUp = BTN[F, UP]()(using ref) // move selected up ! in 1st line
-  final val MoveDown = BTN[F, DOWN]()(using ref) // move selected down ! in last line
+  final val MoveUp = Btn[F, UP]()(using ref) // move selected up ! in 1st line
+  final val MoveDown = Btn[F, DOWN]()(using ref) // move selected down ! in last line
 }

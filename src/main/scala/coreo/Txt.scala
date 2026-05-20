@@ -3,7 +3,7 @@ package coreo
 import com.microsoft.playwright.options.AriaRole
 import com.microsoft.playwright.{Locator, Page}
 
-class TXT[F <: WIN](b: By = null)(using ref: OWNER[F])
+class Txt[F <: WIN](b: By = null)(using ref: OWNER[F])
   extends DATA[F](b) {
 
 

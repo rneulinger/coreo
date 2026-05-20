@@ -19,24 +19,17 @@ final class Inputs_(own: CanOwn) extends FRM(own) {
     getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Clear Inputs")))
 
   @Ui("Input: Number")
-  val InputNumber = TXT( (p:Page) => p.
-    getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("Input: Number")))
+  val InputNumber = TXT( _.getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("Input: Number")))
 
   @Ui("Input: Text")
-  val InputText = new TXT( (p:Page) => p.
-    getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Input: Text"))){
-    override def gen(any: Any): String = {
-       s"$any..42"
-    }
-  }
+  val InputText = TXT( _.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Input: Text")))
+
 
   @Ui("Input: Password")
-  val InputPassword = TXT( (p:Page) => p.
-    getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("Input: Password")))
+  val InputPassword = TXT( _.getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("Input: Password")))
 
   @Ui("Input: Date")
-  val InputDate = TXT((p:Page) => p.
-    getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("Input: Date")))
+  val InputDate = TXT(_.getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("Input: Date")))
 
   @Ui("Output: Number")
   val OutputNumber = TXT( (p:Page) => p.

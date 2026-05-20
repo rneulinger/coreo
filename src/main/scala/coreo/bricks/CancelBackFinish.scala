@@ -12,9 +12,9 @@ import coreo.*
 trait CancelBackFinish[F <: WIN, C <: WIN, B <: WIN, N <: WIN]() {
   self: F =>
 
-  final val Cancel = BTN[F, C]()(using ref)
-  final val Back = BTN[F, B]()(using ref)
-  final val Finish = BTN[F, N]()(using ref)
+  final val Cancel = Btn[F, C]()(using ref)
+  final val Back = Btn[F, B]()(using ref)
+  final val Finish = Btn[F, N]()(using ref)
 
   def ref: OWNER[F]
 }
