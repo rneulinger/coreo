@@ -1,6 +1,6 @@
 package coreo
 
-final class Unknown_(own: CanOwn) extends DLG(own) {
+final class Unknown_(own: CanOwn) extends WIN(own) {
 
 }
 

@@ -5,7 +5,7 @@ import com.microsoft.playwright.options.*
 import coreo.*
 import coreo.bricks.*
 
-final class Inputs_(own: CanOwn) extends FRM(own) {
+final class Inputs_(own: CanOwn) extends WIN(own) {
   // tag::fields[]
   given ref: OWNER[Inputs_] = OWNER(this)
 

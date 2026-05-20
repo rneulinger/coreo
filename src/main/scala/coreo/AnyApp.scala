@@ -74,7 +74,7 @@ abstract class AnyApp extends OBJ with CanOwn {
         adoptedFrms = adoptedFrms.appended(frm)
     }
 
-  var currentWin: WIN = new DLG(this) {}
+  var currentWin: WIN = new WIN(this) {}
   val defaultWin = currentWin
 
   def findAtoms(name: String) = currentWin.findAtoms(name)
@@ -105,7 +105,7 @@ abstract class AnyApp extends OBJ with CanOwn {
       println(hits)
       if hits.size == 1 then
         hits.head.match {
-          case frm: Goto => frm.goto
+          case frm: WIN => frm.goto()
           case _ => println(s"${hits.head} is not of type Goto")
         }
     }
@@ -114,7 +114,7 @@ abstract class AnyApp extends OBJ with CanOwn {
       if (frms.keySet.contains(dest)) {
         val frm = frms(dest)
         frm match {
-          case f: Goto => f.goto
+          case f: WIN => f.goto()
           case _ => throw Exception(s"goto not supported: $frm has no path")
         }
       } else {
@@ -132,7 +132,7 @@ abstract class AnyApp extends OBJ with CanOwn {
       println(hits)
       if hits.size == 1 then
         hits.head.match {
-          case frm: Goto => frm.goto
+          case frm: WIN => frm.goto()
           case _ => println(s"${hits.head} is not of type Goto")
         }
     }

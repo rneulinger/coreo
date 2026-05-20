@@ -5,7 +5,7 @@ import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
 // tag::fields[]
-class Accessories_(own: CanOwn) extends DLG(own) {
+class Accessories_(own: CanOwn) extends WIN(own) {
 
 
 

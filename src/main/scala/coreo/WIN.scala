@@ -13,8 +13,10 @@ abstract class WIN(override val own: CanOwn, ui: String = "")
   val fullType: String = if (ui.isEmpty) myType else ui
   own.adopt(this)
 
-  def path: String
+  def path: String = ""
 
+  def goto():Unit = ???
+    
   def pathAbs = path.trim match {
     case "" => ""
     case x if x startsWith ("/") => x
