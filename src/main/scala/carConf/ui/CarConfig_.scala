@@ -6,7 +6,7 @@ import com.microsoft.playwright.{Locator, Page}
 
 import scala.language.postfixOps
 
-class CarConfig_(own: CanOwn) extends Dlg(own) {
+class CarConfig_(own: AnyApp) extends Dlg(own) {
 
   // tag::fields[]
 

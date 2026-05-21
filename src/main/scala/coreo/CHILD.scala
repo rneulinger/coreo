@@ -2,7 +2,7 @@ package coreo
 
 import com.microsoft.playwright.options.*
 
-abstract class CHILD
+abstract class xxxCHILD
   extends OBJ {
 
   def weight = 1

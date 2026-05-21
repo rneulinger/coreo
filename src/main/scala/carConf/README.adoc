@@ -9,7 +9,7 @@ image::Vehicles.png[]
 
 [,java]
 ----
-include::CarConfig.scala[tag=fields]
+include::CarConfig_.scala[tag=fields]
 ----
 
 == Vehicles

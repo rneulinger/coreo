@@ -14,6 +14,7 @@ trait CanOwn {
    * @return
    */
   def pg: Page
+  final def page: Page = pg
 
   def companion: Static = {
     val cls = this.getClass // e.g., com.example.X
@@ -39,9 +40,8 @@ trait CanOwn {
    *
    * @return
    */
-  final def page: Page = pg
 
-  def adopt(obj: OBJ): Unit
+//  def adopt(obj: OBJ): Unit
 
   def openUrl(path: String): Unit
 

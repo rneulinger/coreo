@@ -2,8 +2,8 @@ package coreo
 
 import com.microsoft.playwright.*
 
-abstract class Dlg(override val own: CanOwn, ui: String = "")
-  extends CHILD with CanOwn {
+abstract class Dlg(val own: AnyApp, ui: String = "")
+  extends OBJ { //with CanOwn {
   def app = own.app.asInstanceOf[PwApp]
 
   def Self = getClass.getName
@@ -26,18 +26,26 @@ abstract class Dlg(override val own: CanOwn, ui: String = "")
   override def pg: Page = own.pg
 
   private var adoptedAtoms = List[Ctrl[?]]()
+
+  final def datas: Map[String, Ctrl[?]] = atoms
+    .filter(_._2.isInstanceOf[Data[?]])
+    .collect { case d: (String, Data[?]) => d }
+
+  final def actions: Map[String, Action[?, ?]] = atoms
+    .filter(_._2.isInstanceOf[Action[?, ?]])
+    .collect { case a: (String, Action[?, ?]) => a }
+
   lazy val atoms: Map[String, Ctrl[?]] = {
     val tmp = adoptedAtoms.map(a => a.fullName -> a).toMap
     tmp
   }
 
-  override def weight = atoms.map(_._2.weight).sum + 1
+  def weight = atoms.map(_._2.weight).sum + 1
 
-  final def adopt(obj: OBJ): Unit =
-    obj match {
-      case ctrl: Ctrl[_] => adoptedAtoms = adoptedAtoms.appended(ctrl)
-      case frm: Dlg => own.adopt(obj)
-    }
+  final def adopt(ctrl: Ctrl[?]): Unit = {
+      adoptedAtoms = adoptedAtoms.appended(ctrl)
+  }
+
 
   def onto: Dlg = {
     own.onto(this)
@@ -46,7 +54,7 @@ abstract class Dlg(override val own: CanOwn, ui: String = "")
   }
 
   final def openUrl(path: String): Unit = {
-    own.openUrl(path)
+    own.asInstanceOf[PwApp].openUrl(path)
   }
 
   def onto(frm: Dlg): Unit = own.onto(frm)

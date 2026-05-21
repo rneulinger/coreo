@@ -5,7 +5,7 @@ import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
 
-class Vehicles(own: CanOwn) extends Dlg(own) {
+class Vehicles(own: AnyApp) extends Dlg(own) {
 
   // tag::fields[]
   given ref: OWNER[Vehicles] = OWNER(this)

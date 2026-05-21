@@ -1,16 +1,16 @@
 package coreo
 
-abstract class AnyApp extends OBJ with CanOwn {
+abstract class AnyApp extends OBJ { //with CanOwn {
   def app: AnyApp = this
 
-  private var adoptedAtoms = List[Ctrl[?]]()
-  private var adoptedFrms = List[Dlg]()
+//  private var adoptedAtoms = List[Ctrl[?]]()
+  private var adoptedDlgs = List[Dlg]()
 
-  lazy val atoms: Map[String, Ctrl[?]] = adoptedAtoms.map(a => a.fullName -> a).toMap
+  lazy val atoms: Map[String, Ctrl[?]] = ??? // adoptedAtoms.map(a => a.fullName -> a).toMap
 
   lazy val (short, full, frms) = {
-    val short = adoptedFrms.map(a => a.myType -> a).toMap
-    val full = adoptedFrms.map(a => a.fullType -> a).toMap
+    val short = adoptedDlgs.map(a => a.myType -> a).toMap
+    val full = adoptedDlgs.map(a => a.fullType -> a).toMap
     (short, full, short ++ full)
   }
 
@@ -21,21 +21,21 @@ abstract class AnyApp extends OBJ with CanOwn {
    * @return
    */
   def findWinByPath(name: String): List[Dlg] = {
-    adoptedFrms.filter(_.path.contains(name)).toList
+    adoptedDlgs.filter(_.path.contains(name)).toList
   }
   //  def findByUiName( name:String):List[WIN] = {
-  //    adoptedFrms.filter(_.contains(name)).toList
+  //    adoptedDlgs.filter(_.contains(name)).toList
   //  }
 
   def findWin(name: String): Dlg = {
     val byPath = findWinByPath(name)
     if byPath.length == 1 then return byPath.head
 
-    val res = adoptedFrms.find(_.Self == name)
+    val res = adoptedDlgs.find(_.Self == name)
     res match {
       case None =>
         val msg =
-          //${adoptedFrms.map(_.Self).mkString("\n")}
+          //${adoptedDlgs.map(_.Self).mkString("\n")}
           s"""Win not Found $name
              |""".stripMargin
         println(msg)
@@ -65,14 +65,9 @@ abstract class AnyApp extends OBJ with CanOwn {
     VARS.getOrElse(key, default)
   }
 
-  final def adopt(obj: OBJ): Unit =
-    obj match {
-      case ctrl: Ctrl[_] =>
-        adoptedAtoms = adoptedAtoms.appended(ctrl)
+  final def adopt(dlg: Dlg): Unit =
+        adoptedDlgs = adoptedDlgs.appended(dlg)
 
-      case frm: Dlg =>
-        adoptedFrms = adoptedFrms.appended(frm)
-    }
 
   var currentDlg: Dlg = new Dlg(this) {}
   val defaultWin = currentDlg
@@ -101,7 +96,7 @@ abstract class AnyApp extends OBJ with CanOwn {
 
     if clean.toLowerCase() == clean then {
       println("try to find by path:" + clean)
-      val hits = adoptedFrms.filter(_.pathAbs.contains(clean))
+      val hits = adoptedDlgs.filter(_.pathAbs.contains(clean))
       println(hits)
       if hits.size == 1 then
         hits.head.match {
@@ -128,7 +123,7 @@ abstract class AnyApp extends OBJ with CanOwn {
 
     if clean.toLowerCase() == clean then {
       println("try to find by path:" + clean)
-      val hits = adoptedFrms.filter(_.pathAbs.contains(clean))
+      val hits = adoptedDlgs.filter(_.pathAbs.contains(clean))
       println(hits)
       if hits.size == 1 then
         hits.head.match {

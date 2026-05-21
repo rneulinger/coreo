@@ -1,6 +1,6 @@
 package coreo
 
-final class Unknown_(own: CanOwn) extends Dlg(own) {
+final class Unknown_(own: AnyApp) extends Dlg(own) {
 
 }
 

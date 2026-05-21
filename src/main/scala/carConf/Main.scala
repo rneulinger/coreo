@@ -28,10 +28,10 @@ class Main extends PwApp(s) {
 
 
   // TODO Mene
-  val _CarConfig: CarConfig = CarConfig(this)
-  val _SpecialsTab: TAB[CarConfig,?] = _CarConfig.SpecialsTab
-  val _VehiclesTab: TAB[CarConfig, ?] = _CarConfig.VehiclesTab
-  val _AccessoriesTab: TAB[CarConfig, ?] = _CarConfig.AccessoriesTab
+  val _CarConfig: CarConfig_ = CarConfig_(this)
+  val _SpecialsTab: TAB[CarConfig_,?] = _CarConfig.SpecialsTab
+  val _VehiclesTab: TAB[CarConfig_, ?] = _CarConfig.VehiclesTab
+  val _AccessoriesTab: TAB[CarConfig_, ?] = _CarConfig.AccessoriesTab
 
   val _Specials = Specials_(this)
   val _SpecialsDialog = SpecialsDialog_(this)

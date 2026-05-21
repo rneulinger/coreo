@@ -7,6 +7,7 @@ import java.io.PrintWriter
 
 class PwApp(val baseUrl: String) extends AnyApp {
   def nameOfApp = "No Name"
+  final def page: Page = pg
 
   override def app: PwApp = this
 
@@ -65,7 +66,7 @@ class PwApp(val baseUrl: String) extends AnyApp {
    * current view
    */
 
-  override def openUrl(path: String): Unit = pg.navigate(baseUrl + path)
+  def openUrl(path: String): Unit = pg.navigate(baseUrl + path)
 
   def gui: GUI = GUI(this)
 

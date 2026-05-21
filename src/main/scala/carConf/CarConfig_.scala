@@ -7,12 +7,12 @@ import com.microsoft.playwright.{Locator, Page}
 
 import scala.language.postfixOps
 
-class CarConfig(own: CanOwn)
+class CarConfig_(own: AnyApp)
   extends Dlg(own) {
 
   // tag::fields[]
 
-  given ref: OWNER[CarConfig] = OWNER(this)
+  given ref: OWNER[CarConfig_] = OWNER(this)
 
   def byName(name: String): Page => Locator =
     _.getByRole(AriaRole.LINK,

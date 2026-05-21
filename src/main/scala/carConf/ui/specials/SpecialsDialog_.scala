@@ -3,7 +3,7 @@ package carConf.ui.specials
 import com.microsoft.playwright.Page
 import coreo.*
 
-class SpecialsDialog_(own: CanOwn) extends Dlg(own) {
+class SpecialsDialog_(own: AnyApp) extends Dlg(own) {
 
   // tag::fields[]
   given ref: OWNER[SpecialsDialog_] = OWNER(this)
