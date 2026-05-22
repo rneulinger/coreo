@@ -5,10 +5,9 @@ import coreo.bricks.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
+// tag::fields[]
 class PurchaseOrderDetails_(own: AnyApp) extends Dlg(own) {
 
-  // tag::fields[]
-  given ref: OWNER[PurchaseOrderDetails_] = OWNER(this)
 
 
   val SelectedVehicle = TXT()
@@ -41,6 +40,7 @@ class PurchaseOrderDetails_(own: AnyApp) extends Dlg(own) {
 
 
   // end::fields[]
+  given ref: PurchaseOrderDetails_ = this
 }
 
 object PurchaseOrderDetails_ {}

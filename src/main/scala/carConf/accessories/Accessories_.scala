@@ -6,9 +6,8 @@ import com.microsoft.playwright.options.*
 
 import scala.annotation.nowarn
 
+// tag::fields[]
 class Accessories_(own: AnyApp) extends Dlg(own) {
-
-  // tag::fields[]
 
   @Ui("Base price")
   val BasePrice = TXT(_.locator("#BasePrice_input"))
@@ -30,5 +29,5 @@ class Accessories_(own: AnyApp) extends Dlg(own) {
 
   val Accessories = TBL( _.locator("#AccessoryTable"))
   // end::fields[]
-  given ref: OWNER[Accessories_] = OWNER(this)
+  given ref: Accessories_ = this
 }

@@ -3,10 +3,10 @@ package carConf.ui.specials
 import com.microsoft.playwright.Page
 import coreo.*
 
+// tag::fields[]
 class SpecialsDialog_(own: AnyApp) extends Dlg(own) {
 
-  // tag::fields[]
-  given ref: OWNER[SpecialsDialog_] = OWNER(this)
+  given ref: SpecialsDialog_ = this
 
   val Specials = TAB( _.
     locator("#SpecialsTable"))

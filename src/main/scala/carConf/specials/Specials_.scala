@@ -27,7 +27,7 @@ class Specials_(own: AnyApp) extends Dlg(own)
   val FinalPrice = TXT(_.getByText("$3,438.25")) // Wrong
 
   // end::fields[]
-  given ref: OWNER[Specials_] = OWNER(this)
+  given ref: Specials_ = this
 
 }
 

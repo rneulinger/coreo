@@ -5,10 +5,8 @@ import coreo.bricks.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
+// tag::fields[]
 class VehiclesDialog_(own: AnyApp) extends Dlg(own) {
-
-  // tag::fields[]
-  given ref: OWNER[VehiclesDialog_] = OWNER(this)
 
   val Vehicles = TBL( _.
     locator("#VehiclesTable"))
@@ -38,6 +36,7 @@ class VehiclesDialog_(own: AnyApp) extends Dlg(own) {
     getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")))
 
   // end::fields[]
+  given ref: VehiclesDialog_ = this
 }
 
 object VehiclesDialog_ {}

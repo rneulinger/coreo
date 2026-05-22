@@ -5,10 +5,8 @@ import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
 
+// tag::fields[]
 class Vehicles(own: AnyApp) extends Dlg(own) {
-
-  // tag::fields[]
-  given ref: OWNER[Vehicles] = OWNER(this)
 
   val Vehicles = TBL( _.
     locator("#VehicleTablePanel"))
@@ -33,4 +31,5 @@ class Vehicles(own: AnyApp) extends Dlg(own) {
     locator("#CalculatedPrice_input"))
 
   // end::fields[]
+  given ref: Vehicles = this
 }

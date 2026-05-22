@@ -8,8 +8,6 @@ import com.microsoft.playwright.options.*
 class PurchaseOrderDetails_(own: AnyApp) extends Dlg(own) {
 
   // tag::fields[]
-  given ref: OWNER[PurchaseOrderDetails_] = OWNER(this)
-
 
   val SelectedVehicle = TXT()
 
@@ -39,4 +37,5 @@ class PurchaseOrderDetails_(own: AnyApp) extends Dlg(own) {
 
 
   // end::fields[]
+  given ref:PurchaseOrderDetails_ = this
 }

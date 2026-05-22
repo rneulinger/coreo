@@ -8,8 +8,6 @@ import com.microsoft.playwright.options.*
 class AccessoriesDialog_(own: AnyApp) extends Dlg(own) {
 
   // tag::fields[]
-  given ref: OWNER[AccessoriesDialog_] = OWNER(this)
-
 
   val AccessoryName = TXT()
 
@@ -29,4 +27,5 @@ class AccessoriesDialog_(own: AnyApp) extends Dlg(own) {
   val Cancel = BTN()
 
   // end::fields[]
+  given ref: AccessoriesDialog_ = this
 }

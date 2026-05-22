@@ -5,9 +5,8 @@ import com.microsoft.playwright.options.*
 import coreo.*
 import coreo.bricks.*
 
+// tag::fields[]
 final class Inputs_(own: AnyApp) extends Dlg(own) {
-  // tag::fields[]
-  given ref: OWNER[Inputs_] = OWNER(this)
 
   // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this
   override def path: String = "inputs"
@@ -48,4 +47,5 @@ final class Inputs_(own: AnyApp) extends Dlg(own) {
     getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("Output: Date")))
 
   // end::fields[]
+  given ref: Inputs_ = this
 }

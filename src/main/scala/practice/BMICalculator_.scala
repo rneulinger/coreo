@@ -2,9 +2,8 @@ package practice
 
 import coreo.*
 
+// tag::fields[]
 final class BMICalculator_(own: AnyApp) extends Dlg(own, "BMI Calculator") {
-  // tag::fields[]
-  given ref: OWNER[BMICalculator_] = OWNER(this)
 
   // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this
   override def path: String = "bmi"
@@ -22,4 +21,5 @@ final class BMICalculator_(own: AnyApp) extends Dlg(own, "BMI Calculator") {
   val Clear = BTN()
 
   // end::fields[]
+  given ref: BMICalculator_ = this
 }

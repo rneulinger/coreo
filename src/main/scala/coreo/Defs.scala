@@ -51,10 +51,6 @@ def opt(name: String | Pattern = "", exact: Boolean = false): Opt = {
   ???
 }
 
-
-/** wrapper for given / using i FRM */
-case class OWNER[+WIN](own: WIN)
-
 object Defs {
   /**
    * splits up a string and make it camel case

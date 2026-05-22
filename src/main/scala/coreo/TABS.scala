@@ -8,5 +8,5 @@ import coreo.*
 trait TABS {
   self: Dlg =>
 
-  given ref: OWNER[Dlg]
+  given ref: Dlg
 }

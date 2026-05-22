@@ -20,7 +20,7 @@ class SpecialsDialog_(own: AnyApp) extends Dlg(own) {
   val Specials = TAB(_.locator("#SpecialsTable"))
 
   // end::fields[]
-  given ref: OWNER[SpecialsDialog_] = OWNER(this)
+  given ref: SpecialsDialog_ = this
 
 }
 

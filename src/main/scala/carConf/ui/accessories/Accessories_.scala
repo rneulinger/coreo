@@ -7,8 +7,6 @@ import com.microsoft.playwright.options.*
 // tag::fields[]
 class Accessories_(own: AnyApp) extends Dlg(own) {
 
-
-
   val Accessories = TBL( _.locator("#AccessoryTable"))
 
   val AddAccessoriesPriceToFinalPrice = CBX(_.getByRole(AriaRole.CHECKBOX, new Page.GetByRoleOptions().setName("Add accessories price to")))
@@ -27,7 +25,7 @@ class Accessories_(own: AnyApp) extends Dlg(own) {
   val FinalPrice = TXT( _.getByText("$3,236.00")) // Wrong
 
   // end::fields[]
-  given ref: OWNER[Accessories_] = OWNER(this)
+  given ref: Accessories_ = this
 }
 
 object Accessories_ {}

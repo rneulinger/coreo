@@ -5,10 +5,9 @@ import coreo.bricks.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
+// tag::fields[]
 class AccessoriesDialog_(own: AnyApp) extends Dlg(own) {
 
-  // tag::fields[]
-  given ref: OWNER[AccessoriesDialog_] = OWNER(this)
 
   val AccessoryName = TXT()
 
@@ -17,6 +16,7 @@ class AccessoriesDialog_(own: AnyApp) extends Dlg(own) {
   val Price = TXT()
 
   // end::fields[]
+  given ref: AccessoriesDialog_ = this
 }
 
 object AccessoriesDialog_ {}

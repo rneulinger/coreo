@@ -4,11 +4,9 @@ import coreo.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
+// tag::fields[]
 class Specials_(own: AnyApp) extends Dlg(own)
   with coreo.bricks.NewChangDeleteDetailsCancelOK {
-
-  // tag::fields[]
-  given ref: OWNER[Specials_] = OWNER(this)
 
   val Specials = CBX( _.
     locator("#SpecialsCombo"))
@@ -36,7 +34,7 @@ class Specials_(own: AnyApp) extends Dlg(own)
     getByText("$3,438.25")) // Wrong
 
   // end::fields[]
-
+  given ref: Specials_ = this
 }
 
 object Specials_ {}

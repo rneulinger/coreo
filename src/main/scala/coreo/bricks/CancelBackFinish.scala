@@ -16,5 +16,5 @@ trait CancelBackFinish[F <: Dlg, C <: Dlg, B <: Dlg, N <: Dlg]() {
   final val Back = Btn[F, B]()(using ref)
   final val Finish = Btn[F, N]()(using ref)
 
-  def ref: OWNER[F]
+  def ref: F
 }

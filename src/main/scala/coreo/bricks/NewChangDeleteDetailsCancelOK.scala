@@ -5,7 +5,7 @@ import coreo.*
 trait NewChangDeleteDetailsCancelOK[F <: Dlg]() {
   self: F =>
 
-  def ref: OWNER[F]
+  def ref: F
 
   //  final val New = BTN[F]()(using ref)
   //  final val Change = BTN[F]()(using ref)

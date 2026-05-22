@@ -11,8 +11,8 @@ import coreo.*
 trait OkCancel[F <: Dlg, OK <: Dlg, C <: Dlg]() {
   self: F =>
 
-  def ref: OWNER[F]
 
   final val Ok = Btn[F, OK]()(using ref)
   final val Cancel = Btn[F, C]()(using ref)
+  def ref: F
 }

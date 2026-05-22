@@ -17,5 +17,5 @@ trait AddEditDelete[F <: Dlg, A <: Dlg, E <: Dlg, D <: Dlg] {
   final val Delete = Btn[F, D]()(using ref) // delete selected
   //end::fields[]
 
-  def ref: OWNER[F]
+  def ref: F
 }
