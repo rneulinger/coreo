@@ -58,7 +58,7 @@ class Main extends PwApp(s) {
 
   def goto(mnu: Menu) = {
     def click(s: String): Unit = {
-      page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(s)).click();
+      page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(s)).click()
     }
 
     def click2(s: String, s2: String): Unit = {

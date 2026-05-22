@@ -61,7 +61,7 @@ abstract class Dlg(val own: AnyApp, ui: String = "")
 
   /**
    *
-   * @param name
+   * @param name name of control
    * @return
    */
   def findAtom(name: String): Option[Ctrl[?]] = {

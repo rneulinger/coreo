@@ -24,7 +24,7 @@ abstract class Ctrl[F <: Dlg](b: By, idx:Int=0)(using ref: OWNER[F])
   //println( "UiName:"+uiName)
 
   final def setLoc(loc: Page => Locator): Unit = {
-    this.lfunc = loc;
+    this.lfunc = loc
   }
 
   final def parentType: String = own.getClass.getSimpleName

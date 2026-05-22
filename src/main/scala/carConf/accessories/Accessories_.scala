@@ -4,6 +4,8 @@ import coreo.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
+import scala.annotation.nowarn
+
 class Accessories_(own: AnyApp) extends Dlg(own) {
 
   // tag::fields[]

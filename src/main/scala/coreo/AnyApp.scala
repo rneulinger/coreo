@@ -17,11 +17,11 @@ abstract class AnyApp extends OBJ { //with CanOwn {
   /**
    * short   *
    *
-   * @param name
+   * @param name of dialog
    * @return
    */
   def findWinByPath(name: String): List[Dlg] = {
-    adoptedDlgs.filter(_.path.contains(name)).toList
+    adoptedDlgs.filter(_.path.contains(name))
   }
   //  def findByUiName( name:String):List[WIN] = {
   //    adoptedDlgs.filter(_.contains(name)).toList

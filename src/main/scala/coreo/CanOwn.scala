@@ -5,7 +5,7 @@ import com.microsoft.playwright.*
 /**
  * either Root or WIN
  */
-trait CanOwn {
+trait CanOwnXXX {
   def app: AnyApp
 
   /**
