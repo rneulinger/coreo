@@ -2,7 +2,7 @@ package practice
 
 import coreo.*
 
-class PrecticeApp extends PwApp("https://practice.expandtesting.com/"){
+class PracticeApp extends PwApp("https://practice.expandtesting.com/"){
   override def nameOfApp = "Practice"
 
   override def predefBaseUrls = Map("Local" -> baseUrl)

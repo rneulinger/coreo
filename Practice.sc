@@ -4,16 +4,9 @@ import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 import coreo.*
 
-class Practice extends practice.Practice{
-
-
-
-
-
-
-
+class Practice extends practice.PracticeApp{
 }
 
-lazy val `/` = Practice()
+lazy val `/` = new Practice()
 
 //P.home
