@@ -2,14 +2,14 @@ package coreo.bricks
 
 import coreo.*
 
-trait CancelNext[F <: Dlg, C <: Dlg, N <: Dlg]() {
+trait CancelNext[F <: Dlg]() {
   self: F =>
 
 
-  @To(Return)
-  final val Cancel = Btn[F, C]()(using ref)
-  @To(Overload)
-  final val Next = Btn[F, N]()(using ref)
+  @To(dest = classOf[Return])
+  final val Cancel = Btn[F]()(using ref)
+  @To()
+  final val Next = Btn[F]()(using ref)
 
   def ref: F
 }

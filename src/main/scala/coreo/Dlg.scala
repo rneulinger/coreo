@@ -31,9 +31,9 @@ abstract class Dlg(val own: AnyApp, ui: String = "")
     .filter(_._2.isInstanceOf[Data[?]])
     .collect { case d: (String, Data[?]) => d }
 
-  final def actions: Map[String, Action[?, ?]] = atoms
-    .filter(_._2.isInstanceOf[Action[?, ?]])
-    .collect { case a: (String, Action[?, ?]) => a }
+  final def actions: Map[String, Action[?]] = atoms
+    .filter(_._2.isInstanceOf[Action[?]])
+    .collect { case a: (String, Action[?]) => a }
 
   lazy val atoms: Map[String, Ctrl[?]] = {
     val tmp = adoptedAtoms.map(a => a.fullName -> a).toMap
@@ -112,10 +112,10 @@ abstract class Dlg(val own: AnyApp, ui: String = "")
   def getVar(key: String): String = own.getVar(key)
 
   //  def TAB(func:Page => Locator):TAB[?,?] = ???
-  def BTN[F <: Dlg, T <: Dlg](func:Page => Locator=null, idx:Int=0):Btn[F,T] = ???
+  def BTN[F <: Dlg](func:Page => Locator=null, idx:Int=0):Btn[F] = ???
   def TXT(func:Page => Locator=null, idx:Int=0):Txt[?] = ???
   def CBX(func:Page => Locator=null, idx:Int=0):Cbx[?] = ???
-  def TAB(func:Page => Locator=null, idx:Int=0):Tab[?,?] = ???
+  def TAB(func:Page => Locator=null, idx:Int=0):Tab[?] = ???
   def TBL(func:Page => Locator=null, idx:Int=0):Tbl[?] = ???
   //  def TBL(func:Page => Locator):TBL[?] = ???
 }

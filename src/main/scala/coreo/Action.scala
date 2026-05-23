@@ -1,13 +1,13 @@
 package coreo
 
-abstract class Action[F <: Dlg, T <: Dlg](b: By)(using ref: F)
+abstract class Action[F <: Dlg](b: By)(using ref: F)
   extends Ctrl[F](b) {
 
   override def weight = 2
 
   var target: Static = Unknown_
 
-  lazy val action: Option[T] = None // TODO implement lookup
+//  lazy val action: Option[T] = None // TODO implement lookup
 
   override def click: F =
     super.click

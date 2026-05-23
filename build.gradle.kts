@@ -1,6 +1,7 @@
+
 plugins {
     scala
-    //java
+    java
 }
 
 repositories {
@@ -9,8 +10,8 @@ repositories {
 
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 dependencies {
@@ -33,4 +34,11 @@ dependencies {
 
 tasks.test {
     useJUnit()
+}
+
+tasks.withType<ScalaCompile>().configureEach {
+    scalaCompileOptions.additionalParameters = listOf(
+        "-source:3.6-migration",
+        "-rewrite"
+    )
 }

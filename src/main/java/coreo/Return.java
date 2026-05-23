@@ -1,4 +1,4 @@
 package coreo;
 
-public final class Return implements Destination{
+public class Return  implements Destination{
 }

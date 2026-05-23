@@ -9,11 +9,11 @@ import java.lang.annotation.ElementType;
 
 /**
  * focus goes to this window, usable in Actions.
- * if RETURN is provided as parameter action returns to previous dialog 
+ * if RETURN is provided as parameter action returns to previous dialog
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)   // TYPE = class, interface, enum, record
 
 public @interface To {
-    Class<? extends Destination> type();
+    Class<? extends Destination> dest() default Overload.class;
 }

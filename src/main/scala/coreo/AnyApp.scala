@@ -140,7 +140,7 @@ abstract class AnyApp extends Obj { //with CanOwn {
       }
   }
 
-  def findRelationsFor(dlg: Dlg): Map[Action[?, ?], Dlg] = {
+  def findRelationsFor(dlg: Dlg): Map[Action[?], Dlg] = {
     val res = for (frm <- frms; act <- frm._2.actions) yield {
       act._2 -> frm._2
     }

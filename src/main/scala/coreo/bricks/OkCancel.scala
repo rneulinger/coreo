@@ -8,13 +8,13 @@ import coreo.*
  * @tparam F
  * has buttons Ok, Cancel
  */
-trait OkCancel[F <: Dlg, OK <: Dlg, C <: Dlg]() {
+trait OkCancel[F <: Dlg]() {
   self: F =>
 
 
-  @To(Return)
-  final val Ok = Btn[F, OK]()(using ref)
-  @To(Return)
-  final val Cancel = Btn[F, C]()(using ref)
+  @To(dest = classOf[Return])
+  final val Ok = Btn[F]()(using ref)
+  @To(dest = classOf[Return])
+  final val Cancel = Btn[F]()(using ref)
   def ref: F
 }
