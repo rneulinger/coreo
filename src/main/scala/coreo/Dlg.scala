@@ -19,7 +19,7 @@ abstract class Dlg(val own: AnyApp, ui: String = "")
 
   def pathAbs = path.trim match {
     case "" => ""
-    case x if x startsWith ("/") => x
+    case x if x.startsWith ("/") => x
     case x => "/" + x
   }
 
@@ -111,11 +111,11 @@ abstract class Dlg(val own: AnyApp, ui: String = "")
 
   def getVar(key: String): String = own.getVar(key)
 
-//  def TAB(func:Page => Locator):TAB[?,?] = ???
-def BTN[F <: Dlg, T <: Dlg](func:Page => Locator=null, idx:Int=0):Btn[F,T] = ???
-def TXT(func:Page => Locator=null, idx:Int=0):Txt[?] = ???
-def CBX(func:Page => Locator=null, idx:Int=0):Cbx[?] = ???
-def TAB(func:Page => Locator=null, idx:Int=0):Tab[?,?] = ???
-def TBL(func:Page => Locator=null, idx:Int=0):Tbl[?] = ???
-//  def TBL(func:Page => Locator):TBL[?] = ???
+  //  def TAB(func:Page => Locator):TAB[?,?] = ???
+  def BTN[F <: Dlg, T <: Dlg](func:Page => Locator=null, idx:Int=0):Btn[F,T] = ???
+  def TXT(func:Page => Locator=null, idx:Int=0):Txt[?] = ???
+  def CBX(func:Page => Locator=null, idx:Int=0):Cbx[?] = ???
+  def TAB(func:Page => Locator=null, idx:Int=0):Tab[?,?] = ???
+  def TBL(func:Page => Locator=null, idx:Int=0):Tbl[?] = ???
+  //  def TBL(func:Page => Locator):TBL[?] = ???
 }
