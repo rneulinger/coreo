@@ -1,46 +1,35 @@
 package carConf
 
+import com.microsoft.playwright.Page
+import com.microsoft.playwright.options.AriaRole
 import coreo.*
-import carConf.specials.Specials_
-import com.microsoft.playwright.*
-import com.microsoft.playwright.options.*
 
 import carConf.specials.*
-import carConf.vehicles.*
 import carConf.accessories.*
+import carConf.vehicles.*
 
-/*
-{
-  import $ivy.`com.microsoft.playwright:playwright:1.53.0`
-  import $cp.`./build/libs/burli.jar`
-  import com.microsoft.playwright.*
-  import com.microsoft.playwright.options.*
-  import burli.*
-  import carConf.*
-}
-*/
 val s = "file:///C:/Projects/carconfigWeb/html/CarConfig.htm?lang=en#"
 
-class Main extends PwApp(s) {
+class CarConfigApp extends PwApp(""){
   override def nameOfApp = "Car Configurator"
 
   override def predefBaseUrls = Map("Local" -> s)
 
-
   // TODO Mene
   val _CarConfig: CarConfig_ = CarConfig_(this)
-  val _SpecialsTab: TAB[CarConfig_,?] = _CarConfig.SpecialsTab
-  val _VehiclesTab: TAB[CarConfig_, ?] = _CarConfig.VehiclesTab
-  val _AccessoriesTab: TAB[CarConfig_, ?] = _CarConfig.AccessoriesTab
+//  val _SpecialsTab: TAB[CarConfig_,?] = _CarConfig.SpecialsTab
+//  val _VehiclesTab: TAB[CarConfig_, ?] = _CarConfig.VehiclesTab
+//  val _AccessoriesTab: TAB[CarConfig_, ?] = _CarConfig.AccessoriesTab
 
   val _Specials = Specials_(this)
   val _SpecialsDialog = SpecialsDialog_(this)
 
-  val _Vehicles = Vehicles(this)
-  val _VehiclesDialog = VehiclesDialog(this)
+  val _Vehicles = Vehicles_(this)
+  val _VehiclesDialog = VehiclesDialog_(this)
 
   val _Accessories = Accessories_(this)
   val _AccessoriesDialog = AccessoriesDialog_(this)
+
 
   object specials {
   }
@@ -87,6 +76,5 @@ class Main extends PwApp(s) {
       case Menu.Help_LoadTestingModule => click2("Help", "Load testing mode")
     }
   }
+  
 }
-
-

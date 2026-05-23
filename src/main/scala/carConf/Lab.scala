@@ -5,12 +5,13 @@ import com.microsoft.playwright.options.*
 
 import coreo.*
 
-object Lab extends Main() {
-  lazy val C1: Main = new Main()
-  lazy val C2: Main = new Main()
-  lazy val `/`: Main = this
+object Lab extends CarConfigApp() {
+  lazy val C1: CarConfigApp = new CarConfigApp()
+  lazy val C2: CarConfigApp = new CarConfigApp()
+  lazy val `/`: CarConfigApp = this
 
   @main def clickMains(): Unit = {
+/*
     _SpecialsTab.click
     _AccessoriesTab.click
     _VehiclesTab.click
@@ -53,6 +54,7 @@ object Lab extends Main() {
     goto(Menu.Help_Buggy)
     goto(Menu.Help_LoadTestingModule)
 
+*/
     dump()
     close()
   }

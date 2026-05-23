@@ -2,9 +2,13 @@ package coreo
 
 import com.microsoft.playwright.{Locator, Page}
 
-abstract class OBJ {
+/**
+ * baseclass for all members of an application
+ * that is app, dialogs and controls
+ */
+abstract class Obj {
   def pg: Page
-
+  def app : AnyApp
   def myType: String = this.getClass.getSimpleName
     .reverse.dropWhile(_.toString == "_")
     .reverse.mkString("")

@@ -1,6 +1,6 @@
 package coreo
 
-abstract class AnyApp extends OBJ { //with CanOwn {
+abstract class AnyApp extends Obj { //with CanOwn {
   def app: AnyApp = this
 
 //  private var adoptedAtoms = List[Ctrl[?]]()

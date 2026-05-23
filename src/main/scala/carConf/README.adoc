@@ -18,7 +18,7 @@ image::Vehicles.png[]
 
 [,java]
 ----
-include::vehicles/Vehicles.scala[tag=fields]
+include::vehicles/Vehicles_.scala[tag=fields]
 ----
 
 === Vehicles Dialog
@@ -27,7 +27,7 @@ image::VehiclesDialog.png[]
 
 [,java]
 ----
-include::vehicles/VehiclesDialog.scala[tag=fields]
+include::vehicles/VehiclesDialog_.scala[tag=fields]
 ----
 
 == Specials

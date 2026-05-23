@@ -6,7 +6,7 @@ import com.microsoft.playwright.options.*
 import java.util.regex.Pattern
 
 abstract class Ctrl[F <: Dlg](b: By, idx:Int=0)(using dlg: F)
-  extends OBJ {
+  extends Obj {
   def weight = 1
   def ariaRole:AriaRole = AriaRole.GENERIC
   final val own: F = dlg

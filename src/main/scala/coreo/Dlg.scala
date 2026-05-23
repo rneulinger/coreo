@@ -3,7 +3,7 @@ package coreo
 import com.microsoft.playwright.*
 
 abstract class Dlg(val own: AnyApp, ui: String = "")
-  extends OBJ { //with CanOwn {
+  extends Obj { //with CanOwn {
   def app = own.app.asInstanceOf[PwApp]
 
   def Self = getClass.getName
@@ -115,5 +115,7 @@ abstract class Dlg(val own: AnyApp, ui: String = "")
 def BTN[F <: Dlg, T <: Dlg](func:Page => Locator=null, idx:Int=0):Btn[F,T] = ???
 def TXT(func:Page => Locator=null, idx:Int=0):Txt[?] = ???
 def CBX(func:Page => Locator=null, idx:Int=0):Cbx[?] = ???
+def TAB(func:Page => Locator=null, idx:Int=0):Tab[?,?] = ???
+def TBL(func:Page => Locator=null, idx:Int=0):Tbl[?] = ???
 //  def TBL(func:Page => Locator):TBL[?] = ???
 }
