@@ -3,7 +3,7 @@ package coreo
 import com.microsoft.playwright.*
 
 abstract class Dlg(val own: AnyApp, ui: String = "")
-  extends Obj { //with CanOwn {
+  extends Obj with Destination{ //with CanOwn {
   def app = own.app.asInstanceOf[PwApp]
 
   def Self = getClass.getName

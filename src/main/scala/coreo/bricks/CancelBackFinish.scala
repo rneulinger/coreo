@@ -12,8 +12,11 @@ import coreo.*
 trait CancelBackFinish[F <: Dlg, C <: Dlg, B <: Dlg, N <: Dlg]() {
   self: F =>
 
+  @To(Return)
   final val Cancel = Btn[F, C]()(using ref)
+  @To(Overload)
   final val Back = Btn[F, B]()(using ref)
+  @To(Return)
   final val Finish = Btn[F, N]()(using ref)
 
   def ref: F
