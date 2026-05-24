@@ -5,19 +5,19 @@ import coreo.*
 /**
  * Decorator Button 
  *
- * @tparam F
+ * @tparam D
  * has buttons Cancel, Back Next
  */
 
-trait CancelBackFinish[F <: ADlg]() {
-  self: F =>
+trait CancelBackFinish[D <: ADlg]() {
+  self: D =>
 
   @To(dest = classOf[Return])
-  final val Cancel = Btn[F]()(using ref)
+  final val Cancel = Btn[D]()(using ref)
   @To()
-  final val Back = Btn[F]()(using ref)
+  final val Back = Btn[D]()(using ref)
   @To(dest = classOf[Return])
-  final val Finish = Btn[F]()(using ref)
+  final val Finish = Btn[D]()(using ref)
 
-  def ref: F
+  def ref: D
 }

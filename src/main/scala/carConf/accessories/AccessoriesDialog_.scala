@@ -5,13 +5,12 @@ import coreo.bricks.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
+// tag::fields[]
 class AccessoriesDialog_(using own: AnyApp) extends Dlg {
-
-  // tag::fields[]
 
   val AccessoryName = TXT()
 
-  val ID = TXT()
+  val Id = TXT()
 
   val Price = TXT()
 

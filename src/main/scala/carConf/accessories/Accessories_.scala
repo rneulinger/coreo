@@ -4,18 +4,13 @@ import coreo.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
-import scala.annotation.nowarn
-
 // tag::fields[]
 class Accessories_(using own: AnyApp) extends Dlg() {
 
-  @Ui("Base price")
   val BasePrice = TXT(_.locator("#BasePrice_input"))
 
-  @Ui("Special price")
   val SpecialPrice = TXT(_.getByText("$4,045.00")) // wrong
 
-  @Ui("Accessories price")
   val AccessoriesPrice = TXT( _.locator("#AccessoryPrice_input"))
 
   val Discount = TXT(_.locator("#DiscountValue_input"))

@@ -1,5 +1,5 @@
 package coreo
 
-abstract class Data[F <: ADlg](b: By)(using ref: F)
-  extends Ctrl[F](b) {
+abstract class Data[D <: ADlg](b: By)(using ref: D)
+  extends Ctrl[D](b) {
 }

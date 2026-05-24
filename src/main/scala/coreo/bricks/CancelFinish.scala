@@ -2,13 +2,13 @@ package coreo.bricks
 
 import coreo.*
 
-trait CancelFinish[F <: ADlg]() {
-  self: F =>
+trait CancelFinish[D <: ADlg]() {
+  self: D =>
 
 
   @To(dest = classOf[Return])
-  final val Cancel = new Btn[F]()(using ref)
+  final val Cancel = new Btn[D]()(using ref)
   @To(dest = classOf[Return])
-  final val Finish = new Btn[F]()(using ref)
-  def ref: F
+  final val Finish = new Btn[D]()(using ref)
+  def ref: D
 }

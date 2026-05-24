@@ -5,16 +5,16 @@ import coreo.*
 /**
  * Decorator Button
  *
- * @tparam F
+ * @tparam D
  * has buttons Ok, Cancel
  */
-trait OkCancel[F <: ADlg]() {
-  self: F =>
+trait OkCancel[D <: ADlg]() {
+  self: D =>
 
 
   @To(dest = classOf[Return])
-  final val Ok = Btn[F]()(using ref)
+  final val Ok = Btn[D]()(using ref)
   @To(dest = classOf[Return])
-  final val Cancel = Btn[F]()(using ref)
-  def ref: F
+  final val Cancel = Btn[D]()(using ref)
+  def ref: D
 }

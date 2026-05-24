@@ -1,6 +1,6 @@
 :doctype: book
 :toc:
-
+:imagesdir: images
 = App
 
 == Car Configurator

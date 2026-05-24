@@ -5,19 +5,19 @@ import coreo.*
 /**
  * Decorator Button 
  *
- * @tparam F owner of these buttons
+ * @tparam D owner of these buttons
  */
 //tag::fields[]
-trait AddEditDelete[F <: ADlg] {
-  self: F =>
+trait AddEditDelete[D <: ADlg] {
+  self: D =>
 
   @To()
-  final val Add = Btn[F]()(using ref) // new Dialog
+  final val Add = Btn[D]()(using ref) // new Dialog
   @To()
-  final val Edit = Btn[F]()(using ref) // edit selected
+  final val Edit = Btn[D]()(using ref) // edit selected
   @To()
-  final val Delete = Btn[F]()(using ref) // delete selected
+  final val Delete = Btn[D]()(using ref) // delete selected
   //end::fields[]
-  def ref: F
+  def ref: D
 
 }

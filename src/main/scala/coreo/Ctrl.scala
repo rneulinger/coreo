@@ -5,11 +5,11 @@ import com.microsoft.playwright.options.*
 
 import java.util.regex.Pattern
 
-abstract class Ctrl[F <: ADlg](b: By, idx:Int=0)(using dlg: F)
+abstract class Ctrl[D <: ADlg](b: By, idx:Int=0)(using dlg: D)
   extends Obj {
   def weight = 1
   def ariaRole:AriaRole = AriaRole.GENERIC
-  final val own: F = dlg
+  final val own: D = dlg
   val name:String =  ???
   final def app: PwApp = own.app.asInstanceOf[PwApp]
   final def nameUi: String = if name.trim.isEmpty then fullName else name

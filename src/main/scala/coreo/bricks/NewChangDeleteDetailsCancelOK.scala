@@ -2,10 +2,10 @@ package coreo.bricks
 
 import coreo.*
 
-trait NewChangDeleteDetailsCancelOK[F <: ADlg]() {
-  self: F =>
+trait NewChangDeleteDetailsCancelOK[D <: ADlg]() {
+  self: D =>
 
-  def ref: F
+  def ref: D
 
   //  final val New = BTN[F]()(using ref)
   //  final val Change = BTN[F]()(using ref)
