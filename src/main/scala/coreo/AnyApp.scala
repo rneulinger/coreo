@@ -4,7 +4,7 @@ abstract class AnyApp extends Obj { //with CanOwn {
   def app: AnyApp = this
 
 //  private var adoptedAtoms = List[Ctrl[?]]()
-  private var adoptedDlgs = List[Dlg]()
+  private var adoptedDlgs = List[Dlg[?]]()
 
   lazy val atoms: Map[String, Ctrl[?]] = ??? // adoptedAtoms.map(a => a.fullName -> a).toMap
 
@@ -20,14 +20,14 @@ abstract class AnyApp extends Obj { //with CanOwn {
    * @param name of dialog
    * @return
    */
-  def findWinByPath(name: String): List[Dlg] = {
+  def findWinByPath(name: String): List[Dlg[?]] = {
     adoptedDlgs.filter(_.path.contains(name))
   }
   //  def findByUiName( name:String):List[WIN] = {
   //    adoptedDlgs.filter(_.contains(name)).toList
   //  }
 
-  def findWin(name: String): Dlg = {
+  def findWin(name: String): Dlg[?] = {
     val byPath = findWinByPath(name)
     if byPath.length == 1 then return byPath.head
 
@@ -65,25 +65,26 @@ abstract class AnyApp extends Obj { //with CanOwn {
     VARS.getOrElse(key, default)
   }
 
-  final def adopt(dlg: Dlg): Unit =
+  final def adopt(dlg: Dlg[?]): Unit =
         adoptedDlgs = adoptedDlgs.appended(dlg)
 
 
-  var currentDlg: Dlg = new Dlg(this) {}
+  var currentDlg: Dlg[?] = new Dlg[AnyApp]() {}
   val defaultWin = currentDlg
 
   def findAtoms(name: String) = currentDlg.findAtoms(name)
 
   def findAtom(name: String) = currentDlg.findAtom(name)
 
+  given ref: AnyApp = this
   /**
    * visit: push current view on stack, arg becomes current,
    * return: push curren tin history, pop and set current
    */
-  val winStack = scala.collection.mutable.Stack[Dlg]()
-  val winHistory = scala.collection.mutable.Stack[Dlg]()
+  val winStack = scala.collection.mutable.Stack[Dlg[?]]()
+  val winHistory = scala.collection.mutable.Stack[Dlg[?]]()
 
-  def onto(frm: Dlg): Unit = {
+  def onto(frm: Dlg[?]): Unit = {
     winStack.push(currentDlg)
     currentDlg = frm
     println("changed to frm:" + frm.myType)
@@ -100,7 +101,7 @@ abstract class AnyApp extends Obj { //with CanOwn {
       println(hits)
       if hits.size == 1 then
         hits.head.match {
-          case frm: Dlg => frm.goto()
+          case frm: Dlg[?] => frm.goto()
           case _ => println(s"${hits.head} is not of type Goto")
         }
     }
@@ -109,7 +110,7 @@ abstract class AnyApp extends Obj { //with CanOwn {
       if (frms.keySet.contains(dest)) {
         val frm = frms(dest)
         frm match {
-          case f: Dlg => f.goto()
+          case f: Dlg[?] => f.goto()
           case _ => throw Exception(s"goto not supported: $frm has no path")
         }
       } else {
@@ -127,7 +128,7 @@ abstract class AnyApp extends Obj { //with CanOwn {
       println(hits)
       if hits.size == 1 then
         hits.head.match {
-          case frm: Dlg => frm.goto()
+          case frm: Dlg[?] => frm.goto()
           case _ => println(s"${hits.head} is not of type Goto")
         }
     }
@@ -139,19 +140,7 @@ abstract class AnyApp extends Obj { //with CanOwn {
         println("onto: cannot find frame:" + dest)
       }
   }
-
-  def findRelationsFor(dlg: Dlg): Map[Action[?], Dlg] = {
-    val res = for (frm <- frms; act <- frm._2.actions) yield {
-      act._2 -> frm._2
-    }
-    val nonEmpty = res.filterNot(_._1.target.name == Unknown_.name)
-    for (x <- nonEmpty) {
-      //      println( x._1.target + " " + x._2.Self)
-    }
-    //println( win.fullType)
-    nonEmpty.filter(_._1.target.name == dlg.Self)
-  }
-
+  
   def back: Unit = {
     if (winStack.nonEmpty) {
       currentDlg = winStack.pop()
@@ -169,7 +158,7 @@ abstract class AnyApp extends Obj { //with CanOwn {
     }
   }
 
-  def mkMermaid(dlg: Dlg): String = {
+  def mkMermaid(dlg: ADlg): String = {
     val className = if dlg.simple.trim.isEmpty then "_" else dlg.simple
 
     val recs = for (a <- dlg.datas) yield {
@@ -211,5 +200,21 @@ abstract class AnyApp extends Obj { //with CanOwn {
        |
        |""".stripMargin
   }
+
+  def findRelationsFor(dlg: ADlg): Map[Action[?], ADlg] = ??? 
+/*
+  {
+    val res = for (frm <- frms; act <- frm._2.actions) yield {
+      act._2 -> frm._2
+    }
+    val nonEmpty = res.filterNot(_._1.target.name == Unknown_.name)
+    for (x <- nonEmpty) {
+      //      println( x._1.target + " " + x._2.Self)
+    }
+    //println( win.fullType)
+    nonEmpty.filter(_._1.target.name == dlg.Self)
+  }
+*/
+
 }
 

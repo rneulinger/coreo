@@ -5,7 +5,7 @@ import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
 // tag::fields[]
-class Specials_(own: AnyApp) extends Dlg(own)
+class Specials_(using own: AnyApp) extends Dlg
   with coreo.bricks.NewChangDeleteDetailsCancelOK {
 
   val Specials = CBX( _.

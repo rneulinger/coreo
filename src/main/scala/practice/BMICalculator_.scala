@@ -3,7 +3,8 @@ package practice
 import coreo.*
 
 // tag::fields[]
-final class BMICalculator_(own: AnyApp) extends Dlg(own, "BMI Calculator") {
+@Ui("BMI Calculator")
+final class BMICalculator_(using own: AnyApp) extends Dlg {
 
   // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this
   override def path: String = "bmi"

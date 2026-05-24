@@ -1,6 +1,6 @@
 package coreo
 
-class Formatter(val frm: Dlg) {
+class Formatter(val frm: ADlg) {
   private def atoms = frm.atoms
 
   private def datas = frm.datas

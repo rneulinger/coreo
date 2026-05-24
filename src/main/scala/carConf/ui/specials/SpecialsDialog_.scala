@@ -4,7 +4,7 @@ import com.microsoft.playwright.Page
 import coreo.*
 
 // tag::fields[]
-class SpecialsDialog_(own: AnyApp) extends Dlg(own) {
+class SpecialsDialog_(using own: AnyApp) extends Dlg {
 
   given ref: SpecialsDialog_ = this
 

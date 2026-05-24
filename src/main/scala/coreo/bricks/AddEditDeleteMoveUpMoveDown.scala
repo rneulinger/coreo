@@ -8,7 +8,7 @@ import coreo.*
  * @tparam F owner of these buttons
  */
 
-trait AddEditDeleteMoveUpMoveDown[F <: Dlg] extends AddEditDelete[F] {
+trait AddEditDeleteMoveUpMoveDown[F <: ADlg] extends AddEditDelete[F] {
   self: F =>
 
 

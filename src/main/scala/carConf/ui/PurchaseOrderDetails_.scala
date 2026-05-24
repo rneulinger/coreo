@@ -6,7 +6,7 @@ import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
 // tag::fields[]
-class PurchaseOrderDetails_(own: AnyApp) extends Dlg(own) {
+class PurchaseOrderDetails_(using own: AnyApp) extends Dlg {
 
 
 

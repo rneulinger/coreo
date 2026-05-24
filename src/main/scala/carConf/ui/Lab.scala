@@ -13,9 +13,9 @@ object Lab extends Main() {
 
   @main def clickMains() = {
     dump()
-    _SpecialsTab.click
-    _AccessoriesTab.click
-    _VehiclesTab.click
+    //_SpecialsTab.click
+    //_AccessoriesTab.click
+    //_VehiclesTab.click
 
     goto(Menu.File)
     goto(Menu.File)

@@ -9,7 +9,7 @@ import coreo.*
  * has buttons Cancel, Back Next
  */
 
-trait CancelBackNext[F <: Dlg]() {
+trait CancelBackNext[F <: ADlg]() {
   self: F =>
 
   @To(dest = classOf[Return])

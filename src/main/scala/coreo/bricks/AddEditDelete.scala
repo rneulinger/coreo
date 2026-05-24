@@ -8,7 +8,7 @@ import coreo.*
  * @tparam F owner of these buttons
  */
 //tag::fields[]
-trait AddEditDelete[F <: Dlg] {
+trait AddEditDelete[F <: ADlg] {
   self: F =>
 
   @To()
@@ -18,6 +18,6 @@ trait AddEditDelete[F <: Dlg] {
   @To()
   final val Delete = Btn[F]()(using ref) // delete selected
   //end::fields[]
-
   def ref: F
+
 }

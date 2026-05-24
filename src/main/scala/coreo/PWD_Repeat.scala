@@ -10,7 +10,7 @@ import com.microsoft.playwright.options.*
  * @param ref
  * @tparam F
  */
-class PWD_Repeat[F <: Dlg](b: By = null)(using ref: F)
+class PWD_Repeat[F <: ADlg](b: By = null)(using ref: F)
   extends Data[F]( b) {
   override def ariaRole: AriaRole = AriaRole.TEXTBOX
 

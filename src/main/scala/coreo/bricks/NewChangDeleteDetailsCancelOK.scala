@@ -2,7 +2,7 @@ package coreo.bricks
 
 import coreo.*
 
-trait NewChangDeleteDetailsCancelOK[F <: Dlg]() {
+trait NewChangDeleteDetailsCancelOK[F <: ADlg]() {
   self: F =>
 
   def ref: F

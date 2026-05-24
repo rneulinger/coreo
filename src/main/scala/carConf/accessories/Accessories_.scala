@@ -7,7 +7,7 @@ import com.microsoft.playwright.options.*
 import scala.annotation.nowarn
 
 // tag::fields[]
-class Accessories_(own: AnyApp) extends Dlg(own) {
+class Accessories_(using own: AnyApp) extends Dlg() {
 
   @Ui("Base price")
   val BasePrice = TXT(_.locator("#BasePrice_input"))

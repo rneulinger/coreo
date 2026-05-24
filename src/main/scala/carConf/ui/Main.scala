@@ -23,19 +23,19 @@ val s = "file:///C:/Projects/burli/carconfigWeb/html/CarConfig.htm?lang=en#"
 class Main extends PwApp(s) {
 
   // TODO Mene
-  val _CarConfig = CarConfig_(this)
-  val _SpecialsTab = _CarConfig.SpecialsTab
-  val _VehiclesTab = _CarConfig.VehiclesTab
-  val _AccessoriesTab = _CarConfig.AccessoriesTab
+  val _CarConfig = CarConfig_()
+  //val _SpecialsTab = _CarConfig.SpecialsTab
+  //val _VehiclesTab = _CarConfig.VehiclesTab
+  //val _AccessoriesTab = _CarConfig.AccessoriesTab
 
-  val _Specials = Specials_(this)
-  val _SpecialsDialog = SpecialsDialog_(this)
+  val _Specials = Specials_()
+  val _SpecialsDialog = SpecialsDialog_()
 
-  val _Vehicles = Vehicles_(this)
-  val _VehiclesDialog = VehiclesDialog_(this)
+  val _Vehicles = Vehicles_()
+  val _VehiclesDialog = VehiclesDialog_()
 
-  val _Accessories = Accessories_(this)
-  val _AccessoriesDialog = AccessoriesDialog_(this)
+  val _Accessories = Accessories_()
+  val _AccessoriesDialog = AccessoriesDialog_()
 
   object specials {
   }

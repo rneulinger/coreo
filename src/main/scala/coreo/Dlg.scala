@@ -2,15 +2,15 @@ package coreo
 
 import com.microsoft.playwright.*
 
-abstract class Dlg(val own: AnyApp, ui: String = "")
+abstract class Dlg[F <: AnyApp](using own: F)
   extends Obj with Destination{ //with CanOwn {
   def app = own.app.asInstanceOf[PwApp]
 
   def Self = getClass.getName
 
-  final def findWin(name: String): Dlg = own.findWin(name)
+  final def findWin(name: String): ADlg = own.findWin(name)
 
-  val fullType: String = if (ui.isEmpty) myType else ui
+  val fullType: String = ??? //if (ui.isEmpty) myType else ui
   own.adopt(this)
 
   def path: String = ""
@@ -27,7 +27,7 @@ abstract class Dlg(val own: AnyApp, ui: String = "")
 
   private var adoptedAtoms = List[Ctrl[?]]()
 
-  final def datas: Map[String, Ctrl[?]] = atoms
+  final def datas: Map[String, ACtrl] = atoms
     .filter(_._2.isInstanceOf[Data[?]])
     .collect { case d: (String, Data[?]) => d }
 
@@ -47,7 +47,7 @@ abstract class Dlg(val own: AnyApp, ui: String = "")
   }
 
 
-  def onto: Dlg = {
+  def onto: ADlg = {
     own.onto(this)
     Thread.sleep(200)
     this
@@ -57,7 +57,7 @@ abstract class Dlg(val own: AnyApp, ui: String = "")
     own.asInstanceOf[PwApp].openUrl(path)
   }
 
-  def onto(frm: Dlg): Unit = own.onto(frm)
+  def onto(frm: ADlg): Unit = own.onto(frm)
 
   /**
    *
@@ -112,7 +112,7 @@ abstract class Dlg(val own: AnyApp, ui: String = "")
   def getVar(key: String): String = own.getVar(key)
 
   //  def TAB(func:Page => Locator):TAB[?,?] = ???
-  def BTN[F <: Dlg](func:Page => Locator=null, idx:Int=0):Btn[F] = ???
+  def BTN[F <: ADlg](func:Page => Locator=null, idx:Int=0):Btn[?] = ???
   def TXT(func:Page => Locator=null, idx:Int=0):Txt[?] = ???
   def CBX(func:Page => Locator=null, idx:Int=0):Cbx[?] = ???
   def TAB(func:Page => Locator=null, idx:Int=0):Tab[?] = ???

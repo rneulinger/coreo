@@ -1,6 +1,8 @@
 package coreo
 
-final class Unknown_(own: AnyApp) extends Dlg(own) {
+final class Unknown_(using own: AnyApp) extends Dlg {
+
+//  given own: Unknown_ = this
 
 }
 

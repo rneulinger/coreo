@@ -4,7 +4,7 @@ import coreo.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
-class Specials_(own: AnyApp) extends Dlg(own)
+class Specials_(using own: AnyApp) extends Dlg
   with coreo.bricks.NewChangDeleteDetailsCancelOK {
 
   // tag::fields[]

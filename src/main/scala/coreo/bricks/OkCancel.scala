@@ -8,7 +8,7 @@ import coreo.*
  * @tparam F
  * has buttons Ok, Cancel
  */
-trait OkCancel[F <: Dlg]() {
+trait OkCancel[F <: ADlg]() {
   self: F =>
 
 

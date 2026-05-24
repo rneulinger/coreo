@@ -6,7 +6,7 @@ import com.microsoft.playwright.options.*
 
 
 // tag::fields[]
-class Vehicles_(own: AnyApp) extends Dlg(own) {
+class Vehicles_(using own: AnyApp) extends Dlg {
 
   val Vehicles = TBL( _.
     locator("#VehicleTablePanel"))

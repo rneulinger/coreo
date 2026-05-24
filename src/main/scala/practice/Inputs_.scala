@@ -6,7 +6,7 @@ import coreo.*
 import coreo.bricks.*
 
 // tag::fields[]
-final class Inputs_(own: AnyApp) extends Dlg(own) {
+final class Inputs_(using own: AnyApp) extends Dlg {
 
   // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this
   override def path: String = "inputs"

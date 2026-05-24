@@ -5,7 +5,7 @@ import com.microsoft.playwright.options.*
 
 import java.util.regex.Pattern
 
-abstract class Ctrl[F <: Dlg](b: By, idx:Int=0)(using dlg: F)
+abstract class Ctrl[F <: ADlg](b: By, idx:Int=0)(using dlg: F)
   extends Obj {
   def weight = 1
   def ariaRole:AriaRole = AriaRole.GENERIC
@@ -35,7 +35,7 @@ abstract class Ctrl[F <: Dlg](b: By, idx:Int=0)(using dlg: F)
 
   final def loc: Locator = loc(own.pg)
 
-  def flash: F = {
+  def flash: ADlg = {
     loc.evaluate("element => {" +
       "element.style.transition = 'background-color 0.3s ease';" +
       "element.style.backgroundColor = 'yellow';" +
@@ -83,36 +83,36 @@ abstract class Ctrl[F <: Dlg](b: By, idx:Int=0)(using dlg: F)
 
   own.adopt(this)
 
-  def click: F =
+  def click: ADlg =
     loc(pg).click()
     own
 
-  final def clickFail: F =
+  final def clickFail: ADlg =
     loc(pg).click()
     own
 
-  final def click(cnt: Integer = 1): F = {
+  final def click(cnt: Integer = 1): ADlg = {
     own
   }
 
-  def check: F =
+  def check: ADlg =
     loc(pg).check()
     own
 
-  def uncheck: F =
+  def uncheck: ADlg =
     loc(pg).uncheck()
     own
 
-  def set(any: Any): F = {
+  def set(any: Any): ADlg = {
     loc(pg).fill(any.toString)
     own
   }
 
-  final def get(): F = {
+  final def get(): ADlg = {
     get(shortName)
   }
 
-  def get(key: String): F = {
+  def get(key: String): ADlg = {
     val txt = loc.textContent()
     own.setVar(key, txt)
     own
@@ -183,12 +183,12 @@ object ReflectUtils {
 }
 
 object Loc {
-  def byText[F <: Dlg](idx:Int = 0):(Ctrl[F] => (Page => Locator) )
+  def byText[F <: ADlg](idx:Int = 0):(Ctrl[F] => (Page => Locator) )
   = (ctrl:Ctrl[F]) => (p:Page) => p.getByText(ctrl.nameUi).nth(idx)
-  def byPattern[F <: Dlg](pattern: Pattern, idx:Int = 0):(Ctrl[F] => (Page => Locator) )
+  def byPattern[F <: ADlg](pattern: Pattern, idx:Int = 0):(Ctrl[F] => (Page => Locator) )
   = (ctrl:Ctrl[F]) => (p:Page) => p.getByText(pattern).nth(idx)
-  def byId[F <: Dlg](id:String ):(Ctrl[F] => (Page => Locator) )
+  def byId[F <: ADlg](id:String ):(Ctrl[F] => (Page => Locator) )
   = (ctrl:Ctrl[F]) => (p:Page) => p.getByTestId(id)
-  def byRole[F <: Dlg](idx:Int = 0 ):(Ctrl[F] => (Page => Locator) )
+  def byRole[F <: ADlg](idx:Int = 0 ):(Ctrl[F] => (Page => Locator) )
   = (ctrl:Ctrl[F]) => (p:Page) => p.getByRole(ctrl.ariaRole).nth(idx)
 }

@@ -6,7 +6,7 @@ import com.microsoft.playwright.options.*
 
 
 // tag::fields[]
-class SpecialsDialog_(own: AnyApp) extends Dlg(own) {
+class SpecialsDialog_ (using own: AnyApp) extends Dlg {
 
 
   val ModelName = TXT(_.locator("#SpecialsName99_input"))

@@ -16,19 +16,21 @@ class CarConfigApp extends PwApp(""){
   override def predefBaseUrls = Map("Local" -> s)
 
   // TODO Mene
-  val _CarConfig: CarConfig_ = CarConfig_(this)
+  val _CarConfig: CarConfig_ = CarConfig_()
 //  val _SpecialsTab: TAB[CarConfig_,?] = _CarConfig.SpecialsTab
 //  val _VehiclesTab: TAB[CarConfig_, ?] = _CarConfig.VehiclesTab
 //  val _AccessoriesTab: TAB[CarConfig_, ?] = _CarConfig.AccessoriesTab
 
-  val _Specials = Specials_(this)
-  val _SpecialsDialog = SpecialsDialog_(this)
+  val _Specials = Specials_()
+  val _SpecialsDialog = SpecialsDialog_
 
-  val _Vehicles = Vehicles_(this)
-  val _VehiclesDialog = VehiclesDialog_(this)
+  val _Vehicles = Vehicles_()
+  val _VehiclesDialog = VehiclesDialog_()
 
-  val _Accessories = Accessories_(this)
-  val _AccessoriesDialog = AccessoriesDialog_(this)
+  val _Accessories = Accessories_()
+  val _AccessoriesDialog = AccessoriesDialog_()
+
+  given own: CarConfigApp = this
 
 
   object specials {

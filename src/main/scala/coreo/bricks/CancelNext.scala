@@ -2,7 +2,7 @@ package coreo.bricks
 
 import coreo.*
 
-trait CancelNext[F <: Dlg]() {
+trait CancelNext[F <: ADlg]() {
   self: F =>
 
 
