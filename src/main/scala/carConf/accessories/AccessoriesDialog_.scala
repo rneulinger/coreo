@@ -6,7 +6,7 @@ import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
 // tag::fields[]
-class AccessoriesDialog_(using own: AnyApp) extends Dlg {
+class AccessoriesDialog_[A](using own: AnyApp) extends Dlg[A] {
 
   val AccessoryName = TXT()
 

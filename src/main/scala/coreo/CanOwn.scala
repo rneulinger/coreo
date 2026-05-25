@@ -47,15 +47,15 @@ trait CanOwnXXX {
 
   def onto(frm: ADlg): Unit
 
-  def atoms: Map[String, Ctrl[?]]
+  def atoms: Map[String, ACtrl]
 
-  final def datas: Map[String, Ctrl[?]] = atoms
-    .filter(_._2.isInstanceOf[Data[?]])
-    .collect { case d: (String, Data[?]) => d }
+  final def datas: Map[String, ACtrl] = atoms
+    .filter(_._2.isInstanceOf[Data[?,?]])
+    .collect { case d: (String, Data[?,?]) => d }
 
-  final def actions: Map[String, Action[?]] = atoms
-    .filter(_._2.isInstanceOf[Action[?]])
-    .collect { case a: (String, Action[?]) => a }
+  final def actions: Map[String, Action[?,?]] = atoms
+    .filter(_._2.isInstanceOf[Action[?,?]])
+    .collect { case a: (String, Action[?,?]) => a }
 
   def setVar(key: String, value: Any): Unit
 

@@ -8,8 +8,8 @@ import com.microsoft.playwright.{Locator, Page}
 import com.microsoft.playwright.options.AriaRole
 
 
-class Flt[F <: ADlg](b: By = null)(using ref: F)
-  extends Data[F](b) {
+class Flt[D <: Dlg[?], A<:PwApp ](b: By = null)(using ref: MYDLG[D,A])
+  extends Data[D,A](b) {
   override def ariaRole: AriaRole = AriaRole.TEXTBOX
 
 }

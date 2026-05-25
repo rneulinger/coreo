@@ -4,7 +4,7 @@ import coreo.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
-class Specials_(using own: AnyApp) extends Dlg
+class Specials_[A](using own: AnyApp) extends Dlg[A]
   with coreo.bricks.NewChangDeleteDetailsCancelOK {
 
   // tag::fields[]
@@ -27,7 +27,7 @@ class Specials_(using own: AnyApp) extends Dlg
   val FinalPrice = TXT(_.getByText("$3,438.25")) // Wrong
 
   // end::fields[]
-  given ref: Specials_ = this
+  given ref: Specials_[A] = MYDLG(this,A)
 
 }
 

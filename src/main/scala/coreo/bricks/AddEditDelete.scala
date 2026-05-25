@@ -8,16 +8,16 @@ import coreo.*
  * @tparam D owner of these buttons
  */
 //tag::fields[]
-trait AddEditDelete[D <: ADlg] {
+trait AddEditDelete[D <: Dlg[?], A<:PwApp ] {
   self: D =>
 
   @To()
-  final val Add = Btn[D]()(using ref) // new Dialog
+  final val Add = Btn[D,A]()(using ref) // new Dialog
   @To()
-  final val Edit = Btn[D]()(using ref) // edit selected
+  final val Edit = Btn[D,A]()(using ref) // edit selected
   @To()
-  final val Delete = Btn[D]()(using ref) // delete selected
+  final val Delete = Btn[D,A]()(using ref) // delete selected
   //end::fields[]
-  def ref: D
+  def ref: MYDLG[D,A]
 
 }

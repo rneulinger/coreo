@@ -3,48 +3,48 @@ package coreo
 import com.microsoft.playwright.options.AriaRole
 import com.microsoft.playwright.{Locator, Page}
 
-class Txt[F <: ADlg](b: By = null)(using ref: F)
-  extends Data[F](b) {
+class Txt[D <: Dlg[?], A<:PwApp ](b: By = null)(using ref: MYDLG[D,A])
+  extends Data[D,A](b) {
 
 
   override def ariaRole: AriaRole = AriaRole.TEXTBOX
 
-  def rightClick: F =
+  def rightClick: D =
     log("rightClick")
     dlg
 
-  def doubleClick: F =
+  def doubleClick: D =
     log("doubleClick")
     dlg
 
-  def isEmpty: F =
+  def isEmpty: D =
     ???
     dlg
 
-  def nonEmpty: F =
+  def nonEmpty: D =
     ???
     dlg
 
-  def maxLength(n: Integer): F =
+  def maxLength(n: Integer): D =
     ???
     dlg
 
-  def contains(snip: Any): F =
+  def contains(snip: Any): D =
     ???
     dlg
 
-  def matches(regex: String): F =
+  def matches(regex: String): D =
     ???
     dlg
 
   // assignment
-  override def set(txt: Any = ""): F = {
+  override def set(txt: Any = ""): D = {
     loc.fill(txt.toString)
     dlg
   }
 
 
-  def <<(txt: Any = ""): F = {
+  def <<(txt: Any = ""): D = {
     set(txt)
     dlg
   }
@@ -54,53 +54,53 @@ class Txt[F <: ADlg](b: By = null)(using ref: F)
    *
    * @return
    */
-  def >> : F =
+  def >> : D =
     dlg
 
   /**
    *
    * @return
    */
-  def >>: : F =
+  def >>: : D =
     dlg
 
   // equality
-  def :==(txt: Any = ""): F =
+  def :==(txt: Any = ""): D =
     dlg
 
-  def :!=(txt: Any = ""): F =
+  def :!=(txt: Any = ""): D =
     dlg
 
   // match
-  def :=~(txt: Any = ""): F =
+  def :=~(txt: Any = ""): D =
     dlg
 
-  def :!~(txt: Any): F =
+  def :!~(txt: Any): D =
     dlg
 
   // rel ops textual
-  def :<=(txt: Any): F =
+  def :<=(txt: Any): D =
     dlg
 
-  def :<(txt: Any): F =
+  def :<(txt: Any): D =
     dlg
 
-  def :>=(txt: Any): F =
+  def :>=(txt: Any): D =
     dlg
 
-  def :>(txt: Any): F =
+  def :>(txt: Any): D =
     dlg
 
   // rel ops numerical
-  def #<(txt: Any): F =
+  def #<(txt: Any): D =
     dlg
 
-  def #<=(txt: Any): F =
+  def #<=(txt: Any): D =
     dlg
 
-  def #>=(txt: Any): F =
+  def #>=(txt: Any): D =
     dlg
 
-  def #>(txt: Any): F =
+  def #>(txt: Any): D =
     dlg
 }

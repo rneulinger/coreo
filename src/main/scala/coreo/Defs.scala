@@ -34,13 +34,13 @@ import scala.jdk.CollectionConverters.*
  *
  */
 
-type By =  Ctrl[?] => (Page => Locator)
+type By =  Ctrl[?,?] => (Page => Locator)
 type ADlg = Dlg[?]
-type ACtrl = Ctrl[?]
+type ACtrl = Ctrl[?,?]
 
-case class MYAPP[+A](app: A)
-case class MYDLG[+D](dlg: D)
-case class OWNER[+WIN](own: WIN)
+case class MYAPP[+A <: PwApp](app: A)
+case class MYDLG[+D <: Dlg[?], +A <: PwApp ](dlg: D, app:PwApp => A)
+case class OWNER[+D](own: D)
 
 case class Opt(name: String = "", exact: Boolean = false) {
 

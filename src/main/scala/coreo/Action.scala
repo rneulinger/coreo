@@ -1,7 +1,7 @@
 package coreo
 
-abstract class Action[D <: ADlg](b: By)(using ref: D)
-  extends Ctrl[D](b) {
+abstract class Action[D <: Dlg[?], A<:PwApp ](b: By)(using ref: MYDLG[D,A])
+  extends Ctrl[D,A](b) {
 
   override def weight = 2
 

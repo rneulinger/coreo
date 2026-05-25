@@ -5,11 +5,12 @@ import com.microsoft.playwright.options.*
 
 import java.util.regex.Pattern
 
-abstract class Ctrl[D <: ADlg](b: By, idx:Int=0)(using ref: D)
+abstract class Ctrl[D <: Dlg[?], A<:PwApp ](b: By, idx:Int=0)(using ref: MYDLG[D,A])
   extends Obj {
   def weight = 1
   def ariaRole:AriaRole = AriaRole.GENERIC
-  final val dlg: D = ref
+  final val dlg: D = ref.dlg
+  final def A =ref.app
   val name:String =  ???
   final def app: PwApp = dlg.app.asInstanceOf[PwApp]
   final def nameUi: String = if name.trim.isEmpty then fullName else name
@@ -183,12 +184,12 @@ object ReflectUtils {
 }
 
 object Loc {
-  def byText[F <: ADlg](idx:Int = 0):(Ctrl[F] => (Page => Locator) )
-  = (ctrl:Ctrl[F]) => (p:Page) => p.getByText(ctrl.nameUi).nth(idx)
-  def byPattern[F <: ADlg](pattern: Pattern, idx:Int = 0):(Ctrl[F] => (Page => Locator) )
-  = (ctrl:Ctrl[F]) => (p:Page) => p.getByText(pattern).nth(idx)
-  def byId[F <: ADlg](id:String ):(Ctrl[F] => (Page => Locator) )
-  = (ctrl:Ctrl[F]) => (p:Page) => p.getByTestId(id)
-  def byRole[F <: ADlg](idx:Int = 0 ):(Ctrl[F] => (Page => Locator) )
-  = (ctrl:Ctrl[F]) => (p:Page) => p.getByRole(ctrl.ariaRole).nth(idx)
+  def byText[F <: ADlg](idx:Int = 0):(Ctrl[F,?] => (Page => Locator) )
+  = (ctrl:Ctrl[F,?]) => (p:Page) => p.getByText(ctrl.nameUi).nth(idx)
+  def byPattern[F <: ADlg](pattern: Pattern, idx:Int = 0):(Ctrl[F,?] => (Page => Locator) )
+  = (ctrl:Ctrl[F,?]) => (p:Page) => p.getByText(pattern).nth(idx)
+  def byId[F <: ADlg](id:String ):(Ctrl[F,?] => (Page => Locator) )
+  = (ctrl:Ctrl[F,?]) => (p:Page) => p.getByTestId(id)
+  def byRole[F <: ADlg](idx:Int = 0 ):(Ctrl[F,?] => (Page => Locator) )
+  = (ctrl:Ctrl[F,?]) => (p:Page) => p.getByRole(ctrl.ariaRole).nth(idx)
 }

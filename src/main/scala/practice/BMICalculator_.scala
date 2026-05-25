@@ -4,7 +4,7 @@ import coreo.*
 
 // tag::fields[]
 @Ui("BMI Calculator")
-final class BMICalculator_(using own: AnyApp) extends Dlg {
+final class BMICalculator_[A](using own: AnyApp) extends Dlg[A] {
 
   // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this
   override def path: String = "bmi"
@@ -22,5 +22,5 @@ final class BMICalculator_(using own: AnyApp) extends Dlg {
   val Clear = BTN()
 
   // end::fields[]
-  given ref: BMICalculator_ = this
+  given ref: BMICalculator_[A] = MYDLG(this,?)
 }

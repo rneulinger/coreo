@@ -5,7 +5,7 @@ import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
 // tag::fields[]
-class Accessories_(using app: AnyApp) extends Dlg() {
+class Accessories_[A](using app: MYAPP[A]) extends Dlg[A] {
 
   val BasePrice = TXT(_.locator("#BasePrice_input"))
 
@@ -23,6 +23,11 @@ class Accessories_(using app: AnyApp) extends Dlg() {
   val AddAccessoriesPriceToFinalPrice = CBX(_.getByRole(AriaRole.CHECKBOX, new Page.GetByRoleOptions().setName("Add accessories price to")))
 
   val Accessories = TBL( _.locator("#AccessoryTable"))
+  
+  def fump(): Unit = {
+    val own=BasePrice.dlg
+    
+  }
   // end::fields[]
-  given ref: Accessories_ = this
+  given ref: Accessories_[A] = MYDLG(this,?)
 }

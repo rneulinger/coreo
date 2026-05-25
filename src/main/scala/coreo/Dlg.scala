@@ -2,16 +2,16 @@ package coreo
 
 import com.microsoft.playwright.*
 
-abstract class Dlg[F <: AnyApp](using own: F)
+abstract class Dlg[A <: PwApp](using myApp: MYAPP[A])
   extends Obj with Destination{ //with CanOwn {
-  def app = own.app.asInstanceOf[PwApp]
+  def app = myApp.app
 
   def Self = getClass.getName
 
-  final def findWin(name: String): ADlg = own.findWin(name)
+  final def findWin(name: String): ADlg = app.findWin(name)
 
   val fullType: String = ??? //if (ui.isEmpty) myType else ui
-  own.adopt(this)
+  app.adopt(this)
 
   def path: String = ""
 
@@ -23,32 +23,32 @@ abstract class Dlg[F <: AnyApp](using own: F)
     case x => "/" + x
   }
 
-  override def pg: Page = own.pg
+  override def pg: Page = app.pg
 
-  private var adoptedAtoms = List[Ctrl[?]]()
+  private var adoptedAtoms = List[Ctrl[?,?]]()
 
   final def datas: Map[String, ACtrl] = atoms
-    .filter(_._2.isInstanceOf[Data[?]])
-    .collect { case d: (String, Data[?]) => d }
+    .filter(_._2.isInstanceOf[Data[?,?]])
+    .collect { case d: (String, Data[?,?]) => d }
 
-  final def actions: Map[String, Action[?]] = atoms
-    .filter(_._2.isInstanceOf[Action[?]])
-    .collect { case a: (String, Action[?]) => a }
+  final def actions: Map[String, Action[?,?]] = atoms
+    .filter(_._2.isInstanceOf[Action[?,?]])
+    .collect { case a: (String, Action[?,?]) => a }
 
-  lazy val atoms: Map[String, Ctrl[?]] = {
+  lazy val atoms: Map[String, ACtrl] = {
     val tmp = adoptedAtoms.map(a => a.fullName -> a).toMap
     tmp
   }
 
   def weight = atoms.map(_._2.weight).sum + 1
 
-  final def adopt(ctrl: Ctrl[?]): Unit = {
+  final def adopt(ctrl: Ctrl[?,?]): Unit = {
       adoptedAtoms = adoptedAtoms.appended(ctrl)
   }
 
 
   def onto: ADlg = {
-    own.onto(this)
+    app.onto(this)
     Thread.sleep(200)
     this
   }
@@ -57,14 +57,14 @@ abstract class Dlg[F <: AnyApp](using own: F)
     own.asInstanceOf[PwApp].openUrl(path)
   }
 
-  def onto(frm: ADlg): Unit = own.onto(frm)
+  def onto(frm: ADlg): Unit = app.onto(frm)
 
   /**
    *
    * @param name name of control
    * @return
    */
-  def findAtom(name: String): Option[Ctrl[?]] = {
+  def findAtom(name: String): Option[ACtrl] = {
     if (atoms.keySet.contains(name)) {
       Option(atoms(name)) // exact match
     } else {
@@ -83,7 +83,7 @@ abstract class Dlg[F <: AnyApp](using own: F)
    * @param name
    * @return
    */
-  def findAtoms(name: String): List[Ctrl[?]] = {
+  def findAtoms(name: String): List[ACtrl] = {
     if (atoms.keySet.contains(name)) {
       List(atoms(name)) // exact match
     } else {
@@ -107,15 +107,15 @@ abstract class Dlg[F <: AnyApp](using own: F)
 
   def dump: Unit = dump("")
 
-  def setVar(key: String, value: Any): Unit = own.setVar(key, value)
+  def setVar(key: String, value: Any): Unit = app.setVar(key, value)
 
-  def getVar(key: String): String = own.getVar(key)
+  def getVar(key: String): String = app.getVar(key)
 
   //  def TAB(func:Page => Locator):TAB[?,?] = ???
-  def BTN[F <: ADlg](func:Page => Locator=null, idx:Int=0):Btn[?] = ???
-  def TXT(func:Page => Locator=null, idx:Int=0):Txt[?] = ???
-  def CBX(func:Page => Locator=null, idx:Int=0):Cbx[?] = ???
-  def TAB(func:Page => Locator=null, idx:Int=0):Tab[?] = ???
-  def TBL(func:Page => Locator=null, idx:Int=0):Tbl[?] = ???
+  def BTN[F <: ADlg](func:Page => Locator=null, idx:Int=0):Btn[?,?] = ???
+  def TXT(func:Page => Locator=null, idx:Int=0):Txt[?,?] = ???
+  def CBX(func:Page => Locator=null, idx:Int=0):Cbx[?,?] = ???
+  def TAB(func:Page => Locator=null, idx:Int=0):Tab[?,?] = ???
+  def TBL(func:Page => Locator=null, idx:Int=0):Tbl[?,?] = ???
   //  def TBL(func:Page => Locator):TBL[?] = ???
 }

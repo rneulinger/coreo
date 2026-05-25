@@ -6,7 +6,7 @@ import coreo.*
 import coreo.bricks.*
 
 // tag::fields[]
-final class Inputs_(using own: AnyApp) extends Dlg {
+final class Inputs_[A](using own: AnyApp) extends Dlg[A] {
 
   // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this
   override def path: String = "inputs"
@@ -47,5 +47,5 @@ final class Inputs_(using own: AnyApp) extends Dlg {
     getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("Output: Date")))
 
   // end::fields[]
-  given ref: Inputs_ = this
+  given ref: Inputs_[A] = MYDLG(this,A)
 }

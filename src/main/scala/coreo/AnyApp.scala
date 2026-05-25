@@ -6,7 +6,7 @@ abstract class AnyApp extends Obj { //with CanOwn {
 //  private var adoptedAtoms = List[Ctrl[?]]()
   private var adoptedDlgs = List[Dlg[?]]()
 
-  lazy val atoms: Map[String, Ctrl[?]] = ??? // adoptedAtoms.map(a => a.fullName -> a).toMap
+  lazy val atoms: Map[String, ACtrl] = ??? // adoptedAtoms.map(a => a.fullName -> a).toMap
 
   lazy val (short, full, frms) = {
     val short = adoptedDlgs.map(a => a.myType -> a).toMap
@@ -201,7 +201,7 @@ abstract class AnyApp extends Obj { //with CanOwn {
        |""".stripMargin
   }
 
-  def findRelationsFor(dlg: ADlg): Map[Action[?], ADlg] = ??? 
+  def findRelationsFor(dlg: ADlg): Map[Action[?,?], ADlg] = ??? 
 /*
   {
     val res = for (frm <- frms; act <- frm._2.actions) yield {

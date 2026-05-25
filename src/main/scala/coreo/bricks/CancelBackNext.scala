@@ -9,14 +9,14 @@ import coreo.*
  * has buttons Cancel, Back Next
  */
 
-trait CancelBackNext[D <: ADlg]() {
+trait CancelBackNext[D <: Dlg[?], A<:PwApp ]() {
   self: D =>
 
   @To(dest = classOf[Return])
-  final val Cancel = Btn[D]()(using ref)
+  final val Cancel = Btn[D,A]()(using ref)
   @To()
-  final val Back = Btn[D]()(using ref)
+  final val Back = Btn[D,A]()(using ref)
   @To()
-  final val Next = Btn[D]()(using ref)
-  def ref: D
+  final val Next = Btn[D,A]()(using ref)
+  def ref: MYDLG[D,A]
 }

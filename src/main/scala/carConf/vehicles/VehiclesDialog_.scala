@@ -6,7 +6,7 @@ import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
 // tag::fields[]
-class VehiclesDialog_(using own: AnyApp) extends Dlg {
+class VehiclesDialog_[A](using own: PwApp) extends Dlg[A] {
 
   val Vehicles = TBL( _.locator("#VehiclesTable"))
 
@@ -27,5 +27,5 @@ class VehiclesDialog_(using own: AnyApp) extends Dlg {
   val Cancel = BTN(_.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")))
 
   // end::fields[]
-  given ref: VehiclesDialog_ = this
+  given ref: VehiclesDialog_[A] = MYDLG(this,A)
 }

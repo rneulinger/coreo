@@ -6,7 +6,7 @@ import com.microsoft.playwright.options.*
 
 
 // tag::fields[]
-class Vehicles_(using own: AnyApp) extends Dlg {
+class Vehicles_[A ](using own: AnyApp) extends Dlg[A] {
 
   val Vehicles = TBL( _.
     locator("#VehicleTablePanel"))
@@ -31,5 +31,5 @@ class Vehicles_(using own: AnyApp) extends Dlg {
     locator("#CalculatedPrice_input"))
 
   // end::fields[]
-  given ref: Vehicles_ = this
+  given ref: Vehicles_[A] = MYDLG(this,A)
 }
