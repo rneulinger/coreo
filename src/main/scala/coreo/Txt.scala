@@ -11,42 +11,42 @@ class Txt[F <: ADlg](b: By = null)(using ref: F)
 
   def rightClick: F =
     log("rightClick")
-    own
+    dlg
 
   def doubleClick: F =
     log("doubleClick")
-    own
+    dlg
 
   def isEmpty: F =
     ???
-    own
+    dlg
 
   def nonEmpty: F =
     ???
-    own
+    dlg
 
   def maxLength(n: Integer): F =
     ???
-    own
+    dlg
 
   def contains(snip: Any): F =
     ???
-    own
+    dlg
 
   def matches(regex: String): F =
     ???
-    own
+    dlg
 
   // assignment
   override def set(txt: Any = ""): F = {
     loc.fill(txt.toString)
-    own
+    dlg
   }
 
 
   def <<(txt: Any = ""): F = {
     set(txt)
-    own
+    dlg
   }
 
   /**
@@ -55,52 +55,52 @@ class Txt[F <: ADlg](b: By = null)(using ref: F)
    * @return
    */
   def >> : F =
-    own
+    dlg
 
   /**
    *
    * @return
    */
   def >>: : F =
-    own
+    dlg
 
   // equality
   def :==(txt: Any = ""): F =
-    own
+    dlg
 
   def :!=(txt: Any = ""): F =
-    own
+    dlg
 
   // match
   def :=~(txt: Any = ""): F =
-    own
+    dlg
 
   def :!~(txt: Any): F =
-    own
+    dlg
 
   // rel ops textual
   def :<=(txt: Any): F =
-    own
+    dlg
 
   def :<(txt: Any): F =
-    own
+    dlg
 
   def :>=(txt: Any): F =
-    own
+    dlg
 
   def :>(txt: Any): F =
-    own
+    dlg
 
   // rel ops numerical
   def #<(txt: Any): F =
-    own
+    dlg
 
   def #<=(txt: Any): F =
-    own
+    dlg
 
   def #>=(txt: Any): F =
-    own
+    dlg
 
   def #>(txt: Any): F =
-    own
+    dlg
 }

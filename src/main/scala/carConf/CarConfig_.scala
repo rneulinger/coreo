@@ -8,7 +8,7 @@ import com.microsoft.playwright.{Locator, Page}
 import scala.language.postfixOps
 
 // tag::fields[]
-class CarConfig_(using own: AnyApp)
+class CarConfig_(using app: AnyApp)
   extends Dlg {
 
   def byName(name: String): Page => Locator =

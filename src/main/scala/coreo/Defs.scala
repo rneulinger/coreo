@@ -37,7 +37,9 @@ import scala.jdk.CollectionConverters.*
 type By =  Ctrl[?] => (Page => Locator)
 type ADlg = Dlg[?]
 type ACtrl = Ctrl[?]
-//type By =  (ATOM[?]) => (Page => Locator)
+
+case class MYAPP[+A](app: A)
+case class MYDLG[+D](dlg: D)
 
 case class Opt(name: String = "", exact: Boolean = false) {
 

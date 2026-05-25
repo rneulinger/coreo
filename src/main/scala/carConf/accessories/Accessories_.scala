@@ -5,7 +5,7 @@ import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
 // tag::fields[]
-class Accessories_(using own: AnyApp) extends Dlg() {
+class Accessories_(using app: AnyApp) extends Dlg() {
 
   val BasePrice = TXT(_.locator("#BasePrice_input"))
 

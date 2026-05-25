@@ -13,6 +13,6 @@ abstract class Action[D <: ADlg](b: By)(using ref: D)
     super.click
     if target != Unknown_ then
       ??? //own.onto(own.findWin(target))
-    own
+    dlg
 
 }

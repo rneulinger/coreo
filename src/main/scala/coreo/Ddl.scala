@@ -11,7 +11,7 @@ class Ddl[D <: ADlg](b: By = null)(using ref: D)
     loc(pg).click()
     loc(pg).fill(str.toString)
     loc(pg).press("Enter")
-    own
+    dlg
   }
 
 }

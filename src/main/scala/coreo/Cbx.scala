@@ -12,7 +12,7 @@ class Cbx[D <: ADlg](b: By = null)(using ref: D)
     loc(pg).click()
     val opt = new Page.GetByRoleOptions().setName("\uEA0F " + str.toString).setExact(true)
     pg.getByRole(AriaRole.OPTION, opt).click()
-    own
+    dlg
   }
 }
 

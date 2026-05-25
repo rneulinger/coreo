@@ -5,13 +5,13 @@ import com.microsoft.playwright.options.*
 
 import java.util.regex.Pattern
 
-abstract class Ctrl[D <: ADlg](b: By, idx:Int=0)(using dlg: D)
+abstract class Ctrl[D <: ADlg](b: By, idx:Int=0)(using ref: D)
   extends Obj {
   def weight = 1
   def ariaRole:AriaRole = AriaRole.GENERIC
-  final val own: D = dlg
+  final val dlg: D = ref
   val name:String =  ???
-  final def app: PwApp = own.app.asInstanceOf[PwApp]
+  final def app: PwApp = dlg.app.asInstanceOf[PwApp]
   final def nameUi: String = if name.trim.isEmpty then fullName else name
 
   final var lfunc: (Page => Locator) = {
@@ -27,13 +27,13 @@ abstract class Ctrl[D <: ADlg](b: By, idx:Int=0)(using dlg: D)
     this.lfunc = loc
   }
 
-  final def parentType: String = own.getClass.getSimpleName
+  final def parentType: String = dlg.getClass.getSimpleName
 
-  final def pg: Page = own.pg
+  final def pg: Page = dlg.pg
 
   final def loc(pg: Page): Locator = lfunc(pg)
 
-  final def loc: Locator = loc(own.pg)
+  final def loc: Locator = loc(dlg.pg)
 
   def flash: ADlg = {
     loc.evaluate("element => {" +
@@ -42,7 +42,7 @@ abstract class Ctrl[D <: ADlg](b: By, idx:Int=0)(using dlg: D)
       "setTimeout(() => element.style.backgroundColor = '', 500);" +
       "}")
     Thread.sleep(1000)
-    own
+    dlg
   }
 
   /**
@@ -54,11 +54,11 @@ abstract class Ctrl[D <: ADlg](b: By, idx:Int=0)(using dlg: D)
   final def fullName: String = {
 
     //val allFields = own.getClass.getDeclaredFields
-    val allFields = ReflectUtils.allInstanceFields(own.getClass)
+    val allFields = ReflectUtils.allInstanceFields(dlg.getClass)
     for (field <- allFields) {
       field.setAccessible(true)
       try {
-        val value = field.get(own)
+        val value = field.get(dlg)
         if (value eq this) {
           //println("My name im parent is: " + field.getName)
           return field.getName
@@ -69,7 +69,7 @@ abstract class Ctrl[D <: ADlg](b: By, idx:Int=0)(using dlg: D)
       }
     }
     // search in base classes
-    own.getClass
+    dlg.getClass
     "NOT FOUND"
   }
 
@@ -81,31 +81,31 @@ abstract class Ctrl[D <: ADlg](b: By, idx:Int=0)(using dlg: D)
 
   def random(value: String) = s"$value .. 42"
 
-  own.adopt(this)
+  dlg.adopt(this)
 
   def click: ADlg =
     loc(pg).click()
-    own
+    dlg
 
   final def clickFail: ADlg =
     loc(pg).click()
-    own
+    dlg
 
   final def click(cnt: Integer = 1): ADlg = {
-    own
+    dlg
   }
 
   def check: ADlg =
     loc(pg).check()
-    own
+    dlg
 
   def uncheck: ADlg =
     loc(pg).uncheck()
-    own
+    dlg
 
   def set(any: Any): ADlg = {
     loc(pg).fill(any.toString)
-    own
+    dlg
   }
 
   final def get(): ADlg = {
@@ -114,8 +114,8 @@ abstract class Ctrl[D <: ADlg](b: By, idx:Int=0)(using dlg: D)
 
   def get(key: String): ADlg = {
     val txt = loc.textContent()
-    own.setVar(key, txt)
-    own
+    dlg.setVar(key, txt)
+    dlg
   }
 
 }

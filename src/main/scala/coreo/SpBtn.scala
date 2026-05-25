@@ -9,7 +9,7 @@ class SpBtn[F <: ADlg](b: By = null)(using ref: F)
 
   override def set(txt: Any = ""): F = {
     loc.fill(txt.toString)
-    own
+    dlg
   }
 
 }
