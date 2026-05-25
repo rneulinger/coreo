@@ -40,6 +40,7 @@ type ACtrl = Ctrl[?]
 
 case class MYAPP[+A](app: A)
 case class MYDLG[+D](dlg: D)
+case class OWNER[+WIN](own: WIN)
 
 case class Opt(name: String = "", exact: Boolean = false) {
 
