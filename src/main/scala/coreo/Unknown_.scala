@@ -1,6 +1,6 @@
 package coreo
 
-final class Unknown_[A](using own: PwApp) extends Dlg[A] {
+final class Unknown_[A](using own: PwApp) extends Dlg {
 
 //  given own: Unknown_ = this
 

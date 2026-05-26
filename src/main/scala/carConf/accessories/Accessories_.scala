@@ -5,7 +5,7 @@ import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
 // tag::fields[]
-class Accessories_[A](using app: MYAPP[A]) extends Dlg[A] {
+class Accessories_[+A <: App](using app: App) extends Dlg {
 
   val BasePrice = TXT(_.locator("#BasePrice_input"))
 
@@ -29,5 +29,5 @@ class Accessories_[A](using app: MYAPP[A]) extends Dlg[A] {
     
   }
   // end::fields[]
-  given ref: Accessories_[A] = MYDLG(this,?)
+  given ref: Accessories_[A] = this
 }

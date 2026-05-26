@@ -6,7 +6,7 @@ import coreo.*
  * mixin for tabs
  */
 trait TABS {
-  self: ADlg =>
+  self: Dlg =>
 
-  given ref: ADlg
+  given ref: Dlg
 }

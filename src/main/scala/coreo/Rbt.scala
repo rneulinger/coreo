@@ -3,7 +3,6 @@ package coreo
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
-class RBT[D <: Dlg[?], A<:PwApp ](b: By = null)(using ref: MYDLG[D,A])
-  extends Data[D,A](b) {
+class Rbt[+D <: Dlg](by: By = null)(using dlg: D) extends Data:
   override def ariaRole: AriaRole = AriaRole.RADIO
-}
+

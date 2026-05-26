@@ -8,16 +8,18 @@ import coreo.*
  * @tparam D owner of these buttons
  */
 //tag::fields[]
-trait AddEditDelete[D <: Dlg[?], A<:PwApp ] {
+trait AddEditDelete[D <: Dlg] {
   self: D =>
 
   @To()
-  final val Add = Btn[D,A]()(using ref) // new Dialog
+  final val Add = Btn[D]()(using myDlg) // new Dialog
+
   @To()
-  final val Edit = Btn[D,A]()(using ref) // edit selected
+  final val Edit = Btn[D]()(using myDlg) // edit selected
+
   @To()
-  final val Delete = Btn[D,A]()(using ref) // delete selected
+  final val Delete = Btn[D]()(using myDlg) // delete selected
   //end::fields[]
-  def ref: MYDLG[D,A]
+  given myDlg: D = scala.compiletime.deferred
 
 }

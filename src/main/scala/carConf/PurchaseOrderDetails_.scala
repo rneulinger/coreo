@@ -5,7 +5,7 @@ import coreo.bricks.*
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
-class PurchaseOrderDetails_[A](using myApp: MYAPP[A]) extends Dlg[A] {
+class PurchaseOrderDetails_[+A <: App](using myApp: App) extends Dlg {
 
   // tag::fields[]
 
@@ -37,5 +37,5 @@ class PurchaseOrderDetails_[A](using myApp: MYAPP[A]) extends Dlg[A] {
 
 
   // end::fields[]
-  given myDlg:PurchaseOrderDetails_ = MYDLG(this)
+  given myDlg:PurchaseOrderDetails_[A] = this
 }

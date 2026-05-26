@@ -5,7 +5,7 @@ import com.microsoft.playwright.*
 import scala.jdk.CollectionConverters.*
 import java.io.PrintWriter
 
-class PwApp(val baseUrl: String) extends AnyApp {
+class PwApp(val baseUrl: String) extends App {
   def nameOfApp = "No Name"
   final def page: Page = pg
 

@@ -2,13 +2,16 @@ package coreo.bricks
 
 import coreo.*
 
-trait CancelFinish[D <: Dlg[?], A<:PwApp ]() {
+//tag::fields[]
+trait CancelFinish[D <: Dlg]() {
   self: D =>
 
+  @To(dest = classOf[Return])
+  final val Cancel = new Btn[D]()(using myDlg)
 
   @To(dest = classOf[Return])
-  final val Cancel = new Btn[D,A]()(using ref)
-  @To(dest = classOf[Return])
-  final val Finish = new Btn[D,A]()(using ref)
-  def ref: MYDLG[D,A]
+  final val Finish = new Btn[D]()(using myDlg)
+
+  //tag::fields[]
+  given myDlg: D = scala.compiletime.deferred
 }

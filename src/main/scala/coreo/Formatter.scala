@@ -1,6 +1,6 @@
 package coreo
 
-class Formatter(val frm: ADlg) {
+class Formatter(val frm: Dlg) {
   private def atoms = frm.atoms
 
   private def datas = frm.datas
@@ -28,7 +28,7 @@ class Formatter(val frm: ADlg) {
    */
   def mkAdd: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[Btn[?,?]])) yield {
+    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[Btn[?]])) yield {
       s"""|| ${a._1.padTo(atomsMax, BLANK)} |   | ${a._2.myType.padTo(typeMax, BLANK)} |"""
     }
     val tbl = List(head) ::: lines.toList
@@ -45,7 +45,7 @@ class Formatter(val frm: ADlg) {
    */
   def mkEdit: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[Btn[?,?]])) yield {
+    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[Btn[?]])) yield {
       s"""|| ${a._1.padTo(atomsMax, BLANK)} |   | ${a._2.myType.padTo(typeMax, BLANK)} |"""
     }
     val tbl = List(head) ::: lines.toList
@@ -62,7 +62,7 @@ class Formatter(val frm: ADlg) {
    */
   def mkNext: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[Btn[?,?]])) yield {
+    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[Btn[?]])) yield {
       s"""|| ${a._1.padTo(atomsMax, BLANK)} |   | ${a._2.myType.padTo(typeMax, BLANK)} |"""
     }
     val tbl = List(head) ::: lines.toList
@@ -79,7 +79,7 @@ class Formatter(val frm: ADlg) {
    */
   def mkSet: String = {
     val head = s"""|| ${"name".padTo(atomsMax, " ".charAt(0))} |   | typ |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[Btn[?,?]])) yield {
+    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[Btn[?]])) yield {
       s"""|| ${a._1.padTo(atomsMax, BLANK)} |   | ${a._2.myType.padTo(typeMax, BLANK)} |"""
     }
     val tbl = List(head) ::: lines.toList
@@ -113,7 +113,7 @@ class Formatter(val frm: ADlg) {
    */
   def mkGet: String = {
     val head = s"""|| ${"name".padTo(atomsMax, BLANK)} | op | ${"var".padTo(shortMax, BLANK)} |"""
-    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[Btn[?,?]])) yield {
+    val lines = for (a <- atoms.filterNot(_._2.isInstanceOf[Btn[?]])) yield {
       s"""|| ${a._1.padTo(atomsMax, BLANK)} |    | ${a._2.shortName.padTo(shortMax, BLANK)} |"""
     }
     val tbl = List(head) ::: lines.toList
@@ -164,7 +164,7 @@ class Formatter(val frm: ADlg) {
       s"""|    public readonly $typ $short;"""
     }
 
-    val recs = for (a <- atoms.filter(_._2.isInstanceOf[Data[?,?]])) yield {
+    val recs = for (a <- atoms.filter(_._2.isInstanceOf[Data[?]])) yield {
       val name = a._2.nameUi
       //      val short = Defs.mkCamelCase(name)
       val short = Defs.mkCamelCase(a._2.fullName)
@@ -176,12 +176,12 @@ class Formatter(val frm: ADlg) {
         if s.endsWith("_") then s.dropRight(1) else s
       }
 
-      val res = for (a <- atoms.filter(_._2.isInstanceOf[Action[?,?]])) yield {
+      val res = for (a <- atoms.filter(_._2.isInstanceOf[Action[?]])) yield {
         val short = Defs.mkCamelCase(a._2.fullName)
         a._2 match {
-          case x: Action[?,?] if x.target == Unknown_
+          case x: Action[?] if x.target == Unknown_
           => ""
-          case x: Action[?, ?]
+          case x: Action[?]
           => s"""$short.target = "${dropTrailingUnderscore(x.target.simple)}";"""
         }
       }

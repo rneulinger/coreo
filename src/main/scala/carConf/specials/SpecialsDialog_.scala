@@ -6,7 +6,7 @@ import com.microsoft.playwright.options.*
 
 
 // tag::fields[]
-class SpecialsDialog_[A] (using own: AnyApp) extends Dlg[A] {
+class SpecialsDialog_[+A <: App] (using own: App) extends Dlg {
 
 
   val ModelName = TXT(_.locator("#SpecialsName99_input"))
@@ -20,7 +20,7 @@ class SpecialsDialog_[A] (using own: AnyApp) extends Dlg[A] {
   val Specials = TAB(_.locator("#SpecialsTable"))
 
   // end::fields[]
-  given ref: SpecialsDialog_[A] = MYDLG(this,A)
+  given ref: SpecialsDialog_[A] = this
 
 }
 

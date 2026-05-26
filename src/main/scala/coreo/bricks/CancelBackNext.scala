@@ -9,14 +9,19 @@ import coreo.*
  * has buttons Cancel, Back Next
  */
 
-trait CancelBackNext[D <: Dlg[?], A<:PwApp ]() {
+//tag::fields[]
+trait CancelBackNext[D <: Dlg]() {
   self: D =>
 
   @To(dest = classOf[Return])
-  final val Cancel = Btn[D,A]()(using ref)
+  final val Cancel = Btn[D]()(using myDlg)
+  
   @To()
-  final val Back = Btn[D,A]()(using ref)
+  final val Back = Btn[D]()(using myDlg)
+  
   @To()
-  final val Next = Btn[D,A]()(using ref)
-  def ref: MYDLG[D,A]
+  final val Next = Btn[D]()(using myDlg)
+
+  //end::fields[]
+  given myDlg: D = scala.compiletime.deferred
 }

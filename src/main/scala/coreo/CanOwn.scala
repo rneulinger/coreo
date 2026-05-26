@@ -6,7 +6,7 @@ import com.microsoft.playwright.*
  * either Root or WIN
  */
 trait CanOwnXXX {
-  def app: AnyApp
+  def app: App
 
   /**
    * associated page
@@ -24,9 +24,9 @@ trait CanOwnXXX {
     moduleField.get(null).asInstanceOf[Static] // the singleton instance (companion object)
   }
 
-  def findWin(name: String): ADlg
+  def findWin(name: String): Dlg
 
-  final def findWin(comp: Static): ADlg = {
+  final def findWin(comp: Static): Dlg = {
     comp match {
       case Unknown_ =>
         println(Unknown_)
@@ -45,17 +45,17 @@ trait CanOwnXXX {
 
   def openUrl(path: String): Unit
 
-  def onto(frm: ADlg): Unit
+  def onto(frm: Dlg): Unit
 
   def atoms: Map[String, ACtrl]
 
   final def datas: Map[String, ACtrl] = atoms
-    .filter(_._2.isInstanceOf[Data[?,?]])
-    .collect { case d: (String, Data[?,?]) => d }
+    .filter(_._2.isInstanceOf[Data[?]])
+    .collect { case d: (String, Data[?]) => d }
 
-  final def actions: Map[String, Action[?,?]] = atoms
-    .filter(_._2.isInstanceOf[Action[?,?]])
-    .collect { case a: (String, Action[?,?]) => a }
+  final def actions: Map[String, Action[?]] = atoms
+    .filter(_._2.isInstanceOf[Action[?]])
+    .collect { case a: (String, Action[?]) => a }
 
   def setVar(key: String, value: Any): Unit
 

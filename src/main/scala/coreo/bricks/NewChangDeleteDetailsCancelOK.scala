@@ -2,10 +2,10 @@ package coreo.bricks
 
 import coreo.*
 
-trait NewChangDeleteDetailsCancelOK[D <: Dlg[?], A<:PwApp ]() {
+trait NewChangDeleteDetailsCancelOK[D <: Dlg]() {
   self: D =>
 
-  def ref: D
+  given myDlg: D = scala.compiletime.deferred
 
   //  final val New = BTN[F]()(using ref)
   //  final val Change = BTN[F]()(using ref)

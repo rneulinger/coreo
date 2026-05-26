@@ -8,8 +8,8 @@ import com.microsoft.playwright.{Locator, Page}
 import scala.language.postfixOps
 
 // tag::fields[]
-class CarConfig_[A](using app: AnyApp)
-  extends Dlg[A] {
+class CarConfig_[+A <: App](using app: App)
+  extends Dlg {
 
   def byName(name: String): Page => Locator =
     _.getByRole(AriaRole.LINK,
@@ -25,5 +25,5 @@ class CarConfig_[A](using app: AnyApp)
     byName("Accessories"))
 
   // end::fields[]
-  given ref: CarConfig_[A] = MYDLG(this,A)
+  given ref: CarConfig_[A] = this
 }

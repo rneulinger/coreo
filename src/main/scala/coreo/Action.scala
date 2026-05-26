@@ -1,7 +1,7 @@
 package coreo
 
-abstract class Action[D <: Dlg[?], A<:PwApp ](b: By)(using ref: MYDLG[D,A])
-  extends Ctrl[D,A](b) {
+abstract   class Action[+D <: Dlg](by: By = null)(using dlg: D) extends Ctrl
+  {
 
   override def weight = 2
 
@@ -9,7 +9,7 @@ abstract class Action[D <: Dlg[?], A<:PwApp ](b: By)(using ref: MYDLG[D,A])
 
 //  lazy val action: Option[T] = None // TODO implement lookup
 
-  override def click: ADlg =
+  override def click: Dlg =
     super.click
     if target != Unknown_ then
       ??? //own.onto(own.findWin(target))

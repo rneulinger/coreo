@@ -1,5 +1,3 @@
 package coreo
 
-abstract class Data[D <: Dlg[?], A<:PwApp ](b: By)(using ref: MYDLG[D,A])
-  extends Ctrl[D,A](b) {
-}
+abstract class Data[+D <: Dlg](by: By = null)(using dlg: D) extends Ctrl

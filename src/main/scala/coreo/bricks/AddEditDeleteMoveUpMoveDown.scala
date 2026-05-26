@@ -8,14 +8,18 @@ import coreo.*
  * @tparam D owner of these buttons
  */
 
-trait AddEditDeleteMoveUpMoveDown[D <: Dlg[?], A<:PwApp ] extends AddEditDelete[D,A] {
+//tag::fields[]
+trait AddEditDeleteMoveUpMoveDown[D <: Dlg] extends AddEditDelete[D] {
   self: D =>
 
 
   // buttons right
   @To()
-  final val MoveUp = Btn[D,A]()(using ref) // move selected up ! in 1st line
+  final val MoveUp = Btn[D]()(using myDlg) // move selected up ! in 1st line
+
   @To()
-  final val MoveDown = Btn[D,A]()(using ref) // move selected down ! in last line
-  def ref: MYDLG[D,A]
+  final val MoveDown = Btn[D]()(using myDlg) // move selected down ! in last line
+
+  //en::fields[]
+  given myDlg: D = scala.compiletime.deferred
 }

@@ -30,7 +30,7 @@ class CarConfigApp extends PwApp(""){
   val _Accessories = Accessories_()
   val _AccessoriesDialog = AccessoriesDialog_()
 
-  given own:CarConfigApp = MYAPP(this)
+  given own:CarConfigApp = this
 
 
   object specials {

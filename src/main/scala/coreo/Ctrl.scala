@@ -5,18 +5,16 @@ import com.microsoft.playwright.options.*
 
 import java.util.regex.Pattern
 
-abstract class Ctrl[D <: Dlg[?], A<:PwApp ](b: By, idx:Int=0)(using ref: MYDLG[D,A])
+abstract class Ctrl[+D <: Dlg](by: By = null, idx:Int=0)(using val dlg: D)
   extends Obj {
   def weight = 1
   def ariaRole:AriaRole = AriaRole.GENERIC
-  final val dlg: D = ref.dlg
-  final def A =ref.app
+  final def app = dlg.app
   val name:String =  ???
-  final def app: PwApp = dlg.app.asInstanceOf[PwApp]
   final def nameUi: String = if name.trim.isEmpty then fullName else name
 
   final var lfunc: (Page => Locator) = {
-    b match{
+    by match{
       case null  => (p:Page) => p.getByText(nameUi)
       case func: (Page => Locator) => func
     }
@@ -36,7 +34,7 @@ abstract class Ctrl[D <: Dlg[?], A<:PwApp ](b: By, idx:Int=0)(using ref: MYDLG[D
 
   final def loc: Locator = loc(dlg.pg)
 
-  def flash: ADlg = {
+  def flash: Dlg = {
     loc.evaluate("element => {" +
       "element.style.transition = 'background-color 0.3s ease';" +
       "element.style.backgroundColor = 'yellow';" +
@@ -84,36 +82,36 @@ abstract class Ctrl[D <: Dlg[?], A<:PwApp ](b: By, idx:Int=0)(using ref: MYDLG[D
 
   dlg.adopt(this)
 
-  def click: ADlg =
+  def click: Dlg =
     loc(pg).click()
     dlg
 
-  final def clickFail: ADlg =
+  final def clickFail: Dlg =
     loc(pg).click()
     dlg
 
-  final def click(cnt: Integer = 1): ADlg = {
+  final def click(cnt: Integer = 1): Dlg = {
     dlg
   }
 
-  def check: ADlg =
+  def check: Dlg =
     loc(pg).check()
     dlg
 
-  def uncheck: ADlg =
+  def uncheck: Dlg =
     loc(pg).uncheck()
     dlg
 
-  def set(any: Any): ADlg = {
+  def set(any: Any): Dlg = {
     loc(pg).fill(any.toString)
     dlg
   }
 
-  final def get(): ADlg = {
+  final def get(): Dlg = {
     get(shortName)
   }
 
-  def get(key: String): ADlg = {
+  def get(key: String): Dlg = {
     val txt = loc.textContent()
     dlg.setVar(key, txt)
     dlg
@@ -184,12 +182,12 @@ object ReflectUtils {
 }
 
 object Loc {
-  def byText[F <: ADlg](idx:Int = 0):(Ctrl[F,?] => (Page => Locator) )
-  = (ctrl:Ctrl[F,?]) => (p:Page) => p.getByText(ctrl.nameUi).nth(idx)
-  def byPattern[F <: ADlg](pattern: Pattern, idx:Int = 0):(Ctrl[F,?] => (Page => Locator) )
-  = (ctrl:Ctrl[F,?]) => (p:Page) => p.getByText(pattern).nth(idx)
-  def byId[F <: ADlg](id:String ):(Ctrl[F,?] => (Page => Locator) )
-  = (ctrl:Ctrl[F,?]) => (p:Page) => p.getByTestId(id)
-  def byRole[F <: ADlg](idx:Int = 0 ):(Ctrl[F,?] => (Page => Locator) )
-  = (ctrl:Ctrl[F,?]) => (p:Page) => p.getByRole(ctrl.ariaRole).nth(idx)
+  def byText[D <: Dlg](idx:Int = 0):(Ctrl[D] => (Page => Locator) )
+  = (ctrl:Ctrl[D]) => (p:Page) => p.getByText(ctrl.nameUi).nth(idx)
+  def byPattern[D <: Dlg](pattern: Pattern, idx:Int = 0):(Ctrl[D] => (Page => Locator) )
+  = (ctrl:Ctrl[D]) => (p:Page) => p.getByText(pattern).nth(idx)
+  def byId[D <: Dlg](id:String ):(Ctrl[D] => (Page => Locator) )
+  = (ctrl:Ctrl[D]) => (p:Page) => p.getByTestId(id)
+  def byRole[D <: Dlg](idx:Int = 0 ):(Ctrl[D] => (Page => Locator) )
+  = (ctrl:Ctrl[D]) => (p:Page) => p.getByRole(ctrl.ariaRole).nth(idx)
 }
