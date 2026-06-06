@@ -26,69 +26,96 @@ object MyLab:
 
   /** Application, a bunch of dialogs*/
   class App:
-    def bingo() = println( "Bingo from app")
-  end App
-
+    def methodApp() = println( "Bingo from app")
+  
   /** a bunch of controls */
   trait Dlg(using app:App):
     def ctrls = membersOfSubtype(this, classOf[Ctrl])
-    def adopt( ctrl:Ctrl) = {}
-    def TXT():Ctrl
-    def dddd() ={
-
+    def datas = membersOfSubtype(this, classOf[Data])
+    def actions = membersOfSubtype(this, classOf[Data])
+    def BTN(id:String=null):Btn
+    def TXT(id:String=null):Txt
+    //def adopt( ctrl:Ctrl) = {}
+    def methodDlg() ={
+      app.methodApp()
     }
 
+  
   /** Control within a dialog */
-  trait Ctrl( using dlg:Dlg) {
-    dlg.adopt(this)
+  trait Ctrl( using dlg:Dlg, app:App) {
+    dlg.actions
+    app.methodApp()
+    def click():Dlg
   }
   trait Data extends Ctrl
   trait Action extends Ctrl
   trait Txt extends Data
   trait Btn extends Action
+  trait OkCancel(using app:App):
+    self: Dlg =>
+    def Ok:Btn
+    def Cancel :Btn
 
-  trait MixinPw(using app:App) {
+  trait Commit( using app:App) :
+    val Close = Btn
+    val Msg = Txt
+    
+  class DlgPw( using app:AppPw) extends Dlg:
+    def BTN(id:String=null) = BtnPw(using this)
+    def TXT(id:String=null) = TxtPw(using this)
+
+  class CtrlPw( using dlg:DlgPw, appPw: AppPw) extends Ctrl:
+    def click()=dlg
+    
+  class DataPw(using dlg: DlgPw, appPw: AppPw) extends CtrlPw with Data
+  class ActionPw(using dlg: DlgPw, appPw: AppPw) extends CtrlPw with Action
+  class TxtPw(using dlg: DlgPw, appPw: AppPw) extends DataPw with Txt
+  class BtnPw(using dlg: DlgPw, appPw: AppPw) extends ActionPw with Btn
+  trait OkCancelPw(using app: PwApp):
+    self: DlgPw =>
+    val Ok = BTN()
+    val Cancel = BTN()
+  
+  trait MixinPw(using app:AppPw):
     self: DlgPw =>
     val Next = BTN()
     val Prev = BTN()
-  }
 
-  class MyDialog(using app:AppPw)  extends DlgPw with MixinPw {
-    val Ok = BTN()
-    given dlg:MyDialog = this
+  class CommitPw(using app:AppPw) extends Commit
+  
+  class MyDialogPw(using app:AppPw)  extends DlgPw with MixinPw {
+//    val Ok = BTN()
+    given dlg:MyDialogPw = this
 
     def foo() = {
-      app.bingo()
+      app.methodApp()
     }
   }
 
-  class AppPw extends App
+  class AppPw extends App:
+    def dlgs = membersOfSubtype(this, classOf[Dlg])
 
-  class DlgPw( using app:AppPw) extends Dlg:
-    def CTRL() = CtrlPw(using this)
-    def BTN() = CtrlPw(using this)
-    def TXT() = CtrlPw(using this)
 
-  class CtrlPw( using val dlg:DlgPw) extends Ctrl
 
 
   class MyApp extends AppPw:
-    val myDialog = MyDialog()
-
+    val myDialog = MyDialogPw()
+    val commit = CommitPw()
     given app:MyApp = this
 
   @main
   def startApp() = {
+    val xxx = App()
     val app = MyApp()
+    println( app.dlgs.distinct )
     println( app.myDialog.ctrls.distinct )
+    val b = app.myDialog.Next
+    app.commit.Close
   }
 
 
 end MyLab
 
-
-import scala.deriving.Mirror
-import scala.compiletime.{erasedValue, summonInline, constValueTuple}
 
 def membersOfSubtype[A, T](a: A, target: Class[T]): List[(String, T)] =
   val cls = a.getClass
@@ -135,3 +162,32 @@ object usage:
   def test()= {
     println(strings)
   }
+
+
+object fieldOfExactType:
+  def fieldsOfExactType[A, T](a: A, target: Class[T]): List[(String, T)] =
+    val cls = a.getClass
+
+    // includes inherited public fields + declared fields
+    val fields =
+      cls.getFields.toList ++ cls.getDeclaredFields.toList
+
+    fields.collect {
+      case f if f.getType == target =>
+        f.setAccessible(true)
+        f.getName -> f.get(a).asInstanceOf[T]
+    }
+
+  class Base:
+    val base: String = "base"
+
+  class Child extends Base:
+    val child: String = "child"
+    val number: Int = 42
+
+  val c = Child()
+
+  val strings = fieldsOfExactType(c, classOf[String])
+
+  @main
+  def usage2() = println(strings)
