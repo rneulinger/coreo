@@ -1,4 +1,4 @@
-package labor
+package lab
 
 /** Language for code generation. C#, Python...
  * default is C# */
