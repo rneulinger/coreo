@@ -1,0 +1,3 @@
+* https://playwright.dev/docs/codegen-intro[Playwright]
+* https://www.qftest.com/doc/tutorial/de/contents.html#table-of-contents[Qf-Tutorial]
+* https://www.qftest.com/doc/manual/de/contents.html[Qf-Manual]

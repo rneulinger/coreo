@@ -60,9 +60,25 @@ abstract class Dlg(using val myApp:App)
   def onto(frm: Dlg): Unit = app.onto(frm)
 
   /**
+   * Attempts to locate an `ACtrl` instance by name using two matching strategies:
    *
-   * @param name name of control
+   *  1. **Exact match**
+   *     If the provided `name` exactly matches a key in the `atoms` map,
+   *     the corresponding `ACtrl` is returned.
+   *
+   *  2. **Unique substring match**
+   *     If no exact match exists, the method searches all `ACtrl` instances
+   *     whose `name` field contains the given `name` as a substring.
+   *     If exactly one such hit exists, that instance is returned.
+   *
+   * If neither an exact match nor a unique substring match is found,
+   * the method returns `None`.
+   *
+   * @param name
+   * The lookup string used to identify an `ACtrl` instance.
    * @return
+   * `Some(ACtrl)` if an exact match exists, or if exactly one substring match
+   * is found; otherwise `None`.
    */
   def findAtom(name: String): Option[ACtrl] = {
     if (atoms.keySet.contains(name)) {
