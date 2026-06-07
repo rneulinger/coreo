@@ -1,7 +1,7 @@
 package lab.pw
 
 import lab.core.*
-import lab.*
+import lab.utils.*
 
 class App extends _App:
   def dlgs = membersOfSubtype(this, classOf[_Dlg])
@@ -24,7 +24,7 @@ abstract class Data(using dlg: Dlg, app: App) extends Ctrl with _Data
 
 abstract class Action(using dlg: Dlg, app: App) extends Ctrl with _Action
 
-class Txt(using dlg: Dlg, app: App) extends Data with _Txt
+class Txt()(using dlg: Dlg, app: App) extends Data with _Txt
 
 class Btn(using dlg: Dlg, app: App) extends Action with _Btn
 

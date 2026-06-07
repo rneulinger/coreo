@@ -1,6 +1,7 @@
 package lab.core
 
 import lab.*
+import lab.utils.membersOfSubtype
 
 /** Language for code generation. C#, Python...
  * default is C# */

@@ -1,4 +1,4 @@
-package lab
+package lab.utils
 
 def membersOfSubtype[A, T](a: A, target: Class[T]): List[(String, T)] =
   val cls = a.getClass
