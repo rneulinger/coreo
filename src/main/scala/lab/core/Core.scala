@@ -70,7 +70,15 @@ trait _Data extends _Ctrl
 
 trait _Txt extends _Data
 
-trait _Action extends _Ctrl
+trait _Action extends _Ctrl:
+  private var target: Option[_Ctrl] = None
+
+  def resetTarget(): Unit = ???
+
+  def setTarget(ctrl: _Ctrl): Unit = ???
+
+  def getTarget: Option[_Ctrl] = ???
+
 
 trait _Btn extends _Action
 
