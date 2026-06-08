@@ -1,7 +1,7 @@
 package lab.practice
 
 import lab.pw.*
-
+import lab.utils
 class PracticeApp extends App:// ("https://practice.expandtesting.com/") {
   //override def nameOfApp = "Practice"
 
@@ -23,4 +23,5 @@ object PracticeApp:
   @main
   def main()={
     val app=PracticeApp()
+    app    
   }

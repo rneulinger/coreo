@@ -35,7 +35,8 @@ trait _Obj {
 /** Application, a bunch of dialogs */
 class _App extends _Obj:
   def methodApp() = println("Bingo from app")
-
+  def goto(dest:String="/") ={
+  }
 /** a bunch of controls */
 trait _Dlg(using app: _App) extends _Obj:
   def ctrls = membersOfSubtype(this, classOf[_Ctrl])
@@ -58,8 +59,6 @@ trait _Dlg(using app: _App) extends _Obj:
 /** Control within a dialog */
 trait _Ctrl(using dlg: _Dlg, app: _App) extends _Obj{
   dlg.notify(this)
-  dlg.actions
-  app.methodApp()
 
   def click(): _Dlg
 
@@ -106,67 +105,4 @@ trait Crud:
   def update(): _Action
 
   def delete(): _Action
-
-trait _Whiz(left: _Whiz.Left, right: _Whiz.Right, mids: _Whiz.Mid*)
-
-object _Whiz:
-  trait Left:
-    def cancel(): _Action
-
-    def next(): _Action
-
-  trait Right:
-
-    def cancel(): _Action
-
-    def ok(): _Action
-
-    def previous(): _Action
-
-  trait Mid:
-    def cancel(): _Action
-
-    def next(): _Action
-
-    def previous(): _Action
-
-trait _CancelNext(using app: _App) extends _Whiz.Right:
-  self: _Dlg =>
-  @Overload
-  val Cancel = BTN()
-  @Overload
-  val Next = BTN()
-
-  def cancel() = Cancel
-
-  def next() = Next
-
-val x = classOf[Overload]
-
-trait _CancelNextPrevious extends _Whiz.Mid:
-  self: _Dlg =>
-  @Overload
-  val Cancel = BTN()
-  @Overload
-  val Next = BTN()
-  @Overload
-  val Previous = BTN()
-
-  def cancel() = Cancel
-
-  def next() = Next
-
-  def previous() = Previous
-
-trait _OkCancelPrevious extends _Whiz.Left with _OkCancel:
-  self: _Dlg =>
-  @Overload
-  val Previous = BTN()
-
-  def cancel() = Cancel
-
-  def previous() = Previous
-
-  def ok() = Ok
-
 

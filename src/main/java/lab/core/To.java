@@ -14,5 +14,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)   // TYPE = class, interface, enum, record
 
 public @interface To {
-    Class<? extends Dialog> dest();
+    Class<? extends _Dlg> dest();
 }
