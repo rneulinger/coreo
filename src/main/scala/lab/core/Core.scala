@@ -28,12 +28,13 @@ class Loc:
 end Loc
 
 type UiId = String | Null
+
 /** Application, a bunch of dialogs */
 class _App:
   def methodApp() = println("Bingo from app")
 
 /** a bunch of controls */
-trait _Dlg(using app: _App):
+trait _Dlg(using app: _App) extends Destination:
   def ctrls = membersOfSubtype(this, classOf[_Ctrl])
 
   def datas = membersOfSubtype(this, classOf[_Data])
@@ -104,6 +105,7 @@ object _Whiz:
     def next(): _Action
 
   trait Right:
+
     def cancel(): _Action
 
     def ok(): _Action
@@ -117,10 +119,11 @@ object _Whiz:
 
     def previous(): _Action
 
-
 trait _CancelNext(using app: _App) extends _Whiz.Right:
   self: _Dlg =>
+  @To(dest = classOf[Overload])
   val Cancel = BTN()
+  @To(dest = classOf[Overload])
   val Next = BTN()
 
   def cancel() = Cancel

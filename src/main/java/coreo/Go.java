@@ -13,5 +13,5 @@ import java.lang.annotation.ElementType;
 @Target(ElementType.TYPE)   // TYPE = class, interface, enum, record
 
 public @interface Go {
-    Class<? extends Destination> type();
+    String value();
 }

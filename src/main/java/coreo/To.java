@@ -10,6 +10,7 @@ import java.lang.annotation.ElementType;
 /**
  * focus goes to this window, usable in Actions.
  * if RETURN is provided as parameter action returns to previous dialog
+ * if Overload is provided as parameter overloading is needed
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)   // TYPE = class, interface, enum, record
