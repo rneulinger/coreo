@@ -3,7 +3,7 @@ package coreo.bricks
 import coreo.*
 
 /**
- * Decorator Button 
+ * Decorator Button
  *
  * @tparam D
  * has buttons Cancel, Back Next
@@ -15,10 +15,10 @@ trait CancelBackNext[D <: Dlg]() {
 
   @To(dest = classOf[Return])
   final val Cancel = Btn[D]()(using myDlg)
-  
+
   @To()
   final val Back = Btn[D]()(using myDlg)
-  
+
   @To()
   final val Next = Btn[D]()(using myDlg)
 

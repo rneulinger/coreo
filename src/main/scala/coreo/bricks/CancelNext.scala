@@ -3,7 +3,7 @@ package coreo.bricks
 import coreo.*
 
 //tag::fields[]
-trait CancelNext[D <: Dlg ]() {
+trait CancelNext[D <: Dlg]() {
   self: D =>
 
   @To(dest = classOf[Return])

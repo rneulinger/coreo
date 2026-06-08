@@ -76,7 +76,8 @@ object fieldOfExactType:
   @main
   def usage2() = println(strings)
 
-extension[A](a: A)
+extension [A](a: A)
   def use(f: A => Unit): A = {
-    f(a); a
+    f(a);
+    a
   }

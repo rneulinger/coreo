@@ -7,11 +7,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * the dialog can be reached directly by the given path  
+ * the dialog can be reached directly by the given path.
+ * 
+ * usage 
+ * 
+ * @Go( "File/Exit" )
+ * class MyDlg...
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)   // TYPE = class, interface, enum, record
 
 public @interface Go {
-    Class<? extends Destination> type();
+    String value();
 }

@@ -5,17 +5,21 @@ import com.microsoft.playwright.options.*
 
 import java.util.regex.Pattern
 
-abstract class Ctrl[+D <: Dlg](by: By = null, idx:Int=0)(using val dlg: D)
+abstract class Ctrl[+D <: Dlg](by: By = null, idx: Int = 0)(using val dlg: D)
   extends Obj {
   def weight = 1
-  def ariaRole:AriaRole = AriaRole.GENERIC
+
+  def ariaRole: AriaRole = AriaRole.GENERIC
+
   final def app = dlg.app
-  val name:String =  ???
+
+  val name: String = ???
+
   final def nameUi: String = if name.trim.isEmpty then fullName else name
 
   final var lfunc: (Page => Locator) = {
-    by match{
-      case null  => (p:Page) => p.getByText(nameUi)
+    by match {
+      case null => (p: Page) => p.getByText(nameUi)
       case func: (Page => Locator) => func
     }
   }
@@ -182,12 +186,15 @@ object ReflectUtils {
 }
 
 object Loc {
-  def byText[D <: Dlg](idx:Int = 0):(Ctrl[D] => (Page => Locator) )
-  = (ctrl:Ctrl[D]) => (p:Page) => p.getByText(ctrl.nameUi).nth(idx)
-  def byPattern[D <: Dlg](pattern: Pattern, idx:Int = 0):(Ctrl[D] => (Page => Locator) )
-  = (ctrl:Ctrl[D]) => (p:Page) => p.getByText(pattern).nth(idx)
-  def byId[D <: Dlg](id:String ):(Ctrl[D] => (Page => Locator) )
-  = (ctrl:Ctrl[D]) => (p:Page) => p.getByTestId(id)
-  def byRole[D <: Dlg](idx:Int = 0 ):(Ctrl[D] => (Page => Locator) )
-  = (ctrl:Ctrl[D]) => (p:Page) => p.getByRole(ctrl.ariaRole).nth(idx)
+  def byText[D <: Dlg](idx: Int = 0): (Ctrl[D] => (Page => Locator))
+  = (ctrl: Ctrl[D]) => (p: Page) => p.getByText(ctrl.nameUi).nth(idx)
+
+  def byPattern[D <: Dlg](pattern: Pattern, idx: Int = 0): (Ctrl[D] => (Page => Locator))
+  = (ctrl: Ctrl[D]) => (p: Page) => p.getByText(pattern).nth(idx)
+
+  def byId[D <: Dlg](id: String): (Ctrl[D] => (Page => Locator))
+  = (ctrl: Ctrl[D]) => (p: Page) => p.getByTestId(id)
+
+  def byRole[D <: Dlg](idx: Int = 0): (Ctrl[D] => (Page => Locator))
+  = (ctrl: Ctrl[D]) => (p: Page) => p.getByRole(ctrl.ariaRole).nth(idx)
 }

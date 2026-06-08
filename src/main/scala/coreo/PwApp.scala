@@ -7,6 +7,7 @@ import java.io.PrintWriter
 
 class PwApp(val baseUrl: String) extends App {
   def nameOfApp = "No Name"
+
   final def page: Page = pg
 
   override def app: PwApp = this
@@ -82,7 +83,7 @@ class PwApp(val baseUrl: String) extends App {
     if (s.isEmpty) s
     else s.head.toUpper + s.tail
 
-  def genAllTs(name:String): Unit = {
+  def genAllTs(name: String): Unit = {
     val capName = capitalizeFirst(name)
     val decl = for (f <- frms) yield {
       val fn = f._2.myType + "_.ts"
@@ -126,7 +127,7 @@ class PwApp(val baseUrl: String) extends App {
 
   }
 
-  def genAllCs(name:String): Unit = {
+  def genAllCs(name: String): Unit = {
     val capName = capitalizeFirst(name)
 
     val decl = for (f <- frms) yield {
@@ -248,7 +249,7 @@ class PwApp(val baseUrl: String) extends App {
     }
   }
 
-  def mkMermaids():Unit = {
+  def mkMermaids(): Unit = {
     for (frm <- short) {
       val path = "build/mermaid/" + frm._2.getClass.getPackageName.replace(".", "/")
       println(path)

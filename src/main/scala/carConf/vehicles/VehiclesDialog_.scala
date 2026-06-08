@@ -8,13 +8,13 @@ import com.microsoft.playwright.options.*
 // tag::fields[]
 class VehiclesDialog_[+A <: App](using own: PwApp) extends Dlg {
 
-  val Vehicles = TBL( _.locator("#VehiclesTable"))
+  val Vehicles = TBL(_.locator("#VehiclesTable"))
 
   val VehicleName = TXT(_.locator("#VehicleName_input"))
 
-  val ID = TXT( _.locator("#VehicleId_input"))
+  val ID = TXT(_.locator("#VehicleId_input"))
 
-  val Price = TXT( _.locator("#VehiclePrice_input"))
+  val Price = TXT(_.locator("#VehiclePrice_input"))
 
   val New = BTN(_.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("New")))
 

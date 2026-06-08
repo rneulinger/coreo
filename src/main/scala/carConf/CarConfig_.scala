@@ -15,13 +15,13 @@ class CarConfig_[+A <: App](using app: App)
     _.getByRole(AriaRole.LINK,
       new Page.GetByRoleOptions().setName(name))
 
-  val VehiclesTab = TAB( 
+  val VehiclesTab = TAB(
     byName("Vehicles"))
-  
-  val SpecialsTab = TAB( 
+
+  val SpecialsTab = TAB(
     byName("Specials"))
-  
-  val AccessoriesTab = TAB( 
+
+  val AccessoriesTab = TAB(
     byName("Accessories"))
 
   // end::fields[]

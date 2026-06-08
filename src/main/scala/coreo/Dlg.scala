@@ -2,7 +2,7 @@ package coreo
 
 import com.microsoft.playwright.*
 
-abstract class Dlg(using val myApp:App)
+abstract class Dlg(using val myApp: App)
   extends Obj with Destination: //with CanOwn {
   def app = myApp.app
 
@@ -15,11 +15,11 @@ abstract class Dlg(using val myApp:App)
 
   def path: String = ""
 
-  def goto():Unit = ???
+  def goto(): Unit = ???
 
   def pathAbs = path.trim match {
     case "" => ""
-    case x if x.startsWith ("/") => x
+    case x if x.startsWith("/") => x
     case x => "/" + x
   }
 
@@ -43,7 +43,7 @@ abstract class Dlg(using val myApp:App)
   def weight = atoms.map(_._2.weight).sum + 1
 
   final def adopt(ctrl: Ctrl[?]): Unit = {
-      adoptedAtoms = adoptedAtoms.appended(ctrl)
+    adoptedAtoms = adoptedAtoms.appended(ctrl)
   }
 
 
@@ -117,7 +117,7 @@ abstract class Dlg(using val myApp:App)
       val len = atoms.map(_._1.length).max
       val name = atom._1
 
-        println("\t" + name + " " * (len - name.length) + " : " + atom._2.myType + " " + atom._2.name)
+      println("\t" + name + " " * (len - name.length) + " : " + atom._2.myType + " " + atom._2.name)
     }
   }
 
@@ -128,9 +128,13 @@ abstract class Dlg(using val myApp:App)
   def getVar(key: String): String = app.getVar(key)
 
   //  def TAB(func:Page => Locator):TAB[?,?] = ???
-  def BTN[F <: Dlg](func:Page => Locator=null, idx:Int=0):Btn[?] = ???
-  def TXT(func:Page => Locator=null, idx:Int=0):Txt[?] = ???
-  def CBX(func:Page => Locator=null, idx:Int=0):Cbx[?] = ???
-  def TAB(func:Page => Locator=null, idx:Int=0):Tab[?] = ???
-  def TBL(func:Page => Locator=null, idx:Int=0):Tbl[?] = ???
-  //  def TBL(func:Page => Locator):TBL[?] = ???
+  def BTN[F <: Dlg](func: Page => Locator = null, idx: Int = 0): Btn[?] = ???
+
+  def TXT(func: Page => Locator = null, idx: Int = 0): Txt[?] = ???
+
+  def CBX(func: Page => Locator = null, idx: Int = 0): Cbx[?] = ???
+
+  def TAB(func: Page => Locator = null, idx: Int = 0): Tab[?] = ???
+
+  def TBL(func: Page => Locator = null, idx: Int = 0): Tbl[?] = ???
+//  def TBL(func:Page => Locator):TBL[?] = ???

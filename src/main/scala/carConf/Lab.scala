@@ -11,50 +11,50 @@ object Lab extends CarConfigApp() {
   lazy val `/`: CarConfigApp = this
 
   @main def clickMains(): Unit = {
-/*
-    _SpecialsTab.click
-    _AccessoriesTab.click
-    _VehiclesTab.click
-
-    goto(Menu.File)
-    goto(Menu.File)
-    goto(Menu.File_Reset)
-
-    goto(Menu.Options)
-    goto(Menu.Options)
-    goto(Menu.Options_Vehicles)
-
-    def clickButton(name: String) = {
-      page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(name)).click()
-    }
-
-    def clickOK() = clickButton("OK")
-
-    def clickCancel() = clickButton("Cancel")
-
-    _VehiclesDialog.VehicleName.flash
-    clickCancel()
-
-    goto(Menu.Options_Specials)
-    clickOK()
-    goto(Menu.Options_Accessories)
-    clickOK()
-
-    goto(Menu.PurchaseOrder)
-    goto(Menu.PurchaseOrder)
-    goto(Menu.PurchaseOrder_ViewSelectedDetails)
-    clickOK()
-    goto(Menu.PurchaseOrder_SendOrder)
-    clickCancel()
-
-    goto(Menu.Help)
-    goto(Menu.Help)
-    goto(Menu.Help_Info)
-    clickOK()
-    goto(Menu.Help_Buggy)
-    goto(Menu.Help_LoadTestingModule)
-
-*/
+    /*
+        _SpecialsTab.click
+        _AccessoriesTab.click
+        _VehiclesTab.click
+    
+        goto(Menu.File)
+        goto(Menu.File)
+        goto(Menu.File_Reset)
+    
+        goto(Menu.Options)
+        goto(Menu.Options)
+        goto(Menu.Options_Vehicles)
+    
+        def clickButton(name: String) = {
+          page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(name)).click()
+        }
+    
+        def clickOK() = clickButton("OK")
+    
+        def clickCancel() = clickButton("Cancel")
+    
+        _VehiclesDialog.VehicleName.flash
+        clickCancel()
+    
+        goto(Menu.Options_Specials)
+        clickOK()
+        goto(Menu.Options_Accessories)
+        clickOK()
+    
+        goto(Menu.PurchaseOrder)
+        goto(Menu.PurchaseOrder)
+        goto(Menu.PurchaseOrder_ViewSelectedDetails)
+        clickOK()
+        goto(Menu.PurchaseOrder_SendOrder)
+        clickCancel()
+    
+        goto(Menu.Help)
+        goto(Menu.Help)
+        goto(Menu.Help_Info)
+        clickOK()
+        goto(Menu.Help_Buggy)
+        goto(Menu.Help_LoadTestingModule)
+    
+    */
     dump()
     close()
   }

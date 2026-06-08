@@ -3,7 +3,7 @@ package coreo.bricks
 import coreo.*
 
 /**
- * Decorator Button 
+ * Decorator Button
  *
  * @tparam D owner of these buttons
  */
@@ -19,6 +19,7 @@ trait AddEditDelete[D <: Dlg] {
 
   @To()
   final val Delete = Btn[D]()(using myDlg) // delete selected
+
   //end::fields[]
   given myDlg: D = scala.compiletime.deferred
 

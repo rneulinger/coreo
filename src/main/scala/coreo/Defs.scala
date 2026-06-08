@@ -35,7 +35,7 @@ import scala.jdk.CollectionConverters.*
  */
 
 type ACtrl = Ctrl[?]
-type By =  ACtrl => (Page => Locator)
+type By = ACtrl => (Page => Locator)
 
 
 case class Opt(name: String = "", exact: Boolean = false) {
@@ -129,13 +129,14 @@ object Defs {
 
     }
 
-    def mkImpl():String = {
+    def mkImpl(): String = {
       s"""  trait Impl {
          |    self: PwApp =>
          |    val ${mkCamelCase(cc)} = ${mkCamelCase(cc)}_(this)
          |  }
          |""".stripMargin
     }
+
     def classWithPath = {
       if baseClass == "DLG" then ""
       else

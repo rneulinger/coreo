@@ -8,7 +8,7 @@ import com.microsoft.playwright.options.*
 // tag::fields[]
 class Vehicles_[+A <: App](using own: App) extends Dlg {
 
-  val Vehicles = TBL( _.
+  val Vehicles = TBL(_.
     locator("#VehicleTablePanel"))
 
   val BasePrice = TXT(_.

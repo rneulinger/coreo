@@ -9,5 +9,5 @@ import org.junit.runner.RunWith
   plugin = Array("pretty")
 )
 class RunCucumberTest {
-  println( "TEST "* 10)
+  println("TEST " * 10)
 }

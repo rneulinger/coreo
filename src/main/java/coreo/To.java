@@ -6,7 +6,6 @@ import java.lang.annotation.Target;
 import java.lang.annotation.ElementType;
 
 
-
 /**
  * focus goes to this window, usable in Actions.
  * if RETURN is provided as parameter action returns to previous dialog

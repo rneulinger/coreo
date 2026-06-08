@@ -14,6 +14,7 @@ trait CanOwnXXX {
    * @return
    */
   def pg: Page
+
   final def page: Page = pg
 
   def companion: Static = {
@@ -41,7 +42,7 @@ trait CanOwnXXX {
    * @return
    */
 
-//  def adopt(obj: OBJ): Unit
+  //  def adopt(obj: OBJ): Unit
 
   def openUrl(path: String): Unit
 

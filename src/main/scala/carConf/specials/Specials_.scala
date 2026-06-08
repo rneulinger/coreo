@@ -9,7 +9,7 @@ class Specials_[+A <: App](using app: App) extends Dlg
 
   // tag::fields[]
 
-  val Specials = CBX( _.locator("#SpecialsCombo"))
+  val Specials = CBX(_.locator("#SpecialsCombo"))
 
   val Special = TXT(_.locator("#SpecialsArea"))
 
@@ -17,7 +17,7 @@ class Specials_[+A <: App](using app: App) extends Dlg
 
   val SpecialPrice = TXT(_.getByText("$4,045.00")) // Wrong
 
-  val AccessoriesPrice = TXT( _.locator("#AccessoryPrice_input"))
+  val AccessoriesPrice = TXT(_.locator("#AccessoryPrice_input"))
 
   val Discount = TXT(_.locator("#DiscountValue_input"))
 

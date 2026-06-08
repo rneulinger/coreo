@@ -3,7 +3,7 @@ package coreo
 abstract class App extends Obj { //with CanOwn {
   def app: App = this
 
-//  private var adoptedAtoms = List[Ctrl[?]]()
+  //  private var adoptedAtoms = List[Ctrl[?]]()
   private var adoptedDlgs = List[Dlg]()
 
   lazy val atoms: Map[String, ACtrl] = ??? // adoptedAtoms.map(a => a.fullName -> a).toMap
@@ -66,7 +66,7 @@ abstract class App extends Obj { //with CanOwn {
   }
 
   final def adopt(dlg: Dlg): Unit =
-        adoptedDlgs = adoptedDlgs.appended(dlg)
+    adoptedDlgs = adoptedDlgs.appended(dlg)
 
 
   var currentDlg: Dlg = new Dlg() {}
@@ -77,6 +77,7 @@ abstract class App extends Obj { //with CanOwn {
   def findAtom(name: String) = currentDlg.findAtom(name)
 
   given ref: App = this
+
   /**
    * visit: push current view on stack, arg becomes current,
    * return: push curren tin history, pop and set current
@@ -140,7 +141,7 @@ abstract class App extends Obj { //with CanOwn {
         println("onto: cannot find frame:" + dest)
       }
   }
-  
+
   def back: Unit = {
     if (winStack.nonEmpty) {
       currentDlg = winStack.pop()
@@ -202,19 +203,19 @@ abstract class App extends Obj { //with CanOwn {
   }
 
   def findRelationsFor(dlg: Dlg): Map[Action[?], Dlg] = ???
-/*
-  {
-    val res = for (frm <- frms; act <- frm._2.actions) yield {
-      act._2 -> frm._2
+  /*
+    {
+      val res = for (frm <- frms; act <- frm._2.actions) yield {
+        act._2 -> frm._2
+      }
+      val nonEmpty = res.filterNot(_._1.target.name == Unknown_.name)
+      for (x <- nonEmpty) {
+        //      println( x._1.target + " " + x._2.Self)
+      }
+      //println( win.fullType)
+      nonEmpty.filter(_._1.target.name == dlg.Self)
     }
-    val nonEmpty = res.filterNot(_._1.target.name == Unknown_.name)
-    for (x <- nonEmpty) {
-      //      println( x._1.target + " " + x._2.Self)
-    }
-    //println( win.fullType)
-    nonEmpty.filter(_._1.target.name == dlg.Self)
-  }
-*/
+  */
 
 }
 

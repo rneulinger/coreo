@@ -16,5 +16,6 @@ trait OkCancel[D <: Dlg]() {
   final val Ok = Btn[D]()(using myDlg)
   @To(dest = classOf[Return])
   final val Cancel = Btn[D]()(using myDlg)
+
   given myDlg: D = scala.compiletime.deferred
 }

@@ -37,5 +37,5 @@ class PurchaseOrderDetails_[+A <: App](using myApp: App) extends Dlg {
 
 
   // end::fields[]
-  given myDlg:PurchaseOrderDetails_[A] = this
+  given myDlg: PurchaseOrderDetails_[A] = this
 }

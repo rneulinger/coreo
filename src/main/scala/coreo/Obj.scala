@@ -8,7 +8,9 @@ import com.microsoft.playwright.{Locator, Page}
  */
 abstract class Obj {
   def pg: Page
-  def app : App
+
+  def app: App
+
   def myType: String = this.getClass.getSimpleName
     .reverse.dropWhile(_.toString == "_")
     .reverse.mkString("")

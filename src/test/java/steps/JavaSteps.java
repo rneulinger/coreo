@@ -21,7 +21,7 @@ public class JavaSteps implements En {
             // Write code here that turns the phrase above into concrete actions
             throw new io.cucumber.java8.PendingException();
         });
-        
+
         And("goto: {string}", (String string) -> {
             // Write code here that turns the phrase above into concrete actions
             throw new io.cucumber.java8.PendingException();

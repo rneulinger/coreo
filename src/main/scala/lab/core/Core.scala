@@ -34,7 +34,7 @@ class _App:
   def methodApp() = println("Bingo from app")
 
 /** a bunch of controls */
-trait _Dlg(using app: _App) extends Destination:
+trait _Dlg(using app: _App) extends Dialog:
   def ctrls = membersOfSubtype(this, classOf[_Ctrl])
 
   def datas = membersOfSubtype(this, classOf[_Data])
@@ -84,6 +84,7 @@ trait _OkCancel(using app: _App):
 
 trait _Commit(using app: _App):
   self: _Dlg =>
+  @Return
   val Close = BTN()
   val Msg = TXT()
 
@@ -121,19 +122,24 @@ object _Whiz:
 
 trait _CancelNext(using app: _App) extends _Whiz.Right:
   self: _Dlg =>
-  @To(dest = classOf[Overload])
+  @Overload
   val Cancel = BTN()
-  @To(dest = classOf[Overload])
+  @Overload
   val Next = BTN()
 
   def cancel() = Cancel
 
   def next() = Next
 
+val x = classOf[Overload]
+
 trait _CancelNextPrevious extends _Whiz.Mid:
   self: _Dlg =>
+  @Overload
   val Cancel = BTN()
+  @Overload
   val Next = BTN()
+  @Overload
   val Previous = BTN()
 
   def cancel() = Cancel
@@ -144,6 +150,7 @@ trait _CancelNextPrevious extends _Whiz.Mid:
 
 trait _OkCancelPrevious extends _Whiz.Left with _OkCancel:
   self: _Dlg =>
+  @Overload
   val Previous = BTN()
 
   def cancel() = Cancel

@@ -11,7 +11,7 @@ class Accessories_[+A <: App](using app: App) extends Dlg {
 
   val SpecialPrice = TXT(_.getByText("$4,045.00")) // wrong
 
-  val AccessoriesPrice = TXT( _.locator("#AccessoryPrice_input"))
+  val AccessoriesPrice = TXT(_.locator("#AccessoryPrice_input"))
 
   val Discount = TXT(_.locator("#DiscountValue_input"))
 
@@ -22,12 +22,13 @@ class Accessories_[+A <: App](using app: App) extends Dlg {
 
   val AddAccessoriesPriceToFinalPrice = CBX(_.getByRole(AriaRole.CHECKBOX, new Page.GetByRoleOptions().setName("Add accessories price to")))
 
-  val Accessories = TBL( _.locator("#AccessoryTable"))
-  
+  val Accessories = TBL(_.locator("#AccessoryTable"))
+
   def fump(): Unit = {
-    val own=BasePrice.dlg
-    
+    val own = BasePrice.dlg
+
   }
+
   // end::fields[]
   given ref: Accessories_[A] = this
 }

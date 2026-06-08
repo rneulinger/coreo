@@ -10,16 +10,16 @@ import carConf.vehicles.*
 
 val s = "file:///C:/Projects/carconfigWeb/html/CarConfig.htm?lang=en#"
 
-class CarConfigApp extends PwApp(""){
+class CarConfigApp extends PwApp("") {
   override def nameOfApp = "Car Configurator"
 
   override def predefBaseUrls = Map("Local" -> s)
 
   // TODO Mene
   val _CarConfig = CarConfig_()
-//  val _SpecialsTab: TAB[CarConfig_,?] = _CarConfig.SpecialsTab
-//  val _VehiclesTab: TAB[CarConfig_, ?] = _CarConfig.VehiclesTab
-//  val _AccessoriesTab: TAB[CarConfig_, ?] = _CarConfig.AccessoriesTab
+  //  val _SpecialsTab: TAB[CarConfig_,?] = _CarConfig.SpecialsTab
+  //  val _VehiclesTab: TAB[CarConfig_, ?] = _CarConfig.VehiclesTab
+  //  val _AccessoriesTab: TAB[CarConfig_, ?] = _CarConfig.AccessoriesTab
 
   val _Specials = Specials_()
   val _SpecialsDialog = SpecialsDialog_
@@ -30,7 +30,7 @@ class CarConfigApp extends PwApp(""){
   val _Accessories = Accessories_()
   val _AccessoriesDialog = AccessoriesDialog_()
 
-  given own:CarConfigApp = this
+  given own: CarConfigApp = this
 
 
   object specials {
@@ -52,7 +52,7 @@ class CarConfigApp extends PwApp(""){
     case Help_LoadTestingModule
   }
 
-  def goto(mnu: Menu):Unit = {
+  def goto(mnu: Menu): Unit = {
     def click(s: String): Unit = {
       page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(s)).click()
     }
@@ -78,5 +78,5 @@ class CarConfigApp extends PwApp(""){
       case Menu.Help_LoadTestingModule => click2("Help", "Load testing mode")
     }
   }
-  
+
 }

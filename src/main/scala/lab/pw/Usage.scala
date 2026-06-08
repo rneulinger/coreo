@@ -7,6 +7,7 @@ import lab.core.{_Commit, _OkCancel}
 import lab.utils.*
 
 class Something(using app: App) extends Dlg with _OkCancel
+
 class CommitPw(using app: App) extends Dlg with _Commit
 
 class MyDialog(using app: App) extends Dlg with CancelNextPrevious {
@@ -22,12 +23,11 @@ class MyDialog(using app: App) extends Dlg with CancelNextPrevious {
     app.methodApp()
     Name.click()
     Next.click()
-    Next.set( "jjj" )
+    Next.set("jjj")
     Previous.click()
   }
 
 }
-
 
 
 class MyAppPw extends App:
@@ -50,7 +50,7 @@ def startApp() = {
     x.Previous.set(1)
 
 
-  app.commit.use:x =>
+  app.commit.use: x =>
     x.Close.click()
 
 
