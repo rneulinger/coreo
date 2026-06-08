@@ -13,3 +13,9 @@ class PracticeApp extends PwApp("https://practice.expandtesting.com/") {
 
 
 }
+
+object PracticeApp:
+  @main
+  def main()={
+    val app=PracticeApp()
+  }

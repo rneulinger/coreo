@@ -29,12 +29,15 @@ end Loc
 
 type UiId = String | Null
 
+trait _Obj {
+  def validate()={}
+}
 /** Application, a bunch of dialogs */
-class _App:
+class _App extends _Obj:
   def methodApp() = println("Bingo from app")
 
 /** a bunch of controls */
-trait _Dlg(using app: _App) extends Dialog:
+trait _Dlg(using app: _App) extends _Obj:
   def ctrls = membersOfSubtype(this, classOf[_Ctrl])
 
   def datas = membersOfSubtype(this, classOf[_Data])
@@ -52,9 +55,8 @@ trait _Dlg(using app: _App) extends Dialog:
     app.methodApp()
   }
 
-
 /** Control within a dialog */
-trait _Ctrl(using dlg: _Dlg, app: _App) {
+trait _Ctrl(using dlg: _Dlg, app: _App) extends _Obj{
   dlg.notify(this)
   dlg.actions
   app.methodApp()
