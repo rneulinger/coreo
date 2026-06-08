@@ -56,6 +56,6 @@ trait MixInPw(using app: App) extends MixIn:
 trait OkCancel(using app: App) extends _OkCancel:
   self: Dlg =>
 
-trait CancelNextPrevious(using app: App) extends Dlg with _CancelNextPrevious:
+trait CancelNextPrevious(using app: App) extends Dlg with _PreviousNextCancel:
   self: Dlg =>
 
