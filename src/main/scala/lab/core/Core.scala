@@ -38,7 +38,7 @@ class _App extends _Obj:
   def goto(dest:String="/") ={
   }
 /** a bunch of controls */
-trait _Dlg(using app: _App) extends _Obj:
+trait _Dlg(using app: _App) extends _Obj with IsTarget:
   def ctrls = membersOfSubtype(this, classOf[_Ctrl])
 
   def datas = membersOfSubtype(this, classOf[_Data])

@@ -81,3 +81,76 @@ extension [A](a: A)
     f(a);
     a
   }
+
+import java.util.regex.Pattern
+
+object IdentifierSplit:
+
+  private val SplitPattern: Pattern =
+    Pattern.compile(
+      """(?<=\p{Ll})(?=\p{Lu})|       # camelCase boundary
+         (?<=\p{L})(?=\p{Nd})|       # letter -> digit
+         (?<=\p{Nd})(?=\p{L})|       # digit -> letter
+         (?<=\p{Lu})(?=\p{Lu}\p{Ll})|# acronym boundary
+         [_\-\s]+                    # snake_case / kebab-case / spaces
+      """.replaceAll("\\s+", "")
+    )
+
+  def split(input: String): Array[String] =
+    SplitPattern.split(input).filter(_.nonEmpty)
+
+  @main def runSplit(): Unit =
+    val examples = Seq(
+      "snake_case",
+      "kebab-case",
+      "CamelCase",
+      "XMLHttpRequest",
+      "user_id",
+      "HTTP_server_response",
+      "mixed_SnakeCamelCase123Test",
+      "Übergang_test42ABCd"
+    )
+
+    examples.foreach { s =>
+      println(s"$s -> ${IdentifierSplit.split(s).mkString(" | ")}")
+    }
+
+
+object IdentifierCheck:
+
+
+  private val PatternSplit: Pattern =
+    Pattern.compile(
+      """(?<=\p{Ll})(?=\p{Lu})|
+         (?<=\p{L})(?=\p{Nd})|
+         (?<=\p{Nd})(?=\p{L})|
+         (?<=\p{Lu})(?=\p{Lu}\p{Ll})|
+         [_\-\s]+""".replaceAll("\\s+", "")
+    )
+
+  def containsSplitPoints(input: String): Boolean =
+    PatternSplit.matcher(input).find()
+
+  private val ValidPattern: Pattern =
+    Pattern.compile(
+      """^\p{L}[\p{L}\p{Nd}]*
+         ([_\-\s]?\p{L}[\p{L}\p{Nd}]*)*$""".replaceAll("\\s+", "")
+    )
+
+  def isValidIdentifier(input: String): Boolean =
+    ValidPattern.matcher(input).matches()
+
+
+  def analyze(s: String): Unit =
+    println(
+      s"$s -> valid=${isValidIdentifier(s)}, splittable=${containsSplitPoints(s)}"
+    )
+
+  @main def runit()={
+
+    isValidIdentifier("CamelCase") // true
+    isValidIdentifier("snake_case") // true
+    isValidIdentifier("mixedTest42") // true
+    isValidIdentifier("_invalid") // false
+
+  }
