@@ -10,7 +10,7 @@ type Loc = Page => Locator
 type Adp = Ctrl => Loc
 
 class App extends _App:
-  def dlgs = membersOfSubtype(this, classOf[_Dlg])
+  def dlgs = collectMembersOfType(this, classOf[_Dlg])
 
 // playwright
 class Dlg(using app: App) extends _Dlg:

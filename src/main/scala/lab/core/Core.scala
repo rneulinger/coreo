@@ -1,31 +1,14 @@
 package lab.core
 
 import lab.*
-import lab.utils.membersOfSubtype
+import lab.utils.collectMembersOfType
 
 /** Language for code generation. C#, Python...
  * default is C# */
-class Lang:
-end Lang
-
-/** Technology, eg Playwright, Selenium, Ranorex, QfTest
- * default is Playwright */
-sealed abstract class Tech:
-end Tech
-
-/** Playwright */
-class PW extends Tech
-
-/** Selenium */
-class SE extends Tech
-
-/** Qf-Test */
-class QF extends Tech
-
-
-/** Locator for a given technology */
-class Loc:
-end Loc
+enum Lang:
+  case Python
+  case CSharp
+  case TypeScript
 
 type UiId = String | Null
 
@@ -39,11 +22,11 @@ class _App extends _Obj:
   }
 /** a bunch of controls */
 trait _Dlg(using app: _App) extends _Obj with IsTarget:
-  def ctrls = membersOfSubtype(this, classOf[_Ctrl])
+  def ctrls = collectMembersOfType(this, classOf[_Ctrl])
 
-  def datas = membersOfSubtype(this, classOf[_Data])
+  def datas = collectMembersOfType(this, classOf[_Data])
 
-  def actions = membersOfSubtype(this, classOf[_Data])
+  def actions = collectMembersOfType(this, classOf[_Action])
 
   def notify(ctrl: _Ctrl): Unit = {}
 

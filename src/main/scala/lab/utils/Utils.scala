@@ -1,6 +1,50 @@
 package lab.utils
 
-def membersOfSubtype[A, T](a: A, target: Class[T]): List[(String, T)] =
+/**
+ * Extracts all public or declared fields (and optionally methods) of an object `a`
+ * whose type is a subtype of the given `target` class.
+ *
+ * This function uses Java reflection to inspect the runtime class of `a`,
+ * collecting every field whose type is assignable to `target`.
+ *
+ * @param a
+ *   The instance whose members should be inspected.
+ *
+ * @param target
+ *   A `Class[T]` representing the desired supertype. Any field whose type
+ *   satisfies `target.isAssignableFrom(fieldType)` will be included.
+ *
+ * @tparam A
+ *   The static type of the input value `a`. This type parameter is not used
+ *   for reflection; the runtime class of `a` is inspected instead.
+ *
+ * @tparam T
+ *   The target supertype used to filter members. The resulting list contains
+ *   values of this type.
+ *
+ * @return
+ *   A list of `(String, T)` pairs, where each pair contains:
+ *     - the field name
+ *     - the field value cast to `T`
+ *
+ *   Only fields are returned. The code includes logic for zero‑argument methods
+ *   returning `T`, but this part is currently commented out.
+ *
+ * @note
+ *   - Both public and declared fields are inspected.
+ *   - Private/protected fields are made accessible via `setAccessible(true)`.
+ *   - Reflection may throw exceptions if access fails or invocation errors occur.
+ *   - Method extraction can be enabled by uncommenting the final concatenation.
+ *
+ * @example
+ *   case class Example(x: Int, y: String, z: Option[Int])
+ *   val e = Example(1, "hello", Some(3))
+ *
+ *   // Extract all members that are subtypes of Option[_]
+ *   membersOfSubtype(e, classOf[Option[?]])
+ *   // res: List(("z", Some(3)))
+ */
+def collectMembersOfType[A, T](a: A, target: Class[T]): List[(String, T)] =
   val cls = a.getClass
 
   val fields =
@@ -24,7 +68,8 @@ def membersOfSubtype[A, T](a: A, target: Class[T]): List[(String, T)] =
     }
 
   fieldMatches // ++ methodMatches
-
+end collectMembersOfType
+  
 
 object usage:
   class A {
@@ -40,33 +85,33 @@ object usage:
 
   val b = B()
 
-  val strings = membersOfSubtype(b, classOf[String])
+  val strings = collectMembersOfType(b, classOf[String])
 
   @main
   def test() = {
     println(strings)
   }
 
+def fieldsOfExactType[A, T](a: A, target: Class[T]): List[(String, T)] =
+  val cls = a.getClass
+
+  // includes inherited public fields + declared fields
+  val fields =
+    cls.getFields.toList ++ cls.getDeclaredFields.toList
+
+  fields.collect {
+    case f if f.getType == target =>
+      f.setAccessible(true)
+      f.getName -> f.get(a).asInstanceOf[T]
+  }
 
 object fieldOfExactType:
-  def fieldsOfExactType[A, T](a: A, target: Class[T]): List[(String, T)] =
-    val cls = a.getClass
-
-    // includes inherited public fields + declared fields
-    val fields =
-      cls.getFields.toList ++ cls.getDeclaredFields.toList
-
-    fields.collect {
-      case f if f.getType == target =>
-        f.setAccessible(true)
-        f.getName -> f.get(a).asInstanceOf[T]
-    }
 
   class Base:
     val base: String = "base"
 
   class Child extends Base:
-    val child: String = "child"
+    val child: String = "child-val"
     val number: Int = 42
 
   val c = Child()

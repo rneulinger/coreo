@@ -9,7 +9,7 @@ class PracticeApp extends App:// ("https://practice.expandtesting.com/") {
 
   val _Inputs = Inputs_()
 
-  val _BMICalculator = BMICalculator_()
+  val _BmiCalculator = BMICalculator_()
 
   given app:PracticeApp = this
 
@@ -23,5 +23,8 @@ object PracticeApp:
   @main
   def main()={
     val app=PracticeApp()
-    app    
+    println(app._Inputs.ctrls)
+    println(app._Inputs.datas)
+    println(app._Inputs.actions)
+    println(app._BmiCalculator.ctrls)
   }
