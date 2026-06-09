@@ -9,8 +9,7 @@ import lab.utils.*
 type Loc = Page => Locator
 type Adp = Ctrl => Loc
 
-class App extends _App:
-  def dlgs = collectMembersOfType(this, classOf[_Dlg])
+class App extends _App
 
 // playwright
 class Dlg(using app: App) extends _Dlg:
@@ -50,12 +49,12 @@ class Txt(loc: Adp)(using dlg: Dlg, app: App) extends Data(loc) with _Txt
 
 class Btn(loc: Adp)(using dlg: Dlg, app: App) extends Action(loc) with _Btn
 
-trait MixInPw(using app: App) extends MixIn:
+trait MixIn(using app: App) extends _MixIn:
   self: Dlg =>
 
 trait OkCancel(using app: App) extends _OkCancel:
   self: Dlg =>
 
-trait CancelNextPrevious(using app: App) extends Dlg with _PreviousNextCancel:
+trait CancelNextPrevious(using app: App) extends Dlg with PreviousNextCancel:
   self: Dlg =>
 

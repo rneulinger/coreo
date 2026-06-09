@@ -10,6 +10,13 @@ enum Lang:
   case CSharp
   case TypeScript
 
+enum Prop:
+  case Enabled
+  case Disabled
+  case Hidden
+  case Visible
+  case Editable
+
 type UiId = String | Null
 
 trait _Obj {
@@ -17,16 +24,17 @@ trait _Obj {
 }
 /** Application, a bunch of dialogs */
 class _App extends _Obj:
+  def dlgMembers = collectMembersOfType(this, classOf[_Dlg])
   def methodApp() = println("Bingo from app")
   def goto(dest:String="/") ={
   }
 /** a bunch of controls */
 trait _Dlg(using app: _App) extends _Obj with IsTarget:
-  def ctrls = collectMembersOfType(this, classOf[_Ctrl])
+  def ctrlMembers = collectMembersOfType(this, classOf[_Ctrl])
 
-  def datas = collectMembersOfType(this, classOf[_Data])
+  def dataMembers = collectMembersOfType(this, classOf[_Data])
 
-  def actions = collectMembersOfType(this, classOf[_Action])
+  def actionMembers = collectMembersOfType(this, classOf[_Action])
 
   def notify(ctrl: _Ctrl): Unit = {}
 
@@ -48,6 +56,9 @@ trait _Ctrl(using dlg: _Dlg, app: _App) extends _Obj{
   def set(value: Any): _Dlg
 
   def get(): String
+  def expect( prop:Prop*): Unit = ???
+  def expectOneOf( prop:Prop*): Unit = ???
+  def get(prop:Prop):Boolean = ???
 }
 
 trait _Data extends _Ctrl
@@ -65,27 +76,4 @@ trait _Action extends _Ctrl:
 
 
 trait _Btn extends _Action
-
-trait MixIn(using app: _App):
-  self: _Dlg =>
-
-trait _OkCancel(using app: _App):
-  self: _Dlg =>
-  val Ok = BTN()
-  val Cancel = BTN()
-
-trait _Commit(using app: _App):
-  self: _Dlg =>
-  @Return
-  val Close = BTN()
-  val Msg = TXT()
-
-trait Crud:
-  def create(): _Action
-
-  def read(): _Action
-
-  def update(): _Action
-
-  def delete(): _Action
 

@@ -26,7 +26,6 @@ class MyDialog(using app: App) extends Dlg with CancelNextPrevious {
     Next.set("jjj")
     Previous.click()
   }
-
 }
 
 
@@ -40,8 +39,8 @@ class MyAppPw extends App:
 @main
 def startApp() = {
   val app = MyAppPw()
-  println(app.dlgs.distinct)
-  println(app.myDialog.ctrls.distinct)
+  println(app.dlgMembers.distinct)
+  println(app.myDialog.ctrlMembers.distinct)
   val b = app.myDialog.Next.click()
 
   app.myDialog.use: x =>
@@ -51,10 +50,10 @@ def startApp() = {
 
 
   app.commit.use: x =>
-    x.Close.click()
+    x.Yes.click()
 
 
-  app.commit.Close.click()
+  app.commit.No.click()
   app.myDialog.Name
 }
 

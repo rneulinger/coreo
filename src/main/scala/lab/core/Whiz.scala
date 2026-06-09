@@ -233,10 +233,10 @@ object _Whiz:
  * @param centers intermediate steps supporting "Previous", "Next" and "Cancel"
  * @param app     implicit application context
  */
-class _NextPreviousOkCancelWhiz(
-                                 left: _NextCancel,
-                                 right: _PreviousOkCancel,
-                                 centers: _PreviousNextCancel*
+class NextPreviousOkCancelWhiz(
+                                left: NextCancel,
+                                right: PreviousOkCancel,
+                                centers: PreviousNextCancel*
                                )(using app: _App)
   extends _Whiz(left, right, centers *)
 
@@ -251,7 +251,7 @@ class _NextPreviousOkCancelWhiz(
  * This trait must be mixed into a dialog ([[ _Dlg ]]) and defines
  * the button bindings for the corresponding [[_Whiz.Left]] actions.
  */
-trait _NextCancel(using app: _App) extends _Whiz.Left:
+trait NextCancel(using app: _App) extends _Whiz.Left:
   self: _Dlg =>
 
   /** Button used to cancel/abort the wizard. */
@@ -288,7 +288,7 @@ trait _NextCancel(using app: _App) extends _Whiz.Left:
  * Extends [[_OkCancel]] for standard Ok/Cancel handling and
  * binds them to the [[_Whiz.Right]] contract.
  */
-trait _PreviousOkCancel(using app: _App)
+trait PreviousOkCancel(using app: _App)
   extends _Whiz.Right
     with _OkCancel:
 
@@ -330,7 +330,7 @@ trait _PreviousOkCancel(using app: _App)
  *
  * This trait connects UI buttons to the [[_Whiz.Center]] navigation model.
  */
-trait _PreviousNextCancel(using app: _App) extends _Whiz.Center:
+trait PreviousNextCancel(using app: _App) extends _Whiz.Center:
   self: _Dlg =>
 
   /** Button used to cancel/abort the wizard. */
@@ -379,12 +379,12 @@ trait _PreviousNextCancel(using app: _App) extends _Whiz.Center:
  * @param mids  intermediate steps supporting "Back", "Next" and "Cancel"
  * @param app   implicit application context
  */
-class _FinishCancelNextBackWhiz(
-                                 left: _NextCancel,
-                                 right: _BackCancelFinish,
-                                 mids: _BackNextCancel*
+class FinishCancelNextBackWhiz(
+                                left: NextCancel,
+                                right: BackCancelFinish,
+                                centers: BackNextCancel*
                                )(using app: _App)
-  extends _Whiz(left, right, mids *)
+  extends _Whiz(left, right, centers *)
 
 
 /**
@@ -397,7 +397,7 @@ class _FinishCancelNextBackWhiz(
  *
  * Extends [[_OkCancel]] to reuse standard Ok/Cancel behavior.
  */
-trait _BackCancelFinish(using app: _App)
+trait BackCancelFinish(using app: _App)
   extends _Whiz.Right
     with _OkCancel:
 
@@ -439,7 +439,7 @@ trait _BackCancelFinish(using app: _App)
  *
  * Uses more user-friendly naming ("Back" instead of "Previous").
  */
-trait _BackNextCancel(using app: _App) extends _Whiz.Center:
+trait BackNextCancel(using app: _App) extends _Whiz.Center:
   self: _Dlg =>
 
   /** Button used to cancel/abort the wizard. */

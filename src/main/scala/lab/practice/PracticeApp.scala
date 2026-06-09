@@ -23,8 +23,9 @@ object PracticeApp:
   @main
   def main()={
     val app=PracticeApp()
-    println(app._Inputs.ctrls)
-    println(app._Inputs.datas)
-    println(app._Inputs.actions)
-    println(app._BmiCalculator.ctrls)
+    println(app._Inputs.ctrlMembers)
+    println(app._Inputs.dataMembers)
+    println(app._Inputs.actionMembers)
+    println(app._BmiCalculator.ctrlMembers)
+    println( app.dlgMembers)
   }
