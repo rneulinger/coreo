@@ -20,7 +20,6 @@ class MyDialog(using app: App) extends Dlg with CancelNextPrevious {
   val Name = TXT()
 
   def foo() = {
-    app.methodApp()
     Name.click()
     Next.click()
     Next.set("jjj")

@@ -9,7 +9,8 @@ import lab.utils.*
 type Loc = Page => Locator
 type Adp = Ctrl => Loc
 
-class App extends _App
+class App extends _App:
+  final val Unknown = new Dlg(using this){}
 
 // playwright
 class Dlg(using app: App) extends _Dlg:

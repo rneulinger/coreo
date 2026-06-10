@@ -1,6 +1,6 @@
 package lab.practice
 
-import lab.core.Go
+import lab.core.{Go, Interfaces}
 import lab.pw.*
 
 // tag::fields[]
@@ -24,4 +24,5 @@ final class BMICalculator_(using app: App) extends Dlg:
 
   // end::fields[]
   given dlg: BMICalculator_ = this
+
 

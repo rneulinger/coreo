@@ -255,11 +255,11 @@ trait NextCancel(using app: _App) extends _Whiz.Left:
   self: _Dlg =>
 
   /** Button used to cancel/abort the wizard. */
-  @Overload
+  @Tbd
   val Cancel = BTN()
 
   /** Button used to advance to the next step. */
-  @Overload
+  @Tbd
   val Next = BTN()
 
   /**
@@ -295,7 +295,7 @@ trait PreviousOkCancel(using app: _App)
   self: _Dlg =>
 
   /** Button used to navigate back to the previous step. */
-  @Overload
+  @Tbd
   val Previous = BTN()
 
   /**
@@ -334,15 +334,15 @@ trait PreviousNextCancel(using app: _App) extends _Whiz.Center:
   self: _Dlg =>
 
   /** Button used to cancel/abort the wizard. */
-  @Overload
+  @Tbd
   val Cancel = BTN()
 
   /** Button used to advance to the next step. */
-  @Overload
+  @Tbd
   val Next = BTN()
 
   /** Button used to navigate back to the previous step. */
-  @Overload
+  @Tbd
   val Previous = BTN()
 
   /**
@@ -404,7 +404,7 @@ trait BackCancelFinish(using app: _App)
   self: _Dlg =>
 
   /** Button used to navigate back to the previous step. */
-  @Overload
+  @Tbd
   val Back = BTN()
 
   /**
@@ -443,15 +443,15 @@ trait BackNextCancel(using app: _App) extends _Whiz.Center:
   self: _Dlg =>
 
   /** Button used to cancel/abort the wizard. */
-  @Overload
+  @Tbd
   val Cancel = BTN()
 
   /** Button used to advance to the next step. */
-  @Overload
+  @Tbd
   val Next = BTN()
 
   /** Button used to navigate back to the previous step. */
-  @Overload
+  @Tbd
   val Back = BTN()
 
   /**
