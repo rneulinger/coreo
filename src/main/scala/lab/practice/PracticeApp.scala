@@ -9,8 +9,9 @@ class PracticeApp extends App:// ("https://practice.expandtesting.com/") {
 
   val _Inputs = Inputs_()
 
-  val _BmiCalculator = BMICalculator_()
+  val _BmiCalculator = BmiCalculator_()
 
+  val _Persons = Person_()
   given app:PracticeApp = this
 
 
@@ -28,4 +29,7 @@ object PracticeApp:
     println(app._Inputs.actionMembers)
     println(app._BmiCalculator.ctrlMembers)
     println( app.dlgMembers)
+
+    println( "-"*10)
+    println(app._Persons.Ok.Annotations().toList)
   }

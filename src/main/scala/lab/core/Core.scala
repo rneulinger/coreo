@@ -22,8 +22,7 @@ enum Prop:
 type UiId = String | Null
 
 trait _Obj extends Interfaces.Obj {
-
-
+  final def Annotations() = getClass.getAnnotations.collect { case a: Any => a }
   final def GoAnnotations()= getClass.getAnnotations.collect { case a: Ui => a.value }
   final def ToAnnotations() = getClass.getAnnotations.collect { case a: To => a.dest }
   final def UiAnnotations() = getClass.getAnnotations.collect { case a: Ui => a.value }
@@ -31,7 +30,9 @@ trait _Obj extends Interfaces.Obj {
   final def ReturnAnnotations() = getClass.getAnnotations.collect { case a: Ret => a }
 
 
-  def validate() = ???
+  def validate() = {
+    // todo implement validations
+  }
 }
 /** Application, a bunch of dialogs */
 abstract class _App extends Interfaces.App with _Obj:

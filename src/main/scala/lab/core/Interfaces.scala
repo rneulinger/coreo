@@ -29,6 +29,7 @@ object Interfaces {
      */
     def validate():Unit
 
+    def Annotations():Array[Any]
     def GoAnnotations():Array[String]
     def ToAnnotations(): Array[Class[? <: Interfaces.Dlg]]
     def UiAnnotations(): Array[String]

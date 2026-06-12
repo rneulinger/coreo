@@ -5,7 +5,7 @@ import lab.pw.*
 
 // tag::fields[]
 @Go("BMI Calculator")
-final class BMICalculator_(using app: App) extends Dlg:
+final class BmiCalculator_(using app: App) extends Dlg:
 
   // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this
   //override def path: String = "bmi"
@@ -23,6 +23,6 @@ final class BMICalculator_(using app: App) extends Dlg:
   val Clear = BTN()
 
   // end::fields[]
-  given dlg: BMICalculator_ = this
+  given dlg: BmiCalculator_ = this
 
 

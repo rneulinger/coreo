@@ -1,7 +1,7 @@
 package lab.utils
 
 /**
- * Extracts all public or declared fields (and optionally methods) of an object `a`
+ * Extracts all public or declared fields of an object `a`
  * whose type is a subtype of the given `target` class.
  *
  * This function uses Java reflection to inspect the runtime class of `a`,
@@ -27,8 +27,7 @@ package lab.utils
  *     - the field name
  *     - the field value cast to `T`
  *
- *   Only fields are returned. The code includes logic for zero‑argument methods
- *   returning `T`, but this part is currently commented out.
+ *   Only fields are returned.
  *
  * @note
  *   - Both public and declared fields are inspected.
@@ -59,17 +58,8 @@ def collectMembersOfType[A, T](a: A, target: Class[T]): List[(String, T)] =
         f.getName -> f.get(a).asInstanceOf[T]
     }
 
-  val methodMatches =
-    methods.collect {
-      case m if m.getParameterCount == 0 &&
-        target.isAssignableFrom(m.getReturnType) =>
-        m.setAccessible(true)
-        m.getName -> m.invoke(a).asInstanceOf[T]
-    }
+  fieldMatches
 
-  fieldMatches // ++ methodMatches
-end collectMembersOfType
-  
 
 object usage:
   class A {
