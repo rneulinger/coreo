@@ -1,7 +1,17 @@
 package coreo;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
- * Used in annotiation To represents the need for overload
+ * Used in annotiation To represents the return to the last uses dialog
  */
-public final class Overload implements Destination {
+
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.FIELD, ElementType.METHOD})   // TYPE = class, interface, enum, record
+
+public @interface Overload{
 }

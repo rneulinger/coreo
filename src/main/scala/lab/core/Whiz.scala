@@ -1,5 +1,7 @@
 package lab.core
 
+import scala.annotation.meta.field
+
 /**
  * basic definition for implmenting a wizzard
  * contains at least two dialogs left and right and optional dialogs in the middle
@@ -295,7 +297,7 @@ trait PreviousOkCancel(using app: _App)
   self: _Dlg =>
 
   /** Button used to navigate back to the previous step. */
-  @Tbd
+  @(Tbd @field)
   val Previous = BTN()
 
   /**
