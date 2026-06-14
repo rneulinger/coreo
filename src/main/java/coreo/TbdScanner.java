@@ -3,21 +3,21 @@ import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public final class OverloadScanner {
+public final class TbdScanner {
 
-    private OverloadScanner() {}
+    private TbdScanner() {}
 
     // --- Find ALL annotated fields ---
     public static List<Field> findAnnotatedFields(Class<?> type) {
         return Arrays.stream(getAllFields(type))
-                .filter(f -> f.isAnnotationPresent(Overload.class))
+                .filter(f -> f.isAnnotationPresent(Tbd.class))
                 .collect(Collectors.toList());
     }
 
     // --- Find ALL annotated methods ---
     public static List<Method> findAnnotatedMethods(Class<?> type) {
         return Arrays.stream(getAllMethods(type))
-                .filter(m -> m.isAnnotationPresent(Overload.class))
+                .filter(m -> m.isAnnotationPresent(Tbd.class))
                 .collect(Collectors.toList());
     }
 

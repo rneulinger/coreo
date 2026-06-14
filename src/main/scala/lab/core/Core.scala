@@ -22,12 +22,20 @@ enum Prop:
 type UiId = String | Null
 
 trait _Obj extends Interfaces.Obj {
-  final def Annotations() = getClass.getAnnotations.collect { case a: Any => a }
-  final def GoAnnotations()= getClass.getAnnotations.collect { case a: Ui => a.value }
-  final def ToAnnotations() = getClass.getAnnotations.collect { case a: To => a.dest }
-  final def UiAnnotations() = getClass.getAnnotations.collect { case a: Ui => a.value }
-  final def TbdAnnotations() = getClass.getAnnotations.collect { case a: Tbd => a }
-  final def ReturnAnnotations() = getClass.getAnnotations.collect { case a: Ret => a }
+  final def classAnnotations() = {
+    val c = getClass
+    val x = c.getAnnotations
+    val l = x.toList
+    x.collect { case a: Any => a }
+  }
+
+  def objMembers = collectMembersOfType(this, classOf[_Obj])
+
+//  final def GoAnnotations()= getClass.getAnnotations.collect { case a: Ui => a.value }
+//  final def ToAnnotations() = getClass.getAnnotations.collect { case a: To => a.dest }
+//  final def UiAnnotations() = getClass.getAnnotations.collect { case a: Ui => a.value }
+//  final def TbdAnnotations() = getClass.getAnnotations.collect { case a: Tbd => a }
+//  final def ReturnAnnotations() = getClass.getAnnotations.collect { case a: Ret => a }
 
 
   def validate() = {
@@ -106,27 +114,32 @@ trait _Action extends Interfaces.Action with _Ctrl:
     if( target.isDefined )  {
       target
     } else {
-      val returnOpt =
-        getClass.getAnnotations
-          .collectFirst { case a: Ret => a }
-
-      println(returnOpt) // Some("hello")
-
-      val overloadOpt =
-        getClass.getAnnotations
-          .collectFirst { case a: Tbd => a }
-
-      println(overloadOpt) // Some("hello")
-
-      val onTOOpt =
-        getClass.getAnnotations
-          .collectFirst { case a: To => a }
-
-      println(onTOOpt.map(_.dest)) // Some("hello")
+//      val returnOpt =
+//        getClass.getAnnotations
+//          .collectFirst { case a: Ret => a }
+//
+//      println(returnOpt) // Some("hello")
+//
+//      val overloadOpt =
+//        getClass.getAnnotations
+//          .collectFirst { case a: Tbd => a }
+//
+//      println(overloadOpt) // Some("hello")
+//
+//      val onTOOpt =
+//        getClass.getAnnotations
+//          .collectFirst { case a: To => a }
+//
+//      println(onTOOpt.map(_.dest)) // Some("hello")
       None
     }
   }
 
-
 trait _Btn extends _Action
+
+@coreo.Ret
+trait _RetBtn extends _Btn
+
+@coreo.Tbd
+trait _ToBtn extends _Btn
 

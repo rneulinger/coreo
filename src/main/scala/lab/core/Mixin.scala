@@ -10,7 +10,7 @@ trait _OkCancel(using app: _App):
 
 trait _Commit(using app: _App):
   self: _Dlg =>
-  @Ret
+  @coreo.Ret
   val Yes = BTN()
   val No = BTN()
   val Msg = TXT()

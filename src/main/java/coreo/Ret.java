@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.METHOD})   // TYPE = class, interface, enum, record
+@Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD})   // TYPE = class, interface, enum, record
 
-public @interface Return{
+public @interface Ret {
 }

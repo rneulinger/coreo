@@ -5,15 +5,15 @@ import lab.pw.{App, Dlg}
 
 import scala.annotation.meta.field
 
-@Ui("xyz")
+@coreo.Ui("class annotation of Person")
+@coreo.Ret
 class Person_(using own: App) extends Dlg:
   val FirstName = TXT()
   val LastName  = TXT()
-  @(Tbd @field)
-  @(Ui @field)("on field")
-  @(To @field)(classOf[Inputs_])
+  @coreo.Tbd
+  @coreo.Ui("on field")
   val Ok = BTN()
-  @Ret
-  @To(classOf[BmiCalculator_])
+  @coreo.Ret
+  @coreo.To(dest = classOf[BmiCalculator_])
   val Cancel = BTN()
 

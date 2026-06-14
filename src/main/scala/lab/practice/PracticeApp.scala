@@ -24,12 +24,16 @@ object PracticeApp:
   @main
   def main()={
     val app=PracticeApp()
-    println(app._Inputs.ctrlMembers)
+    println( app.objMembers)
+    println(app._Inputs.objMembers)
     println(app._Inputs.dataMembers)
     println(app._Inputs.actionMembers)
     println(app._BmiCalculator.ctrlMembers)
+    println(app._Inputs.InputDate.objMembers)
     println( app.dlgMembers)
 
     println( "-"*10)
-    println(app._Persons.Ok.Annotations().toList)
+
+    println(app._Persons.classAnnotations().toList)
+    println(app._Persons.Ok.classAnnotations().toList)
   }

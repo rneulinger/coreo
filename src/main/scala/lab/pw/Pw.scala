@@ -48,6 +48,7 @@ abstract class Action(loc: Adp)(using dlg: Dlg, app: App) extends Ctrl(loc) with
 
 class Txt(loc: Adp)(using dlg: Dlg, app: App) extends Data(loc) with _Txt
 
+@coreo.Tbd
 class Btn(loc: Adp)(using dlg: Dlg, app: App) extends Action(loc) with _Btn
 
 trait MixIn(using app: App) extends _MixIn:

@@ -29,12 +29,12 @@ object Interfaces {
      */
     def validate():Unit
 
-    def Annotations():Array[Any]
-    def GoAnnotations():Array[String]
-    def ToAnnotations(): Array[Class[? <: Interfaces.Dlg]]
-    def UiAnnotations(): Array[String]
-    def TbdAnnotations(): Array[Tbd]
-    def ReturnAnnotations(): Array[Ret]
+//    def Annotations():Array[Any]
+//    def GoAnnotations():Array[String]
+//    def ToAnnotations(): Array[Class[? <: Interfaces.Dlg]]
+//    def UiAnnotations(): Array[String]
+    //def TbdAnnotations(): Array[Tbd]
+    //def ReturnAnnotations(): Array[Ret]
 
   /**
    * collection of dialogs.
@@ -138,32 +138,36 @@ object Interfaces {
 
 import java.lang.annotation.{Retention, RetentionPolicy, Target, ElementType}
 
-/**
- * defines a name for a ui component
- * in complicated cases it is required to use a special name eg "%"
- */
-@Retention(RetentionPolicy.RUNTIME)
-class Ui(val value: String) extends StaticAnnotation
-
-/**
- * path for direct invocations
- * @param value
- */
-@Retention(RetentionPolicy.RUNTIME)
-class Go(val value: String) extends StaticAnnotation
-
-/**
- * apply this to an action-ctrl if it returns to the previous dialog
- */
-@Retention(RetentionPolicy.RUNTIME)
-class Ret() extends StaticAnnotation
-
-/**
- * To Be Defined, apply this to an action-ctrl if it requires to define the target in derived dialogs
- */
-@Retention(RetentionPolicy.RUNTIME)
-class Tbd() extends StaticAnnotation
-
-@Retention(RetentionPolicy.RUNTIME)
-@Target(Array(ElementType.TYPE))
-class To(val dest: Class[? <: Interfaces.Dlg]) extends StaticAnnotation
+///**
+// * defines a name for a ui component
+// * in complicated cases it is required to use a special name eg "%"
+// */
+//@Retention(RetentionPolicy.RUNTIME)
+//@Target(Array(ElementType.TYPE,ElementType.FIELD, ElementType.METHOD))
+//class Ui(val value: String) extends StaticAnnotation
+//
+///**
+// * path for direct invocations
+// * @param value
+// */
+//@Retention(RetentionPolicy.RUNTIME)
+//@Target(Array(ElementType.TYPE,ElementType.FIELD, ElementType.METHOD))
+//class Go(val value: String) extends StaticAnnotation
+//
+///**
+// * apply this to an action-ctrl if it returns to the previous dialog
+// */
+//@Retention(RetentionPolicy.RUNTIME)
+//@Target(Array(ElementType.TYPE,ElementType.FIELD, ElementType.METHOD))
+//class Ret() extends StaticAnnotation
+//
+///**
+// * To Be Defined, apply this to an action-ctrl if it requires to define the target in derived dialogs
+// */
+//@Retention(RetentionPolicy.RUNTIME)
+//@Target(Array(ElementType.TYPE,ElementType.FIELD, ElementType.METHOD))
+//class Tbd() extends StaticAnnotation
+//
+//@Retention(RetentionPolicy.RUNTIME)
+//@Target(Array(ElementType.TYPE,ElementType.FIELD, ElementType.METHOD))
+//class To(val dest: Class[? <: Interfaces.Dlg]) extends StaticAnnotation

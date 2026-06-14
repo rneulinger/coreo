@@ -15,5 +15,6 @@ import java.lang.annotation.ElementType;
 @Target({ElementType.FIELD, ElementType.METHOD})   // TYPE = class, interface, enum, record
 
 public @interface To {
-    Class<? extends Destination> dest();
+    Class<? extends Object> dest();
+//    String value() default  "";
 }

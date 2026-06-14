@@ -1,10 +1,9 @@
 package lab.practice
 
-import lab.core.{Go, Interfaces}
 import lab.pw.*
 
 // tag::fields[]
-@Go("BMI Calculator")
+@coreo.Go("BMI Calculator")
 final class BmiCalculator_(using app: App) extends Dlg:
 
   // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this

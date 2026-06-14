@@ -14,10 +14,10 @@ trait AddEditDeleteMoveUpMoveDown[D <: Dlg] extends AddEditDelete[D] {
 
 
   // buttons right
-  @To()
+  @Tbd()
   final val MoveUp = Btn[D]()(using myDlg) // move selected up ! in 1st line
 
-  @To()
+  @Tbd()
   final val MoveDown = Btn[D]()(using myDlg) // move selected down ! in last line
 
   //en::fields[]

@@ -11,14 +11,14 @@ public final class ReturnScanner {
     // --- Find ALL annotated fields ---
     public static List<Field> findAnnotatedFields(Class<?> type) {
         return Arrays.stream(getAllFields(type))
-                .filter(f -> f.isAnnotationPresent(Return.class))
+                .filter(f -> f.isAnnotationPresent(Ret.class))
                 .collect(Collectors.toList());
     }
 
     // --- Find ALL annotated methods ---
     public static List<Method> findAnnotatedMethods(Class<?> type) {
         return Arrays.stream(getAllMethods(type))
-                .filter(m -> m.isAnnotationPresent(Return.class))
+                .filter(m -> m.isAnnotationPresent(Ret.class))
                 .collect(Collectors.toList());
     }
 
