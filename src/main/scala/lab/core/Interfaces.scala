@@ -57,15 +57,14 @@ object Interfaces {
     }
 
     /**
-     * get all defined annotations either by class or field 
+     * get all defined annotations either by class or field
      * @return
      */
-    def myAnnotations:List[Annotation] = classAnnotations
-    def goAnnotations:List[coreo.Go] = myAnnotations.collect{ case a:coreo.Go => a }
-    def toAnnotations:List[coreo.To] = myAnnotations.collect{ case a:coreo.To => a }
-    def uiAnnotations:List[coreo.Ui] = myAnnotations.collect{ case a:coreo.Ui => a }
-//    def ToAnnotations(): Array[Class[? <: Interfaces.Dlg]]
-//    def UiAnnotations(): Array[String]
+    final def myAnnotations:List[Annotation] = classAnnotations ++ parentAnnotations
+    def parentAnnotations = List[Annotation]()
+    final def goAnnotations:List[coreo.Go] = myAnnotations.collect{ case a:coreo.Go => a }
+    final def toAnnotations:List[coreo.To] = myAnnotations.collect{ case a:coreo.To => a }
+    final def uiAnnotations:List[coreo.Ui] = myAnnotations.collect{ case a:coreo.Ui => a }
     //def TbdAnnotations(): Array[Tbd]
     //def ReturnAnnotations(): Array[Ret]
 

@@ -3,6 +3,7 @@ package lab.core
 import lab.*
 import lab.utils.collectMembersOfType
 
+import java.lang.annotation.Annotation
 import scala.language.postfixOps
 
 /** Language for code generation. C#, Python...
@@ -37,7 +38,7 @@ trait _Obj extends Interfaces.Obj {
 /** Application, a bunch of dialogs */
 abstract class _App extends Interfaces.App with _Obj:
   final def dlgMembers = collectMembersOfType(this, classOf[_Dlg])
-  final def gotoMembers = collectMembersOfType(this, classOf[_Dlg])
+  final def gotoMembers = dlgMembers
   final def goTo(path:String="/") = ???
   final def goTo[T <: _Dlg](dlg:Class[T]) = ???
   final def onTo(dlgName:String) = ???
@@ -61,6 +62,9 @@ trait _Dlg(using app: _App) extends Interfaces.Dlg with _Obj:
   def act = app.act
   final def myApp = app
   final def actDialog = app.act
+
+  override def parentAnnotations: List[Annotation] = app.objAnnotations(this);
+
   def ctrlMembers = collectMembersOfType(this, classOf[_Ctrl])
 
   def dataMembers = collectMembersOfType(this, classOf[_Data])
@@ -76,6 +80,8 @@ trait _Dlg(using app: _App) extends Interfaces.Dlg with _Obj:
 /** Control within a dialog */
 trait _Ctrl(using dlg: _Dlg, app: _App) extends Interfaces.Ctrl with _Obj:
   dlg.notify(this)
+
+  override def parentAnnotations: List[Annotation] = dlg.objAnnotations(this)
 
   final def myApp = app
   final def actDialog = app.act

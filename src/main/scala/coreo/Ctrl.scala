@@ -7,6 +7,7 @@ import java.util.regex.Pattern
 
 abstract class Ctrl[+D <: Dlg](by: By = null, idx: Int = 0)(using val dlg: D)
   extends Obj {
+  
   def weight = 1
 
   def ariaRole: AriaRole = AriaRole.GENERIC

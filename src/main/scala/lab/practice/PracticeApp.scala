@@ -37,5 +37,9 @@ object PracticeApp:
     println(app._Person.classAnnotations.toList)
     println(app._Person.Ok.classAnnotations.toList)
     println(app._Person.objAnnotations(app._Person.Ok))
-    println(app._Person.objAnnotations(app._Person.Cancel))
+    println( "-"*10)
+    println(app._Person.Cancel.classAnnotations)
+    println(app._Person.Cancel.parentAnnotations)
+    println(app._Person.Cancel.myAnnotations)
+
   }
