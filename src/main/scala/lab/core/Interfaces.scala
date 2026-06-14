@@ -1,6 +1,8 @@
 package lab.core
 
 import scala.annotation.StaticAnnotation
+import java.lang.annotation.Annotation
+import lab.utils.collectMembersOfType
 
 /**
  * public interface for important objects within the problem domain
@@ -29,8 +31,39 @@ object Interfaces {
      */
     def validate():Unit
 
-//    def Annotations():Array[Any]
-//    def GoAnnotations():Array[String]
+    final def classAnnotations = {
+      val c = getClass
+      val x = c.getAnnotations
+      val l = x.toList
+      val res = x.collect { case a: Any => a }
+      res.toList
+    }
+
+    def objMembers = collectMembersOfType(this, classOf[_Obj])
+
+    def objName(obj: _Obj): String = {
+      objMembers.filter(_._2 == obj) match {
+        case Nil => ""
+        case head :: tail => head._1
+      }
+    }
+
+    def objAnnotations(obj: _Obj) = {
+      val name = objName(obj)
+      val clazz = this.getClass
+      val field = clazz.getDeclaredField(name)
+      field.setAccessible(true)
+      field.getAnnotations.toList
+    }
+
+    /**
+     * get all defined annotations either by class or field 
+     * @return
+     */
+    def myAnnotations:List[Annotation] = classAnnotations
+    def goAnnotations:List[coreo.Go] = myAnnotations.collect{ case a:coreo.Go => a }
+    def toAnnotations:List[coreo.To] = myAnnotations.collect{ case a:coreo.To => a }
+    def uiAnnotations:List[coreo.Ui] = myAnnotations.collect{ case a:coreo.Ui => a }
 //    def ToAnnotations(): Array[Class[? <: Interfaces.Dlg]]
 //    def UiAnnotations(): Array[String]
     //def TbdAnnotations(): Array[Tbd]

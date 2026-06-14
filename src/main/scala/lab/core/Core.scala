@@ -22,28 +22,6 @@ enum Prop:
 type UiId = String | Null
 
 trait _Obj extends Interfaces.Obj {
-  final def classAnnotations() = {
-    val c = getClass
-    val x = c.getAnnotations
-    val l = x.toList
-    x.collect { case a: Any => a }
-  }
-
-  def objMembers = collectMembersOfType(this, classOf[_Obj])
-  def objName( obj:_Obj):String = {
-    objMembers.filter(_._2 == obj) match{
-      case Nil => ""
-      case head::tail => head._1
-    }
-  }
-
-  def objAnnotations( obj:_Obj) = {
-    val name = objName( obj)
-    val clazz = this.getClass
-    val field = clazz.getDeclaredField(name)
-    field.setAccessible(true)
-    field.getAnnotations.toList
-  }
 
 //  final def GoAnnotations()= getClass.getAnnotations.collect { case a: Ui => a.value }
 //  final def ToAnnotations() = getClass.getAnnotations.collect { case a: To => a.dest }
