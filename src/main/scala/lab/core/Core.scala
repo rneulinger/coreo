@@ -19,6 +19,9 @@ enum Prop:
   case Hidden
   case Visible
   case Editable
+  case Readonly
+  case Present
+  case Absent
 
 type UiId = String | Null
 
@@ -44,10 +47,20 @@ abstract class _App extends Interfaces.App with _Obj:
   final def onTo(dlgName:String) = ???
   final def onTo[T <: _Dlg](dlg: Class[T]) = ???
   def Unknown:_Dlg
+  def actDialog = act
 
+  /**
+   * last dialogs -> pushed by to-button, popped by back-button
+   * @return
+   */
+  def lastDlgs = scala.collection.mutable.Stack[_Dlg]()
+  /**
+   * gosub dialogs -> pushed by sub-Button, popped by return-button
+   * @return
+   */
+  def subDlgs = scala.collection.mutable.Stack[_Dlg]()
   def push(dlg: Interfaces.Dlg): Unit = ???
 
-  def actDialog = act
   def myApp = this
   def act: _Dlg = ???
 
