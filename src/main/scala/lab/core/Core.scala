@@ -76,7 +76,7 @@ trait _Dlg(using app: _App) extends Interfaces.Dlg with _Obj:
   final def myApp = app
   final def actDialog = app.act
 
-  override def parentAnnotations: List[Annotation] = app.objAnnotations(this);
+  override def parentAnnotations: List[Annotation] = app.annotationsForObj(this);
 
   def ctrlMembers = collectMembersOfType(this, classOf[_Ctrl])
 
@@ -94,7 +94,7 @@ trait _Dlg(using app: _App) extends Interfaces.Dlg with _Obj:
 trait _Ctrl(using dlg: _Dlg, app: _App) extends Interfaces.Ctrl with _Obj:
   dlg.notify(this)
 
-  override def parentAnnotations: List[Annotation] = dlg.objAnnotations(this)
+  override def parentAnnotations: List[Annotation] = dlg.annotationsForObj(this)
 
   final def myApp = app
   final def actDialog = app.act

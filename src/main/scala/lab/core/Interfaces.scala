@@ -31,42 +31,65 @@ object Interfaces {
      */
     def validate():Unit
 
+    /**
+     * get all annotations defined on class level for this object
+     * @return
+     */
     final def classAnnotations = {
-      val c = getClass
-      val x = c.getAnnotations
-      val l = x.toList
-      val res = x.collect { case a: Any => a }
-      res.toList
+      getClass.getAnnotations.toList
     }
 
-    def objMembers = collectMembersOfType(this, classOf[_Obj])
+    /**
+     * returns all fields derived from Obj for this instance
+     * @return
+     */
+    def myObjs = collectMembersOfType(this, classOf[_Obj])
 
-    def objName(obj: _Obj): String = {
-      objMembers.filter(_._2 == obj) match {
+    /**
+     * return the name of the given object if it's a field.
+     * @param obj to search for
+     * @return unique name or "" if obj is not a field
+     */
+    def nameForObj(obj: _Obj): String = {
+      myObjs.filter(_._2 == obj) match {
         case Nil => ""
         case head :: tail => head._1
       }
     }
 
-    def objAnnotations(obj: _Obj) = {
-      val name = objName(obj)
-      val clazz = this.getClass
-      val field = clazz.getDeclaredField(name)
+    /**
+     *
+     * @param obj
+     * @return
+     */
+    def annotationsForObj(obj: _Obj) = {
+      val name = nameForObj(obj)
+      val field = this.getClass.getDeclaredField(name)
       field.setAccessible(true)
       field.getAnnotations.toList
     }
 
     /**
+     * return all annotations for this object defined on parent level
+     * must be implemented in derived classes if appropriate
+     * @return
+     */
+    def parentAnnotations = List[Annotation]()
+    /**
      * get all defined annotations either by class or field
      * @return
      */
     final def myAnnotations:List[Annotation] = classAnnotations ++ parentAnnotations
-    def parentAnnotations = List[Annotation]()
+
+    /**
+     * return all Go-annotations
+     * @return
+     */
     final def goAnnotations:List[coreo.Go] = myAnnotations.collect{ case a:coreo.Go => a }
     final def toAnnotations:List[coreo.To] = myAnnotations.collect{ case a:coreo.To => a }
     final def uiAnnotations:List[coreo.Ui] = myAnnotations.collect{ case a:coreo.Ui => a }
-    //def TbdAnnotations(): Array[Tbd]
-    //def ReturnAnnotations(): Array[Ret]
+    final def tbdAnnotations: List[coreo.Tbd] = myAnnotations.collect { case a: coreo.Tbd => a }
+    final def retAnnotations: List[coreo.Ret] = myAnnotations.collect { case a: coreo.Ret => a }
 
   /**
    * collection of dialogs.
@@ -166,40 +189,3 @@ object Interfaces {
   trait Action extends Ctrl
   trait Btn extends Data
 }
-
-
-import java.lang.annotation.{Retention, RetentionPolicy, Target, ElementType}
-
-///**
-// * defines a name for a ui component
-// * in complicated cases it is required to use a special name eg "%"
-// */
-//@Retention(RetentionPolicy.RUNTIME)
-//@Target(Array(ElementType.TYPE,ElementType.FIELD, ElementType.METHOD))
-//class Ui(val value: String) extends StaticAnnotation
-//
-///**
-// * path for direct invocations
-// * @param value
-// */
-//@Retention(RetentionPolicy.RUNTIME)
-//@Target(Array(ElementType.TYPE,ElementType.FIELD, ElementType.METHOD))
-//class Go(val value: String) extends StaticAnnotation
-//
-///**
-// * apply this to an action-ctrl if it returns to the previous dialog
-// */
-//@Retention(RetentionPolicy.RUNTIME)
-//@Target(Array(ElementType.TYPE,ElementType.FIELD, ElementType.METHOD))
-//class Ret() extends StaticAnnotation
-//
-///**
-// * To Be Defined, apply this to an action-ctrl if it requires to define the target in derived dialogs
-// */
-//@Retention(RetentionPolicy.RUNTIME)
-//@Target(Array(ElementType.TYPE,ElementType.FIELD, ElementType.METHOD))
-//class Tbd() extends StaticAnnotation
-//
-//@Retention(RetentionPolicy.RUNTIME)
-//@Target(Array(ElementType.TYPE,ElementType.FIELD, ElementType.METHOD))
-//class To(val dest: Class[? <: Interfaces.Dlg]) extends StaticAnnotation
