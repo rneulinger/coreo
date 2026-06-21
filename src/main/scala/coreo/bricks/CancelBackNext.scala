@@ -13,13 +13,13 @@ import coreo.*
 trait CancelBackNext[D <: Dlg]() {
   self: D =>
 
-  @Ret
+  @Return
   final val Cancel = Btn[D]()(using myDlg)
 
-  @Tbd()
+  @TBD()
   final val Back = Btn[D]()(using myDlg)
 
-  @Tbd()
+  @TBD()
   final val Next = Btn[D]()(using myDlg)
 
   //end::fields[]

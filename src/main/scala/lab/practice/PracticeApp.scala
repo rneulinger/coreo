@@ -7,11 +7,11 @@ class PracticeApp extends App:// ("https://practice.expandtesting.com/") {
 
   //override def predefBaseUrls = Map("Local" -> baseUrl)
 
-  val _Inputs = Inputs_()
+  val Inputs = Inputs_()
 
-  val _BmiCalculator = BmiCalculator_()
+  val BmiCalculator = BmiCalculator_()
 
-  val _Person = Person_()
+  val Person = Person_()
   given app:PracticeApp = this
 
 
@@ -25,21 +25,25 @@ object PracticeApp:
   def main()={
     val app=PracticeApp()
     println( app.myObjs)
-    println(app._Inputs.myObjs)
-    println(app._Inputs.dataMembers)
-    println(app._Inputs.actionMembers)
-    println(app._BmiCalculator.ctrlMembers)
-    println(app._Inputs.InputDate.myObjs)
+    println(app.Inputs.myObjs)
+    println(app.Inputs.dataMembers)
+    println(app.Inputs.actionMembers)
+    println(app.BmiCalculator.ctrlMembers)
+    println(app.Inputs.InputDate.myObjs)
     println( app.dlgMembers)
 
     println( "-"*10)
 
-    println(app._Person.classAnnotations.toList)
-    println(app._Person.Ok.classAnnotations.toList)
-    println(app._Person.annotationsForObj(app._Person.Ok))
+    println(app.Person.Cancel.classAnnotations)
+    println(app.Person.Cancel.parentAnnotations)
+    println(app.Person.Cancel.myAnnotations)
+    println(app.Person.annotationsForObj(app.Person.Cancel))
+
     println( "-"*10)
-    println(app._Person.Cancel.classAnnotations)
-    println(app._Person.Cancel.parentAnnotations)
-    println(app._Person.Cancel.myAnnotations)
+
+    println(app.Person.classAnnotations.toList)
+    println(app.Person.Cancel.parentAnnotations)
+    println(app.Person.Ok.classAnnotations.toList)
+    println(app.Person.annotationsForObj(app.Person.Ok))
 
   }

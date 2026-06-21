@@ -1,5 +1,7 @@
 package lab.core
 
+import coreo.Return
+
 trait _MixIn(using app: _App):
   self: _Dlg =>
 
@@ -10,7 +12,7 @@ trait _OkCancel(using app: _App):
 
 trait _Commit(using app: _App):
   self: _Dlg =>
-  @coreo.Ret
+  @Return
   val Yes = BTN()
   val No = BTN()
   val Msg = TXT()

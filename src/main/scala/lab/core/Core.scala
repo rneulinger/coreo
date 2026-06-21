@@ -1,5 +1,6 @@
 package lab.core
 
+import coreo.{Return, TBD}
 import lab.*
 import lab.utils.collectMembersOfType
 
@@ -86,9 +87,13 @@ trait _Dlg(using app: _App) extends Interfaces.Dlg with _Obj:
 
   def notify(ctrl: _Ctrl): Unit = {}
 
+  def TXT(id: UiId = null): _Txt
+
   def BTN(id: UiId = null): _Btn
 
-  def TXT(id: UiId = null): _Txt
+  def RET(id: UiId = null): _Btn & Interfaces.Ret
+
+  def SUB(id: UiId = null): _Btn & Interfaces.Sub
 
 /** Control within a dialog */
 trait _Ctrl(using dlg: _Dlg, app: _App) extends Interfaces.Ctrl with _Obj:
@@ -146,11 +151,13 @@ trait _Action extends Interfaces.Action with _Ctrl:
     }
   }
 
-trait _Btn extends _Action
+trait _Btn extends _Action with Interfaces.Action
 
-@coreo.Ret
-trait _RetBtn extends _Btn
+trait _SubBtn extends _Btn with Interfaces.Sub
 
-@coreo.Tbd
-trait _ToBtn extends _Btn
+trait _RetBtn extends _Btn with Interfaces.Ret
+
+trait _ToBtn extends _Btn with Interfaces.To
+
+trait _BackBtn extends _Btn with Interfaces.Back
 

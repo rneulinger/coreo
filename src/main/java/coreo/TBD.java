@@ -6,12 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Used in annotiation To represents the return to the last uses dialog
+ * Used in annotation To represents the return to the last uses dialog
  */
 
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD})   // TYPE = class, interface, enum, record
+@Target({ElementType.TYPE,ElementType.FIELD, ElementType.METHOD})   // TYPE = class, interface, enum, record
 
-public @interface Ret {
+public @interface TBD {
 }

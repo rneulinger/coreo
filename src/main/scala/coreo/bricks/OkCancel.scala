@@ -12,9 +12,9 @@ trait OkCancel[D <: Dlg]() {
   self: D =>
 
 
-  @Tbd
+  @TBD
   final val Ok = Btn[D]()(using myDlg)
-  @Tbd
+  @TBD
   final val Cancel = Btn[D]()(using myDlg)
 
   given myDlg: D = scala.compiletime.deferred

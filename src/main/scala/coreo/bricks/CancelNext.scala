@@ -6,10 +6,10 @@ import coreo.*
 trait CancelNext[D <: Dlg]() {
   self: D =>
 
-  @Tbd
+  @TBD
   final val Cancel = Btn[D]()(using myDlg)
 
-  @Tbd
+  @TBD
   final val Next = Btn[D]()(using myDlg)
 
   //end::fields[]

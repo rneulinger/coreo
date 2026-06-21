@@ -1,5 +1,7 @@
 package lab.core
 
+import coreo.{BackTo, GoTo, NextTo, Return, TBD}
+
 import scala.annotation.StaticAnnotation
 import java.lang.annotation.Annotation
 import lab.utils.collectMembersOfType
@@ -36,14 +38,20 @@ object Interfaces {
      * @return
      */
     final def classAnnotations = {
-      getClass.getAnnotations.toList
+      val itfs =  getClass.getAnnotatedInterfaces.toList
+      println( "Itf:" + itfs )
+      val annos  = for ( itf <- itfs ) yield {
+        itf.getAnnotations.toList
+      }
+      //println( "Sup:" + getClass.getAnnotatedSuperclass.toList )
+      getClass.getAnnotations.toList ++ annos.flatten
     }
 
     /**
      * returns all fields derived from Obj for this instance
      * @return
      */
-    def myObjs = collectMembersOfType(this, classOf[_Obj])
+    def myObjs = collectMembersOfType(this, classOf[Obj])
 
     /**
      * return the name of the given object if it's a field.
@@ -85,11 +93,11 @@ object Interfaces {
      * return all Go-annotations
      * @return
      */
-    final def goAnnotations:List[coreo.Go] = myAnnotations.collect{ case a:coreo.Go => a }
-    final def toAnnotations:List[coreo.To] = myAnnotations.collect{ case a:coreo.To => a }
+    final def goAnnotations:List[GoTo] = myAnnotations.collect{ case a:GoTo => a }
+    final def toAnnotations:List[NextTo] = myAnnotations.collect{ case a:NextTo => a }
     final def uiAnnotations:List[coreo.Ui] = myAnnotations.collect{ case a:coreo.Ui => a }
-    final def tbdAnnotations: List[coreo.Tbd] = myAnnotations.collect { case a: coreo.Tbd => a }
-    final def retAnnotations: List[coreo.Ret] = myAnnotations.collect { case a: coreo.Ret => a }
+    final def tbdAnnotations: List[TBD] = myAnnotations.collect { case a: TBD => a }
+    final def retAnnotations: List[Return] = myAnnotations.collect { case a: Return => a }
 
   /**
    * collection of dialogs.
@@ -187,5 +195,18 @@ object Interfaces {
    * base for all action related controls
    */
   trait Action extends Ctrl
-  trait Btn extends Data
+  trait Btn extends Action
+  @TBD
+  trait To extends Action
+  @BackTo
+  trait Back extends Action
+  @TBD
+  trait Sub extends Action
+  @Return
+  trait Ret extends Action
+
+  trait BackBtn extends Btn with Back
+  trait RetBtn extends Btn with Ret
+  trait SubBtn extends Btn with Sub
+  trait ToBtn extends Btn with To
 }

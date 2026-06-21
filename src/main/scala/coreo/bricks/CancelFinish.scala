@@ -6,10 +6,10 @@ import coreo.*
 trait CancelFinish[D <: Dlg]() {
   self: D =>
 
-  @Tbd
+  @TBD
   final val Cancel = new Btn[D]()(using myDlg)
 
-  @Tbd
+  @TBD
   final val Finish = new Btn[D]()(using myDlg)
 
   //tag::fields[]

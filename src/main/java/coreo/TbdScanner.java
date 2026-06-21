@@ -10,14 +10,14 @@ public final class TbdScanner {
     // --- Find ALL annotated fields ---
     public static List<Field> findAnnotatedFields(Class<?> type) {
         return Arrays.stream(getAllFields(type))
-                .filter(f -> f.isAnnotationPresent(Tbd.class))
+                .filter(f -> f.isAnnotationPresent(TBD.class))
                 .collect(Collectors.toList());
     }
 
     // --- Find ALL annotated methods ---
     public static List<Method> findAnnotatedMethods(Class<?> type) {
         return Arrays.stream(getAllMethods(type))
-                .filter(m -> m.isAnnotationPresent(Tbd.class))
+                .filter(m -> m.isAnnotationPresent(TBD.class))
                 .collect(Collectors.toList());
     }
 

@@ -2,10 +2,11 @@ package lab.practice
 
 import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
+import coreo.GoTo
 import lab.pw.*
 
 // tag::fields[]
-@coreo.Go("inputs")
+@GoTo("inputs")
 final class Inputs_(using own: App) extends Dlg:
 
   // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this

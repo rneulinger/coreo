@@ -11,13 +11,13 @@ import coreo.*
 trait AddEditDelete[D <: Dlg] {
   self: D =>
 
-  @Tbd()
+  @TBD()
   final val Add = Btn[D]()(using myDlg) // new Dialog
 
-  @Tbd()
+  @TBD()
   final val Edit = Btn[D]()(using myDlg) // edit selected
 
-  @Tbd()
+  @TBD()
   final val Delete = Btn[D]()(using myDlg) // delete selected
 
   //end::fields[]

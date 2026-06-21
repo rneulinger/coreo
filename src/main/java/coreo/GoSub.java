@@ -1,10 +1,9 @@
 package coreo;
 
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.lang.annotation.ElementType;
-
 
 /**
  * focus goes to this window, usable in Actions.
@@ -14,7 +13,7 @@ import java.lang.annotation.ElementType;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD})   // TYPE = class, interface, enum, record
 
-public @interface To {
+public @interface GoSub {
     Class<? extends Object> dest();
 //    String value() default  "";
 }

@@ -2,7 +2,7 @@ package lab.pw
 
 import com.microsoft.playwright.options.AriaRole
 import com.microsoft.playwright.{Locator, Page}
-
+import coreo.TBD
 import lab.core.*
 import lab.utils.*
 
@@ -17,23 +17,43 @@ class Dlg(using app: App) extends _Dlg:
 
   def wrap(loc: Loc): Adp = _ => loc
 
+  def BTN(loc: Loc) = Btn(wrap(loc))(using this)
   def BTN(id: UiId = null): Btn = {
     id match {
       case null => Btn(null)(using this)
-      case x: String => Btn(null)(using this)
+      case x: String => mkBtnById( id)
     }
   }
 
-  def BTN(loc: Loc) = Btn(wrap(loc))(using this)
+  def RET(id: UiId = null): RetBtn = {
+    id match {
+      case null => RetBtn(null)(using this)
+      case x: String => mkRetById( id)
+    }
+  }
 
+  def SUB(id: UiId = null): SubBtn = {
+    id match {
+      case null => SubBtn(null)(using this)
+      case x: String => mkSubById( id)
+    }
+  }
+  
+
+  protected def mkBtnById( id: String):Btn = ???;
+  protected def mkSubById( id: String):SubBtn = ???;
+  protected def mkRetById( id: String):RetBtn = ???;
+
+
+  def TXT(loc: Loc) = Txt(wrap(loc))(using this)
   def TXT(id: String = null): Txt = {
     id match {
       case null => Txt(null)(using this)
-      case x: String => Txt(null)(using this)
+      case x: String => mkTxtById( id)
     }
   }
+  protected def mkTxtById(id: String): Txt = ???;
 
-  def TXT(loc: Loc) = Txt(wrap(loc))(using this)
 
 abstract class Ctrl(var loc: Adp)(using dlg: Dlg, app: App) extends _Ctrl:
   def click() = dlg
@@ -48,8 +68,10 @@ abstract class Action(loc: Adp)(using dlg: Dlg, app: App) extends Ctrl(loc) with
 
 class Txt(loc: Adp)(using dlg: Dlg, app: App) extends Data(loc) with _Txt
 
-@coreo.Tbd
+@TBD
 class Btn(loc: Adp)(using dlg: Dlg, app: App) extends Action(loc) with _Btn
+class SubBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _SubBtn
+class RetBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _RetBtn
 
 trait MixIn(using app: App) extends _MixIn:
   self: Dlg =>
