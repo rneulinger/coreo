@@ -2,8 +2,7 @@ package lab.pw
 
 import com.microsoft.playwright.options.AriaRole
 import com.microsoft.playwright.{Locator, Page}
-
-import lab.core.{_Commit, _OkCancel}
+import lab.core.{_Commit, _Dlg, _OkCancel, _Txt}
 import lab.utils.*
 
 class Something(using app: App) extends Dlg with _OkCancel
@@ -27,12 +26,15 @@ class MyDialog(using app: App) extends Dlg with CancelNextPrevious {
   }
 }
 
-
+trait _AnotherDialog extends _OkCancel {
+  self: _Dlg =>
+  val Info = TXT()
+} 
 class MyAppPw extends App:
   val myDialog = MyDialog()
   //val commit = CommitPw()
-  val commit = new Dlg with _Commit() {}
-
+  val commit = new Dlg with _Commit() 
+  val another = new Dlg with _AnotherDialog 
   given app: MyAppPw = this
 
 @main

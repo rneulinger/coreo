@@ -7,14 +7,14 @@ trait _MixIn(using app: _App):
 
 trait _OkCancel(using app: _App):
   self: _Dlg =>
-  val Ok = BTN()
-  val Cancel = BTN()
+  val Ok = RET()
+  val Cancel = RET()
 
 trait _Commit(using app: _App):
   self: _Dlg =>
   @Return
-  val Yes = BTN()
-  val No = BTN()
+  val Yes = RET()
+  val No = RET()
   val Msg = TXT()
 
 trait _Crud:
