@@ -25,12 +25,15 @@ class Dlg(using app: App) extends _Dlg:
     }
   }
 
+  protected def mkBtnById(id: String): Btn = ???;
+
   def RET(id: UiId = null): RetBtn = {
     id match {
       case null => RetBtn(null)(using this)
       case x: String => mkRetById( id)
     }
   }
+  protected def mkRetById( id: String):RetBtn = ???;
 
   def SUB(id: UiId = null): SubBtn = {
     id match {
@@ -38,12 +41,26 @@ class Dlg(using app: App) extends _Dlg:
       case x: String => mkSubById( id)
     }
   }
-  
 
-  protected def mkBtnById( id: String):Btn = ???;
   protected def mkSubById( id: String):SubBtn = ???;
-  protected def mkRetById( id: String):RetBtn = ???;
 
+  def BACK(id: UiId = null): BackBtn = {
+    id match {
+      case null => BackBtn(null)(using this)
+      case x: String => mkBackById(id)
+    }
+  }
+
+  protected def mkBackById(id: String): BackBtn = ???;
+
+  def TO(id: UiId = null): ToBtn = {
+    id match {
+      case null => ToBtn(null)(using this)
+      case x: String => mkToById(id)
+    }
+  }
+
+  protected def mkToById(id: String): ToBtn = ???;
 
   def TXT(loc: Loc) = Txt(wrap(loc))(using this)
   def TXT(id: String = null): Txt = {
@@ -72,6 +89,8 @@ class Txt(loc: Adp)(using dlg: Dlg, app: App) extends Data(loc) with _Txt
 class Btn(loc: Adp)(using dlg: Dlg, app: App) extends Action(loc) with _Btn
 class SubBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _SubBtn
 class RetBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _RetBtn
+class BackBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _BackBtn
+class ToBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _ToBtn
 
 trait MixIn(using app: App) extends _MixIn:
   self: Dlg =>

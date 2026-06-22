@@ -19,17 +19,18 @@ object Interfaces {
   trait Obj:
     /**
      *
-     * @return the application to which the object belongs
+     * @return the application to which the object belongs.
      */
     def myApp:App
 
     /**
-     * @return the currently active dialogue
+     * @return the currently active dialogue.
      */
-    def actDialog:Dlg
+    def activeDlg:Dlg
 
     /**
-     * performs validation on the current object
+     * performs validation on the current object.
+     * there will be validations in the future
      */
     def validate():Unit
 
@@ -37,31 +38,30 @@ object Interfaces {
      * get all annotations defined on class level for this object
      * @return
      */
-    final def classAnnotations = {
-      val itfs =  getClass.getAnnotatedInterfaces.toList
-      println( "Itf:" + itfs )
-      val annos  = for ( itf <- itfs ) yield {
+    final def classAnnotations:List[Annotation] = {
+      val anis  = for ( itf <- getClass.getAnnotatedInterfaces ) yield {
         itf.getAnnotations.toList
       }
       //println( "Sup:" + getClass.getAnnotatedSuperclass.toList )
-      getClass.getAnnotations.toList ++ annos.flatten
+      getClass.getAnnotations.toList ++ anis.flatten
     }
 
     /**
      * returns all fields derived from Obj for this instance
+     *
      * @return
      */
-    def myObjs = collectMembersOfType(this, classOf[Obj])
+    def myObjs: List[(String, Obj)] = collectMembersOfType(this, classOf[Obj])
 
     /**
      * return the name of the given object if it's a field.
      * @param obj to search for
-     * @return unique name or "" if obj is not a field
+     * @return unique name or None if obj is not a field
      */
-    def nameForObj(obj: _Obj): String = {
+    def nameOfObj(obj: _Obj): Option[String] = {
       myObjs.filter(_._2 == obj) match {
-        case Nil => ""
-        case head :: tail => head._1
+        case Nil => None
+        case head :: tail => Some(head._1)
       }
     }
 
@@ -70,11 +70,14 @@ object Interfaces {
      * @param obj
      * @return
      */
-    def annotationsForObj(obj: _Obj) = {
-      val name = nameForObj(obj)
-      val field = this.getClass.getDeclaredField(name)
-      field.setAccessible(true)
-      field.getAnnotations.toList
+    def annotationsForObj(obj: _Obj): List[Annotation] = {
+      nameOfObj(obj) match{
+        case None => Nil
+        case Some(name) =>
+          val field = this.getClass.getDeclaredField(name)
+          field.setAccessible(true)
+          field.getAnnotations.toList
+      }
     }
 
     /**
@@ -205,7 +208,13 @@ object Interfaces {
   @Return
   trait Ret extends Action
 
+  /**
+   * a button that navigates to the previous dialog, annotated with Back
+   */
   trait BackBtn extends Btn with Back
+  /**
+   * a button that navigates to the previous dialog, annotated with Back
+   */
   trait RetBtn extends Btn with Ret
   trait SubBtn extends Btn with Sub
   trait ToBtn extends Btn with To

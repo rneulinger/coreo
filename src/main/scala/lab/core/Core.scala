@@ -48,7 +48,7 @@ abstract class _App extends Interfaces.App with _Obj:
   final def onTo(dlgName:String) = ???
   final def onTo[T <: _Dlg](dlg: Class[T]) = ???
   def Unknown:_Dlg
-  def actDialog = act
+  def activeDlg = act
 
   /**
    * last dialogs -> pushed by to-button, popped by back-button
@@ -75,7 +75,7 @@ abstract class _App extends Interfaces.App with _Obj:
 trait _Dlg(using app: _App) extends Interfaces.Dlg with _Obj:
   def act = app.act
   final def myApp = app
-  final def actDialog = app.act
+  final def activeDlg = app.act
 
   override def parentAnnotations: List[Annotation] = app.annotationsForObj(this);
 
@@ -95,6 +95,10 @@ trait _Dlg(using app: _App) extends Interfaces.Dlg with _Obj:
 
   def SUB(id: UiId = null): _Btn & Interfaces.Sub
 
+  def BACK(id: UiId = null): _Btn & Interfaces.Back
+
+  def TO(id: UiId = null): _Btn & Interfaces.To
+
 /** Control within a dialog */
 trait _Ctrl(using dlg: _Dlg, app: _App) extends Interfaces.Ctrl with _Obj:
   dlg.notify(this)
@@ -102,7 +106,7 @@ trait _Ctrl(using dlg: _Dlg, app: _App) extends Interfaces.Ctrl with _Obj:
   override def parentAnnotations: List[Annotation] = dlg.annotationsForObj(this)
 
   final def myApp = app
-  final def actDialog = app.act
+  final def activeDlg = app.act
   final def myDlg = dlg
 
   def click(): _Dlg
