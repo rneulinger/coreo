@@ -6,6 +6,8 @@ import scala.annotation.StaticAnnotation
 import java.lang.annotation.Annotation
 import lab.utils.collectMembersOfType
 
+type CtrlId = String | Null
+
 /**
  * public interface for important objects within the problem domain
  */
@@ -158,7 +160,13 @@ object Interfaces {
    * collection of controls
    */
   trait Dlg extends Obj:
-
+    def TXT(id:CtrlId):Txt
+    def BTN(id:CtrlId):Btn
+    def SUB(id:CtrlId):SubBtn
+    def RET(id:CtrlId):RetBtn
+    def TO(id:CtrlId):ToBtn
+    def BACK(id:CtrlId):BackBtn
+    
     /**
      * all controls of this dialog
      * @return

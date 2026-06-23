@@ -18,7 +18,7 @@ class Dlg(using app: App) extends _Dlg:
   def wrap(loc: Loc): Adp = _ => loc
 
   def BTN(loc: Loc) = Btn(wrap(loc))(using this)
-  def BTN(id: UiId = null): Btn = {
+  def BTN(id: CtrlId = null): Btn = {
     id match {
       case null => Btn(null)(using this)
       case x: String => mkBtnById( id)
@@ -27,7 +27,7 @@ class Dlg(using app: App) extends _Dlg:
 
   protected def mkBtnById(id: String): Btn = ???;
 
-  def RET(id: UiId = null): RetBtn = {
+  def RET(id: CtrlId = null): RetBtn = {
     id match {
       case null => RetBtn(null)(using this)
       case x: String => mkRetById( id)
@@ -35,7 +35,7 @@ class Dlg(using app: App) extends _Dlg:
   }
   protected def mkRetById( id: String):RetBtn = ???;
 
-  def SUB(id: UiId = null): SubBtn = {
+  def SUB(id: CtrlId = null): SubBtn = {
     id match {
       case null => SubBtn(null)(using this)
       case x: String => mkSubById( id)
@@ -44,7 +44,7 @@ class Dlg(using app: App) extends _Dlg:
 
   protected def mkSubById( id: String):SubBtn = ???;
 
-  def BACK(id: UiId = null): BackBtn = {
+  def BACK(id: CtrlId = null): BackBtn = {
     id match {
       case null => BackBtn(null)(using this)
       case x: String => mkBackById(id)
@@ -53,7 +53,7 @@ class Dlg(using app: App) extends _Dlg:
 
   protected def mkBackById(id: String): BackBtn = ???;
 
-  def TO(id: UiId = null): ToBtn = {
+  def TO(id: CtrlId = null): ToBtn = {
     id match {
       case null => ToBtn(null)(using this)
       case x: String => mkToById(id)

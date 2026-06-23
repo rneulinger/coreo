@@ -24,8 +24,6 @@ enum Prop:
   case Present
   case Absent
 
-type UiId = String | Null
-
 trait _Obj extends Interfaces.Obj {
 
 //  final def GoAnnotations()= getClass.getAnnotations.collect { case a: Ui => a.value }
@@ -87,20 +85,20 @@ trait _Dlg(using app: _App) extends Interfaces.Dlg with _Obj:
 
   def notify(ctrl: _Ctrl): Unit = {}
 
-  def TXT(id: UiId = null): _Txt
+  def TXT(id: CtrlId = null): _Txt
 
-  def BTN(id: UiId = null): _Btn
+  def BTN(id: CtrlId = null): _Btn
 
-  def RET(id: UiId = null): _Btn & Interfaces.Ret
+  def RET(id: CtrlId = null): _Btn & Interfaces.RetBtn
 
-  def SUB(id: UiId = null): _Btn & Interfaces.Sub
+  def SUB(id: CtrlId = null): _Btn & Interfaces.SubBtn
 
-  def BACK(id: UiId = null): _Btn & Interfaces.Back
+  def BACK(id: CtrlId = null): _Btn & Interfaces.BackBtn
 
-  def TO(id: UiId = null): _Btn & Interfaces.To
+  def TO(id: CtrlId = null): _Btn & Interfaces.ToBtn
 
 /** Control within a dialog */
-trait _Ctrl(using dlg: _Dlg, app: _App) extends Interfaces.Ctrl with _Obj:
+trait _Ctrl(using dlg: _Dlg, app: _App) extends _Obj with Interfaces.Ctrl :
   dlg.notify(this)
 
   override def parentAnnotations: List[Annotation] = dlg.annotationsForObj(this)
@@ -119,11 +117,11 @@ trait _Ctrl(using dlg: _Dlg, app: _App) extends Interfaces.Ctrl with _Obj:
   def get(prop:Prop):Boolean = ???
 
 
-trait _Data extends Interfaces.Data with _Ctrl
+trait _Data extends _Ctrl  with Interfaces.Data 
 
-trait _Txt extends _Data
+trait _Txt extends _Data with Interfaces.Txt
 
-trait _Action extends Interfaces.Action with _Ctrl:
+trait _Action extends _Ctrl with Interfaces.Action:
   private var target: Option[_Dlg] = None
 
   def resetTarget(): Unit = target = None
@@ -155,13 +153,13 @@ trait _Action extends Interfaces.Action with _Ctrl:
     }
   }
 
-trait _Btn extends _Action with Interfaces.Action
+trait _Btn extends _Action with Interfaces.Btn
 
-trait _SubBtn extends _Btn with Interfaces.Sub
+trait _SubBtn extends _Btn with Interfaces.SubBtn
 
-trait _RetBtn extends _Btn with Interfaces.Ret
+trait _RetBtn extends _Btn with Interfaces.RetBtn
 
-trait _ToBtn extends _Btn with Interfaces.To
+trait _ToBtn extends _Btn with Interfaces.ToBtn
 
-trait _BackBtn extends _Btn with Interfaces.Back
+trait _BackBtn extends _Btn with Interfaces.BackBtn
 
