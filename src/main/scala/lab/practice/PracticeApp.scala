@@ -2,6 +2,7 @@ package lab.practice
 
 import lab.pw.*
 import lab.utils
+
 class PracticeApp extends App:// ("https://practice.expandtesting.com/") {
   //override def nameOfApp = "Practice"
 
@@ -12,6 +13,11 @@ class PracticeApp extends App:// ("https://practice.expandtesting.com/") {
   val BmiCalculator = BmiCalculator_()
 
   val Person = Person_()
+  //
+
+  val DialogOne = { class DialogOne_ extends Dlg with Interfaces.DialogOne_; DialogOne_() }
+
+  val DialogTwo = new Dlg with Interfaces.DialogOne_ {}
   given app:PracticeApp = this
 
 
@@ -45,5 +51,7 @@ object PracticeApp:
     println(app.Person.Cancel.parentAnnotations)
     println(app.Person.Ok.classAnnotations.toList)
     println(app.Person.annotationsForObj(app.Person.Ok))
+
+    println( app.dlgMembers)
 
   }

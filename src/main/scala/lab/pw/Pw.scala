@@ -18,58 +18,28 @@ class Dlg(using app: App) extends _Dlg:
   def wrap(loc: Loc): Adp = _ => loc
 
   def BTN(loc: Loc) = Btn(wrap(loc))(using this)
-  def BTN(id: CtrlId = null): Btn = {
-    id match {
-      case null => Btn(null)(using this)
-      case x: String => mkBtnById( id)
-    }
-  }
+  def BTN(id:String=""): Btn = if id.isEmpty then Btn(null)(using this)
+    else ??? // todo mkBtnById( id)
 
-  protected def mkBtnById(id: String): Btn = ???;
+  def RET(loc: Loc) = RetBtn(wrap(loc))(using this)
+  def RET(id:String=""): RetBtn = if id.isEmpty then RetBtn(null)(using this)
+    else ???// todo mkRetById( id)
 
-  def RET(id: CtrlId = null): RetBtn = {
-    id match {
-      case null => RetBtn(null)(using this)
-      case x: String => mkRetById( id)
-    }
-  }
-  protected def mkRetById( id: String):RetBtn = ???;
+  def SUB(loc: Loc) = SubBtn(wrap(loc))(using this)
+  def SUB(id:String=""): SubBtn = if id.isEmpty then SubBtn(null)(using this)
+    else ??? //  todo mkSubById( id)
 
-  def SUB(id: CtrlId = null): SubBtn = {
-    id match {
-      case null => SubBtn(null)(using this)
-      case x: String => mkSubById( id)
-    }
-  }
+  def BAK(loc: Loc) = SubBtn(wrap(loc))(using this)
+  def BAK(id:String=""): BackBtn = if id.isEmpty then BackBtn(null)(using this)
+    else ??? // todo mkBackById(id)
 
-  protected def mkSubById( id: String):SubBtn = ???;
-
-  def BACK(id: CtrlId = null): BackBtn = {
-    id match {
-      case null => BackBtn(null)(using this)
-      case x: String => mkBackById(id)
-    }
-  }
-
-  protected def mkBackById(id: String): BackBtn = ???;
-
-  def TO(id: CtrlId = null): ToBtn = {
-    id match {
-      case null => ToBtn(null)(using this)
-      case x: String => mkToById(id)
-    }
-  }
-
-  protected def mkToById(id: String): ToBtn = ???;
+  def NXT(loc: Loc) = SubBtn(wrap(loc))(using this)
+  def NXT(id:String=""): NextBtn = if id.isEmpty then NextBtn(null)(using this)
+    else ??? // todo mkToById(id)
 
   def TXT(loc: Loc) = Txt(wrap(loc))(using this)
-  def TXT(id: String = null): Txt = {
-    id match {
-      case null => Txt(null)(using this)
-      case x: String => mkTxtById( id)
-    }
-  }
-  protected def mkTxtById(id: String): Txt = ???;
+  def TXT(id: String = ""): Txt = if id.isEmpty then Txt(null)(using this)
+    else ??? //todo mkTxtById( id)
 
 
 abstract class Ctrl(var loc: Adp)(using dlg: Dlg, app: App) extends _Ctrl:
@@ -90,7 +60,7 @@ class Btn(loc: Adp)(using dlg: Dlg, app: App) extends Action(loc) with _Btn
 class SubBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _SubBtn
 class RetBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _RetBtn
 class BackBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _BackBtn
-class ToBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _ToBtn
+class NextBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _NextBtn
 
 trait MixIn(using app: App) extends _MixIn:
   self: Dlg =>

@@ -12,7 +12,7 @@ final class BmiCalculator_(using app: App) extends Dlg:
 
   val Gender = TXT()
 
-  val Age = TXT()
+  val Age = TXT(_.locator(""))
 
   val Height = TXT()
 
@@ -21,6 +21,7 @@ final class BmiCalculator_(using app: App) extends Dlg:
   val Calculate = BTN()
 
   val Clear = BTN()
+
 
   // end::fields[]
   given dlg: BmiCalculator_ = this

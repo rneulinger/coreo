@@ -1,7 +1,7 @@
 package lab.core
 
 import coreo.{Return, TBD}
-import lab.*
+import lab.core.Interfaces.*
 import lab.utils.collectMembersOfType
 
 import java.lang.annotation.Annotation
@@ -38,7 +38,7 @@ trait _Obj extends Interfaces.Obj {
   }
 }
 /** Application, a bunch of dialogs */
-abstract class _App extends Interfaces.App with _Obj:
+abstract class _App extends App with _Obj:
   final def dlgMembers = collectMembersOfType(this, classOf[_Dlg])
   final def gotoMembers = dlgMembers
   final def goTo(path:String="/") = ???
@@ -70,7 +70,7 @@ abstract class _App extends Interfaces.App with _Obj:
 
 
 /** a bunch of controls */
-trait _Dlg(using app: _App) extends Interfaces.Dlg with _Obj:
+trait _Dlg(using app: _App) extends Dlg with _Obj:
   def act = app.act
   final def myApp = app
   final def activeDlg = app.act
@@ -85,20 +85,20 @@ trait _Dlg(using app: _App) extends Interfaces.Dlg with _Obj:
 
   def notify(ctrl: _Ctrl): Unit = {}
 
-  def TXT(id: CtrlId = null): _Txt
+  def TXT(id: String = ""): _Txt
 
-  def BTN(id: CtrlId = null): _Btn
+  def BTN(id:String=""): _Btn
 
-  def RET(id: CtrlId = null): _Btn & Interfaces.RetBtn
+  def RET(id:String=""): _Btn & RetBtn
 
-  def SUB(id: CtrlId = null): _Btn & Interfaces.SubBtn
+  def SUB(id:String=""): _Btn & SubBtn
 
-  def BACK(id: CtrlId = null): _Btn & Interfaces.BackBtn
+  def BAK(id:String=""): _Btn & BackBtn
 
-  def TO(id: CtrlId = null): _Btn & Interfaces.ToBtn
+  def NXT(id:String=""): _Btn & NextBtn
 
 /** Control within a dialog */
-trait _Ctrl(using dlg: _Dlg, app: _App) extends _Obj with Interfaces.Ctrl :
+trait _Ctrl(using dlg: _Dlg, app: _App) extends _Obj with Ctrl :
   dlg.notify(this)
 
   override def parentAnnotations: List[Annotation] = dlg.annotationsForObj(this)
@@ -117,11 +117,11 @@ trait _Ctrl(using dlg: _Dlg, app: _App) extends _Obj with Interfaces.Ctrl :
   def get(prop:Prop):Boolean = ???
 
 
-trait _Data extends _Ctrl  with Interfaces.Data 
+trait _Data extends _Ctrl  with Data
 
-trait _Txt extends _Data with Interfaces.Txt
+trait _Txt extends _Data with Txt
 
-trait _Action extends _Ctrl with Interfaces.Action:
+trait _Action extends _Ctrl with Action:
   private var target: Option[_Dlg] = None
 
   def resetTarget(): Unit = target = None
@@ -153,13 +153,13 @@ trait _Action extends _Ctrl with Interfaces.Action:
     }
   }
 
-trait _Btn extends _Action with Interfaces.Btn
+trait _Btn extends _Action with Btn
 
-trait _SubBtn extends _Btn with Interfaces.SubBtn
+trait _SubBtn extends _Btn with SubBtn
 
-trait _RetBtn extends _Btn with Interfaces.RetBtn
+trait _RetBtn extends _Btn with RetBtn
 
-trait _ToBtn extends _Btn with Interfaces.ToBtn
+trait _NextBtn extends _Btn with NextBtn
 
-trait _BackBtn extends _Btn with Interfaces.BackBtn
+trait _BackBtn extends _Btn with BackBtn
 

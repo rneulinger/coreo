@@ -6,8 +6,6 @@ import scala.annotation.StaticAnnotation
 import java.lang.annotation.Annotation
 import lab.utils.collectMembersOfType
 
-type CtrlId = String | Null
-
 /**
  * public interface for important objects within the problem domain
  */
@@ -160,13 +158,13 @@ object Interfaces {
    * collection of controls
    */
   trait Dlg extends Obj:
-    def TXT(id:CtrlId):Txt
-    def BTN(id:CtrlId):Btn
-    def SUB(id:CtrlId):SubBtn
-    def RET(id:CtrlId):RetBtn
-    def TO(id:CtrlId):ToBtn
-    def BACK(id:CtrlId):BackBtn
-    
+    def TXT(id:String=""):Txt
+    def BTN(id:String=""):Btn
+    def SUB(id:String=""):SubBtn
+    def RET(id:String=""):RetBtn
+    def NXT(id:String=""):NextBtn
+    def BAK(id:String=""):BackBtn
+
     /**
      * all controls of this dialog
      * @return
@@ -206,24 +204,58 @@ object Interfaces {
    * base for all action related controls
    */
   trait Action extends Ctrl
+
+  /**
+   * a normal button, that fires some internal aktion, but not leeaving the page
+   */
   trait Btn extends Action
+
+  trait Marker
+  /**
+   * navigate to the next dialog
+   */
   @TBD
-  trait To extends Action
+  trait IsNext extends Marker
+
+  /**
+   * navigat eto the previous dialog
+   */
   @BackTo
-  trait Back extends Action
+  trait IsBack extends Marker
+
+  /**
+   * invoke a sub-dialog.
+   * Cancel, Ok, Finish usually return to the current dialog
+   */
   @TBD
-  trait Sub extends Action
+  trait IsSub extends Marker
+
+  /**
+   * return to the dialog that has called this dialog with a Sub-Acction
+   */
+
   @Return
-  trait Ret extends Action
+  trait IsRet extends Marker
+
+  /**
+   *
+   */
+
+  trait NextBtn extends Btn with IsNext
 
   /**
    * a button that navigates to the previous dialog, annotated with Back
    */
-  trait BackBtn extends Btn with Back
+  trait BackBtn extends Btn with IsBack
+
   /**
    * a button that navigates to the previous dialog, annotated with Back
    */
-  trait RetBtn extends Btn with Ret
-  trait SubBtn extends Btn with Sub
-  trait ToBtn extends Btn with To
+  trait RetBtn extends Btn with IsRet
+
+  /**
+   *
+   */
+  trait SubBtn extends Btn with IsSub
+
 }
