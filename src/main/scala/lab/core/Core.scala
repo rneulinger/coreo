@@ -41,12 +41,19 @@ trait _Obj extends Interfaces.Obj {
 abstract class _App extends App with _Obj:
   final def dlgMembers = collectMembersOfType(this, classOf[_Dlg])
   final def gotoMembers = dlgMembers
+  private final val goToHistory = scala.collection.mutable.Stack[_Dlg]()
+  private final val nextHistory = scala.collection.mutable.Stack[_Dlg]()
+  private final val subHistory = scala.collection.mutable.Stack[_Dlg]()
   final def goTo(path:String="/") = ???
   final def goTo[T <: _Dlg](dlg:Class[T]) = ???
-  final def onTo(dlgName:String) = ???
-  final def onTo[T <: _Dlg](dlg: Class[T]) = ???
+  final def goToPrevious() = ???
+  final def nextTo(dlgName:String) = ???
+  final def nextTo[T <: _Dlg](dlg: Class[T]) = ???
+  final def backTo() = ???
+  final def goSub[T <: _Dlg](dlg: Class[T]) = ???
+  final def leave() = ???
   def Unknown:_Dlg
-  def activeDlg = act
+  def activeDlg:_Dlg = act
 
   /**
    * last dialogs -> pushed by to-button, popped by back-button

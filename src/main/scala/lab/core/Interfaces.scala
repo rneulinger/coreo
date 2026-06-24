@@ -104,6 +104,8 @@ object Interfaces {
 
   /**
    * collection of dialogs.
+   * goTo <=> goBack
+   *
    */
   trait App extends Obj:
     /**
@@ -125,19 +127,20 @@ object Interfaces {
      *
      * @param path
      */
-    def goTo(path: String = "/"):Unit
+    def goTo(path: String = "/"):Unit  
 
     /**
      * navigates directly to a dialog.
      * @param dlg the specified dialog must have an Go annotation
      */
     def goTo[T <: _Dlg](dlg: Class[T]):Unit
+    def goToPrevious():Unit
 
     /**
      * the given dialog becomes the active one, without navigation
      * @param dlgName either a valid path (as specified in Go-annotations), or a name of a dialog
      */
-    def onTo(dlgName: String):Unit
+    def nextTo(dlgName: String):Unit
 
     /**
      * the given dialog becomes the active one, without navigation
@@ -145,7 +148,11 @@ object Interfaces {
      * @param dlg
      * @tparam T
      */
-    def onTo[T <: _Dlg](dlg: Class[T]):Unit
+    def nextTo[T <: _Dlg](dlg: Class[T]):Unit
+    def backTo() :Unit
+
+    def goSub[T <: _Dlg](dlg: Class[T]):Unit
+    def leave():Unit
 
     /**
      * the dialog with no elements.
