@@ -39,18 +39,31 @@ trait _Obj extends Interfaces.Obj {
 }
 /** Application, a bunch of dialogs */
 abstract class _App extends App with _Obj:
+unify  /**
+   * stack for goTo / goBack
+   */
+  private final val goHistory = scala.collection.mutable.Stack[_Dlg]()
+  /**
+   * stack for nextTo / backTo
+   */
+  private final val toHistory = scala.collection.mutable.Stack[_Dlg]()
+  /**
+   * stack for inTo / leave
+   */
+  private final val inHistory = scala.collection.mutable.Stack[_Dlg]()
+
   final def dlgMembers = collectMembersOfType(this, classOf[_Dlg])
   final def gotoMembers = dlgMembers
-  private final val goToHistory = scala.collection.mutable.Stack[_Dlg]()
-  private final val nextHistory = scala.collection.mutable.Stack[_Dlg]()
-  private final val subHistory = scala.collection.mutable.Stack[_Dlg]()
-  final def goTo(path:String="/") = ???
-  final def goTo[T <: _Dlg](dlg:Class[T]) = ???
-  final def goToPrevious() = ???
-  final def nextTo(dlgName:String) = ???
-  final def nextTo[T <: _Dlg](dlg: Class[T]) = ???
+
+  final def findDialogs[T <: _Dlg](dlg: Class[T] | String): List[Dlg] = ???
+
+  final def findDialog[T <: _Dlg](dlg: Class[T] | String): Dlg = ???
+
+  final def goTo[T <: _Dlg](dlg:Class[T]|String="/") = ???
+  final def goBack() = ???
+  final def nextTo[T <: _Dlg](dlg: Class[T]|String) = ???
   final def backTo() = ???
-  final def goSub[T <: _Dlg](dlg: Class[T]) = ???
+  final def inTo[T <: _Dlg](dlg: Class[T]|String) = ???
   final def leave() = ???
   def Unknown:_Dlg
   def activeDlg:_Dlg = act
@@ -98,7 +111,7 @@ trait _Dlg(using app: _App) extends Dlg with _Obj:
 
   def RET(id:String=""): _Btn & RetBtn
 
-  def SUB(id:String=""): _Btn & SubBtn
+  def SUB(id:String=""): _Btn & InToBtn
 
   def BAK(id:String=""): _Btn & BackBtn
 
@@ -162,7 +175,7 @@ trait _Action extends _Ctrl with Action:
 
 trait _Btn extends _Action with Btn
 
-trait _SubBtn extends _Btn with SubBtn
+trait _InToBtn extends _Btn with InToBtn
 
 trait _RetBtn extends _Btn with RetBtn
 

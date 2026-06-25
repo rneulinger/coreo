@@ -25,15 +25,15 @@ class Dlg(using app: App) extends _Dlg:
   def RET(id:String=""): RetBtn = if id.isEmpty then RetBtn(null)(using this)
     else ???// todo mkRetById( id)
 
-  def SUB(loc: Loc) = SubBtn(wrap(loc))(using this)
-  def SUB(id:String=""): SubBtn = if id.isEmpty then SubBtn(null)(using this)
+  def SUB(loc: Loc) = InToBtn(wrap(loc))(using this)
+  def SUB(id:String=""): InToBtn = if id.isEmpty then InToBtn(null)(using this)
     else ??? //  todo mkSubById( id)
 
-  def BAK(loc: Loc) = SubBtn(wrap(loc))(using this)
+  def BAK(loc: Loc) = InToBtn(wrap(loc))(using this)
   def BAK(id:String=""): BackBtn = if id.isEmpty then BackBtn(null)(using this)
     else ??? // todo mkBackById(id)
 
-  def NXT(loc: Loc) = SubBtn(wrap(loc))(using this)
+  def NXT(loc: Loc) = InToBtn(wrap(loc))(using this)
   def NXT(id:String=""): NextBtn = if id.isEmpty then NextBtn(null)(using this)
     else ??? // todo mkToById(id)
 
@@ -57,7 +57,7 @@ class Txt(loc: Adp)(using dlg: Dlg, app: App) extends Data(loc) with _Txt
 
 @TBD
 class Btn(loc: Adp)(using dlg: Dlg, app: App) extends Action(loc) with _Btn
-class SubBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _SubBtn
+class InToBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _InToBtn
 class RetBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _RetBtn
 class BackBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _BackBtn
 class NextBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _NextBtn

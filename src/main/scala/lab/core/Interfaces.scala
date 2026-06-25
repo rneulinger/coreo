@@ -121,37 +121,65 @@ object Interfaces {
     def gotoMembers:List[(String, Dlg)]
 
     /**
+     * find all dialogs matching the given parameter
+     * @param dlg
+     *   case T <: Dlg type of dialog recommended
+     *   case String
+     *     if all lowercase = treat as path separated by /
+     *     if contains uppercase && "." treat a type
+     * @tparam T type of dialog
+     * @return
+     */
+    def findDialogs[T <: _Dlg](dlg: Class[T] | String):List[Dlg]
+
+    /**
+     * find the unique dialog that matches the given parameter
+     * @param dlg to find
+     * @tparam T the type of dialog to find
+     * @return the dialog
+     * @throws exeption if NOT unique OR NOT found
+     * @see findDialogs
+     */
+    def findDialog[T <: _Dlg](dlg: Class[T] | String):Dlg
+    /**
      * navigates directly to a dialog.
+     * the dialog must have a goto-annotation
      * The specified path is separated by / and must be interpreted by the application.
      * If it does not contain a / it is treated as name of the dialog
-     *
-     * @param path
-     */
-    def goTo(path: String = "/"):Unit  
-
-    /**
-     * navigates directly to a dialog.
      * @param dlg the specified dialog must have an Go annotation
-     */
-    def goTo[T <: _Dlg](dlg: Class[T]):Unit
-    def goToPrevious():Unit
-
-    /**
-     * the given dialog becomes the active one, without navigation
-     * @param dlgName either a valid path (as specified in Go-annotations), or a name of a dialog
-     */
-    def nextTo(dlgName: String):Unit
-
-    /**
-     * the given dialog becomes the active one, without navigation
      *
+     */
+    def goTo[T <: _Dlg](dlg: Class[T] | String = "/"):Unit
+    def goBack():Unit
+
+    /**
+     * the given dialog becomes the active one, without navigation
+     * the active dialog is stored of the stack
+     * @param dlg either a valid path (as specified in Go-annotations), or a name of a dialog
+     *
+     * @tparam T
+     */
+    def nextTo[T <: _Dlg](dlg: Class[T]|String):Unit
+
+    /**
+     * the dialog from the stack becomes the active window
+     * if the stack is empty "Unknow" becomes the active dialog and a warning is logged
+     */
+    def backTo() :Unit
+
+    /**
+     * the given dialog becomes the active one, without navigation.
+     * the active dialog can be restored with leave.*
+     * if the new dialog does not have a control of type RET a warning is logge
      * @param dlg
      * @tparam T
      */
-    def nextTo[T <: _Dlg](dlg: Class[T]):Unit
-    def backTo() :Unit
+    def inTo[T <: _Dlg](dlg: Class[T]|String):Unit
 
-    def goSub[T <: _Dlg](dlg: Class[T]):Unit
+    /**
+     * returns to the most recent dialog of the sub-stack
+     * if the stack is empty "Unknow" becomes the active dialog and a warning is logged
+     */
     def leave():Unit
 
     /**
@@ -165,9 +193,14 @@ object Interfaces {
    * collection of controls
    */
   trait Dlg extends Obj:
+    /**
+     * Helper to create default Txt
+     * @param id unique id of this control if defined, default is "" which means no id
+     * @return
+     */
     def TXT(id:String=""):Txt
     def BTN(id:String=""):Btn
-    def SUB(id:String=""):SubBtn
+    def SUB(id:String=""):InToBtn
     def RET(id:String=""):RetBtn
     def NXT(id:String=""):NextBtn
     def BAK(id:String=""):BackBtn
@@ -217,52 +250,56 @@ object Interfaces {
    */
   trait Btn extends Action
 
+  /**
+   * marker interface to define the behavior of actions   
+   */
   trait Marker
   /**
-   * navigate to the next dialog
+   * this control navigates to the next dialog
    */
   @TBD
   trait IsNext extends Marker
 
   /**
-   * navigat eto the previous dialog
+   * this control navigates to the previous dialog
    */
   @BackTo
   trait IsBack extends Marker
 
   /**
-   * invoke a sub-dialog.
+   * this control invokes a sub-dialog (gosub).
    * Cancel, Ok, Finish usually return to the current dialog
    */
   @TBD
-  trait IsSub extends Marker
+  trait IsInTo extends Marker
 
   /**
-   * return to the dialog that has called this dialog with a Sub-Acction
+   * this control leaves the sub dialog that has called this dialog by a sub-action (return).
    */
 
   @Return
   trait IsRet extends Marker
 
   /**
-   *
+   * a button that navigates to the next dialog, annotated with IsNext 
    */
 
   trait NextBtn extends Btn with IsNext
 
   /**
-   * a button that navigates to the previous dialog, annotated with Back
+   * a button that navigates to the previous dialog, annotated with IsBack
    */
   trait BackBtn extends Btn with IsBack
 
   /**
-   * a button that navigates to the previous dialog, annotated with Back
+   * a button that invoke a child dialog, annotated with IsSub
+   */
+  trait InToBtn extends Btn with IsInTo
+
+  /**
+   * a button that return to the parent dialog, annotated with IsRet 
    */
   trait RetBtn extends Btn with IsRet
 
-  /**
-   *
-   */
-  trait SubBtn extends Btn with IsSub
 
 }
