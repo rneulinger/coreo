@@ -39,7 +39,7 @@ trait _Obj extends Interfaces.Obj {
 }
 /** Application, a bunch of dialogs */
 abstract class _App extends App with _Obj:
-unify  /**
+  /**
    * stack for goTo / goBack
    */
   private final val goHistory = scala.collection.mutable.Stack[_Dlg]()
