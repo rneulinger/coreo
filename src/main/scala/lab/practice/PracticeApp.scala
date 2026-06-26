@@ -32,11 +32,11 @@ object PracticeApp:
     val app=PracticeApp()
     println( app.myObjs)
     println(app.Inputs.myObjs)
-    println(app.Inputs.dataMembers)
-    println(app.Inputs.actionMembers)
-    println(app.BmiCalculator.ctrlMembers)
+    println(app.Inputs.allDatas)
+    println(app.Inputs.allActions)
+    println(app.BmiCalculator.allCtrls)
     println(app.Inputs.InputDate.myObjs)
-    println( app.dlgMembers)
+    println( app.allDlgs)
 
     println( "-"*10)
 
@@ -52,6 +52,6 @@ object PracticeApp:
     println(app.Person.Ok.classAnnotations.toList)
     println(app.Person.annotationsForObj(app.Person.Ok))
 
-    println( app.dlgMembers)
+    println( app.allDlgs)
 
   }

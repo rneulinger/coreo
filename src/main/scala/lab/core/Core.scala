@@ -5,7 +5,9 @@ import lab.core.Interfaces.*
 import lab.utils.collectMembersOfType
 
 import java.lang.annotation.Annotation
+import scala.collection.mutable
 import scala.language.postfixOps
+import scala.collection.mutable.Stack
 
 /** Language for code generation. C#, Python...
  * default is C# */
@@ -40,24 +42,26 @@ trait _Obj extends Interfaces.Obj {
 /** Application, a bunch of dialogs */
 abstract class _App extends App with _Obj:
   /**
-   * stack for goTo / goBack
+   * stack for goTo / goBack.
+   * the stack is populated on got with the active dialog when it has a goto annotation
    */
-  private final val goHistory = scala.collection.mutable.Stack[_Dlg]()
-  /**
-   * stack for nextTo / backTo
-   */
-  private final val toHistory = scala.collection.mutable.Stack[_Dlg]()
+  private final val goHistory = mutable.Stack[_Dlg]()
   /**
    * stack for inTo / leave
    */
-  private final val inHistory = scala.collection.mutable.Stack[_Dlg]()
+  private final val inHistory = mutable.Stack[(_Dlg, mutable.Stack[Dlg])]()
 
-  final def dlgMembers = collectMembersOfType(this, classOf[_Dlg])
-  final def gotoMembers = dlgMembers
+  /**
+   * stack for nextTo / backTo
+   */
+  private final val toHistory = mutable.Stack[_Dlg]()
 
-  final def findDialogs[T <: _Dlg](dlg: Class[T] | String): List[Dlg] = ???
+  final def allDlgs = collectMembersOfType(this, classOf[_Dlg])
+  final def gotoMembers = ???
 
-  final def findDialog[T <: _Dlg](dlg: Class[T] | String): Dlg = ???
+  final def findDlgs[T <: _Dlg](dlg: Class[T] | String): List[Dlg] = ???
+
+  final def findDlg[T <: _Dlg](dlg: Class[T] | String): Dlg = ???
 
   final def goTo[T <: _Dlg](dlg:Class[T]|String="/") = ???
   final def goBack() = ???
@@ -97,11 +101,11 @@ trait _Dlg(using app: _App) extends Dlg with _Obj:
 
   override def parentAnnotations: List[Annotation] = app.annotationsForObj(this);
 
-  def ctrlMembers = collectMembersOfType(this, classOf[_Ctrl])
+  def allCtrls = collectMembersOfType(this, classOf[_Ctrl])
 
-  def dataMembers = collectMembersOfType(this, classOf[_Data])
+  def allDatas = collectMembersOfType(this, classOf[_Data])
 
-  def actionMembers = collectMembersOfType(this, classOf[_Action])
+  def allActions = collectMembersOfType(this, classOf[_Action])
 
   def notify(ctrl: _Ctrl): Unit = {}
 

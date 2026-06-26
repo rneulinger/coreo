@@ -40,8 +40,8 @@ class MyAppPw extends App:
 @main
 def startApp() = {
   val app = MyAppPw()
-  println(app.dlgMembers.distinct)
-  println(app.myDialog.ctrlMembers.distinct)
+  println(app.allDlgs.distinct)
+  println(app.myDialog.allCtrls.distinct)
   val b = app.myDialog.Next.click()
 
   app.myDialog.use: x =>

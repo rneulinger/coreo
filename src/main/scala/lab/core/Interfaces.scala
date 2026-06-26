@@ -112,7 +112,7 @@ object Interfaces {
      * @return all dialogs of this application
      */
 
-    def dlgMembers:List[(String, Dlg)]
+    def allDlgs:List[(String, Dlg)]
 
     /**
      *
@@ -130,7 +130,7 @@ object Interfaces {
      * @tparam T type of dialog
      * @return
      */
-    def findDialogs[T <: _Dlg](dlg: Class[T] | String):List[Dlg]
+    def findDlgs[T <: _Dlg](dlg: Class[T] | String):List[Dlg]
 
     /**
      * find the unique dialog that matches the given parameter
@@ -140,7 +140,7 @@ object Interfaces {
      * @throws exeption if NOT unique OR NOT found
      * @see findDialogs
      */
-    def findDialog[T <: _Dlg](dlg: Class[T] | String):Dlg
+    def findDlg[T <: _Dlg](dlg: Class[T] | String):Dlg
     /**
      * navigates directly to a dialog.
      * the dialog must have a goto-annotation
@@ -169,8 +169,9 @@ object Interfaces {
 
     /**
      * the given dialog becomes the active one, without navigation.
-     * the active dialog can be restored with leave.*
-     * if the new dialog does not have a control of type RET a warning is logge
+     * the active dialog can be restored with leave.
+     * the current next-stack is saved and a fresh one is created
+     * if the new dialog does not have a control of type RET a warning is logged
      * @param dlg
      * @tparam T
      */
@@ -179,6 +180,7 @@ object Interfaces {
     /**
      * returns to the most recent dialog of the sub-stack
      * if the stack is empty "Unknow" becomes the active dialog and a warning is logged
+     * the current next-stack is dropped and the previously save is restored (like return)
      */
     def leave():Unit
 
@@ -209,19 +211,19 @@ object Interfaces {
      * all controls of this dialog
      * @return
      */
-    def ctrlMembers:List[(String, Ctrl)]
+    def allCtrls:List[(String, Ctrl)]
 
     /**
      * all data controls
      * @return
      */
-    def dataMembers: List[(String, Data)]
+    def allDatas: List[(String, Data)]
 
     /**
      * all action controls
      * @return
      */
-    def actionMembers: List[(String, Action)]
+    def allActions: List[(String, Action)]
 
   /**
    * base for all controls.
