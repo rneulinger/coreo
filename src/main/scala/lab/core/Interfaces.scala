@@ -316,7 +316,14 @@ object Interfaces {
     def debug( any: Any):Unit
   }
 
-  trait Log extends CanLog {
+  trait LogDelegate(val dest: CanLog) extends CanLog {
+    def fatal( any: Any):Unit = dest.fatal(any)
+    def error( any: Any):Unit = dest.error(any)
+    def warn( any: Any):Unit = dest.warn(any)
+    def info(any: Any): Unit = dest.info(any)
+    def debug( any: Any):Unit = dest.debug(any)
+  }
+  trait LogImpl extends CanLog {
     def impl(any:Any):Unit = println(any)
     def fatal( any: Any):Unit = impl(s"fatal: $any")
     def error( any: Any):Unit = impl(s"error: $any")
