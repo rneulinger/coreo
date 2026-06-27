@@ -10,13 +10,16 @@ repositories {
 
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25) // or 21
+    }
 }
 
 dependencies {
     // Scala 3 Standardbibliothek
-    implementation("org.scala-lang:scala3-library_3:3.7.4")
+    implementation("org.scala-lang:scala3-library_3:3.8.4")
     implementation("com.microsoft.playwright:playwright:1.60.0")
 
     testImplementation("io.cucumber:cucumber-java8:7.34.3")
