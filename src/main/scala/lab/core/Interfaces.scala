@@ -316,7 +316,7 @@ object Interfaces {
     def debug( any: Any):Unit
   }
 
-  trait Log {
+  trait Log extends CanLog {
     def impl(any:Any):Unit = println(any)
     def fatal( any: Any):Unit = impl(s"fatal: $any")
     def error( any: Any):Unit = impl(s"error: $any")
