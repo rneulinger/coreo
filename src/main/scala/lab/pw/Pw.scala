@@ -1,5 +1,6 @@
 package lab.pw
 
+import com.microsoft.playwright.*
 import com.microsoft.playwright.options.AriaRole
 import com.microsoft.playwright.{Locator, Page}
 import coreo.TBD
@@ -9,8 +10,43 @@ import lab.utils.*
 type Loc = Page => Locator
 type Adp = Ctrl => Loc
 
-class App extends _App:
+/**
+ * base for all apps using playwright
+ * @param baseUrl of the page
+ *                default "" for testing purposes
+ */
+class App(val baseUrl : String="") extends _App:
   final val Unknown = new Dlg(using this){}
+  lazy val playwright: Playwright = Playwright.create()
+
+  lazy val bOpts = new BrowserType.LaunchOptions().setHeadless(false)
+
+  lazy val browser: Browser = playwright
+    .chromium()
+    .launch(bOpts)
+
+  lazy val cOpts: Browser.NewContextOptions = new Browser.NewContextOptions()
+    .setIgnoreHTTPSErrors(true)
+
+  lazy val context: BrowserContext = browser.newContext(cOpts) // HTTPS-Fehler ignorieren
+
+  lazy val pg: Page = {
+    val tmp = context.newPage()
+    tmp.navigate(baseUrl)
+    tmp
+  }
+
+  override def goTo[T <: _Dlg](dlg: Class[T] | String = "/"): Unit = {
+    dlg match {
+      case url: String => pg.navigate(baseUrl + url)
+      //case dlg :Dlg =>
+    }
+  }
+
+  def pause() = {
+    pg.pause()
+  }
+
 
 // playwright
 class Dlg(using app: App) extends _Dlg:

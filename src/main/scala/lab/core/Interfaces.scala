@@ -245,7 +245,12 @@ object Interfaces {
   /**
    * base for all action related controls
    */
-  trait Action extends Ctrl
+  trait Action extends Ctrl:
+    /**
+     * force to define the destination of an action.
+     * if set it overrides annotations. often used in conjunction with TBD annotation
+     */
+    var dest:Option[Dlg] = None
 
   /**
    * a normal button, that fires some internal aktion, but not leeaving the page

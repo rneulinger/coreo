@@ -63,11 +63,11 @@ abstract class _App extends App with _Obj:
 
   final def findDlg[T <: _Dlg](dlg: Class[T] | String): Dlg = ???
 
-  final def goTo[T <: _Dlg](dlg:Class[T]|String="/") = ???
+  def goTo[T <: _Dlg](dlg:Class[T]|String="/") = ???
   final def goBack() = ???
-  final def nextTo[T <: _Dlg](dlg: Class[T]|String) = ???
+  def nextTo[T <: _Dlg](dlg: Class[T]|String) = ???
   final def backTo() = ???
-  final def inTo[T <: _Dlg](dlg: Class[T]|String) = ???
+  def inTo[T <: _Dlg](dlg: Class[T]|String) = ???
   final def leave() = ???
   def Unknown:_Dlg
   def activeDlg:_Dlg = act
@@ -145,37 +145,7 @@ trait _Data extends _Ctrl  with Data
 
 trait _Txt extends _Data with Txt
 
-trait _Action extends _Ctrl with Action:
-  private var target: Option[_Dlg] = None
-
-  def resetTarget(): Unit = target = None
-
-  def setTarget(dlg: _Dlg): Unit = target = Some(dlg)
-
-  def getTarget: Option[_Dlg] = {
-    if( target.isDefined )  {
-      target
-    } else {
-//      val returnOpt =
-//        getClass.getAnnotations
-//          .collectFirst { case a: Ret => a }
-//
-//      println(returnOpt) // Some("hello")
-//
-//      val overloadOpt =
-//        getClass.getAnnotations
-//          .collectFirst { case a: Tbd => a }
-//
-//      println(overloadOpt) // Some("hello")
-//
-//      val onTOOpt =
-//        getClass.getAnnotations
-//          .collectFirst { case a: To => a }
-//
-//      println(onTOOpt.map(_.dest)) // Some("hello")
-      None
-    }
-  }
+trait _Action extends _Ctrl with Action
 
 trait _Btn extends _Action with Btn
 

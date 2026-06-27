@@ -3,7 +3,7 @@ package lab.practice
 import lab.pw.*
 import lab.utils
 
-class PracticeApp extends App:// ("https://practice.expandtesting.com/") {
+class PracticeApp extends App("https://practice.expandtesting.com/"):// ("https://practice.expandtesting.com/") {
   //override def nameOfApp = "Practice"
 
   //override def predefBaseUrls = Map("Local" -> baseUrl)
@@ -26,6 +26,15 @@ object PracticeApp:
     val app = new PracticeApp()
     app.validate()
     app
+  }
+
+  @main
+  def ui()={
+    val app=PracticeApp()
+    app.goTo("examples")
+    app.goTo("cars")
+    app.goTo("bmi")
+    app.pause()
   }
   @main
   def main()={
@@ -51,6 +60,8 @@ object PracticeApp:
     println(app.Person.Cancel.parentAnnotations)
     println(app.Person.Ok.classAnnotations.toList)
     println(app.Person.annotationsForObj(app.Person.Ok))
+
+    var dlg = app.Person.Cancel.dest.isEmpty
 
     println( app.allDlgs)
 
