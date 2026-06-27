@@ -34,7 +34,7 @@ object PracticeApp:
     app.goTo("examples")
     app.goTo("cars")
     app.goTo("bmi")
-    app.pause()
+    //app.pause()
   }
   @main
   def main()={
