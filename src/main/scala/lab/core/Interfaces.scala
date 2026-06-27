@@ -9,7 +9,7 @@ import lab.utils.collectMembersOfType
 /**
  * public interface for important objects within the problem domain
  */
-object Interfaces {
+object Interfaces:
 
   /**
    * common base for all elements of an application.
@@ -308,27 +308,48 @@ object Interfaces {
    */
   trait RetBtn extends Btn with IsRet
 
-  trait CanLog {
+  trait Logging:
+    def report(any:Any):Unit
+    def audit(any: Any):Unit
     def fatal( any: Any):Unit
     def error( any: Any):Unit
     def warn( any: Any):Unit
     def info(any: Any): Unit
     def debug( any: Any):Unit
-  }
+    def trace( any: Any):Unit
+  end Logging
 
-  trait LogDelegate(val dest: CanLog) extends CanLog {
-    def fatal( any: Any):Unit = dest.fatal(any)
-    def error( any: Any):Unit = dest.error(any)
-    def warn( any: Any):Unit = dest.warn(any)
-    def info(any: Any): Unit = dest.info(any)
-    def debug( any: Any):Unit = dest.debug(any)
-  }
-  trait LogImpl extends CanLog {
+
+  trait LogDelegate extends Logging:
+    def logger:Logging
+    final def report(any: Any):Unit = logger.report(any)
+    final def audit(any: Any):Unit = logger.audit(any)
+    final def fatal( any: Any):Unit = logger.fatal(any)
+    final def error( any: Any):Unit = logger.error(any)
+    final def warn( any: Any):Unit = logger.warn(any)
+    final def info(any: Any): Unit = logger.info(any)
+    final def debug( any: Any):Unit = logger.debug(any)
+    final def trace( any: Any):Unit = logger.trace(any)
+  end LogDelegate
+
+
+  /**
+   * an extremely simple logger that writes to the console
+   */
+  trait LogSimple extends Logging:
     def impl(any:Any):Unit = println(any)
+    def report(any: Any):Unit = impl(any)
+
+    /**
+     * log regardless of any level
+     * @param any
+     */
+    def audit(any: Any):Unit = impl(s"audit: $any")
     def fatal( any: Any):Unit = impl(s"fatal: $any")
     def error( any: Any):Unit = impl(s"error: $any")
     def warn( any: Any):Unit = impl(s"warn: $any")
     def info(any: Any): Unit = impl(s"info: $any")
     def debug( any: Any):Unit = impl(s"debug: $any")
-  }
-}
+    def trace( any: Any):Unit = impl(s"trace: $any")
+  end LogSimple
+
