@@ -26,7 +26,7 @@ enum Prop:
   case Present
   case Absent
 
-trait _Obj extends Interfaces.Obj {
+trait _Obj extends Interfaces.Obj with Logging {
 
 //  final def GoAnnotations()= getClass.getAnnotations.collect { case a: Ui => a.value }
 //  final def ToAnnotations() = getClass.getAnnotations.collect { case a: To => a.dest }
@@ -40,7 +40,7 @@ trait _Obj extends Interfaces.Obj {
   }
 }
 /** Application, a bunch of dialogs */
-abstract class _App extends App with _Obj:
+abstract class _App extends App with _Obj with LogSimple:
   /**
    * stack for goTo / goBack.
    * the stack is populated on got with the active dialog when it has a goto annotation
@@ -94,11 +94,12 @@ abstract class _App extends App with _Obj:
 
 
 /** a bunch of controls */
-trait _Dlg(using app: _App) extends Dlg with _Obj:
+trait _Dlg(using app: _App) extends Dlg with _Obj with LogDelegate:
   def act = app.act
   final def myApp = app
   final def activeDlg = app.act
 
+  override def logger: Logging = app
   override def parentAnnotations: List[Annotation] = app.annotationsForObj(this);
 
   def allCtrls = collectMembersOfType(this, classOf[_Ctrl])
@@ -122,8 +123,9 @@ trait _Dlg(using app: _App) extends Dlg with _Obj:
   def NXT(id:String=""): _Btn & NextBtn
 
 /** Control within a dialog */
-trait _Ctrl(using dlg: _Dlg, app: _App) extends _Obj with Ctrl :
+trait _Ctrl(using dlg: _Dlg, app: _App) extends _Obj with Ctrl with LogDelegate:
   dlg.notify(this)
+  override def logger: Logging = dlg
 
   override def parentAnnotations: List[Annotation] = dlg.annotationsForObj(this)
 
