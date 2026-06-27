@@ -308,5 +308,20 @@ object Interfaces {
    */
   trait RetBtn extends Btn with IsRet
 
+  trait CanLog {
+    def fatal( any: Any):Unit
+    def error( any: Any):Unit
+    def warn( any: Any):Unit
+    def info(any: Any): Unit
+    def debug( any: Any):Unit
+  }
 
+  trait Log {
+    def impl(any:Any):Unit = println(any)
+    def fatal( any: Any):Unit = impl(s"fatal: $any")
+    def error( any: Any):Unit = impl(s"error: $any")
+    def warn( any: Any):Unit = impl(s"warn: $any")
+    def info(any: Any): Unit = impl(s"info: $any")
+    def debug( any: Any):Unit = impl(s"debug: $any")
+  }
 }
