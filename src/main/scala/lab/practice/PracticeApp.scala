@@ -35,6 +35,9 @@ object PracticeApp:
     app.goTo("cars")
     app.goTo("bmi")
     //app.pause()
+    app.context.close()
+    app.context.browser().close()
+    app.playwright.close()
   }
   @main
   def main()={
