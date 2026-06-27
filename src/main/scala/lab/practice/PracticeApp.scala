@@ -38,6 +38,8 @@ object PracticeApp:
     app.context.close()
     app.context.browser().close()
     app.playwright.close()
+    app.report(1)
+    app.debug("sdfssdf")
   }
   @main
   def main()={
