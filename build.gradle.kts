@@ -17,7 +17,7 @@ java {
 dependencies {
     // Scala 3 Standardbibliothek
     implementation("org.scala-lang:scala3-library_3:3.7.4")
-    implementation("com.microsoft.playwright:playwright:1.53.0")
+    implementation("com.microsoft.playwright:playwright:1.60.0")
 
     testImplementation("io.cucumber:cucumber-java8:7.34.3")
     testImplementation("io.cucumber:cucumber-junit-platform-engine:7.34.3")
