@@ -22,6 +22,7 @@ object Interfaces:
      * @return the application to which the object belongs.
      */
     def myApp:App
+    def instanceName:String
 
     /**
      * @return the currently active dialogue.
@@ -101,12 +102,18 @@ object Interfaces:
     final def tbdAnnotations: List[TBD] = myAnnotations.collect { case a: TBD => a }
     final def retAnnotations: List[Return] = myAnnotations.collect { case a: Return => a }
 
+  trait Can:
+    def click( ctrl:String):Unit
+
+    def set( ctrl: String, value:Any): Unit
+    def expect( ctrl: String, valueOf: Any ) :Unit
+
   /**
    * collection of dialogs.
    * goTo <=> goBack
    *
    */
-  trait App extends Obj:
+  trait App extends Obj with Can:
     /**
      * @return all dialogs of this application
      */
@@ -117,7 +124,7 @@ object Interfaces:
      *
      * @return all dialogs having a Go-annotation
      */
-    def gotoMembers:List[(String, Dlg)]
+    def gotoDlgs:List[(String, Dlg)]
 
     /**
      * find all dialogs matching the given parameter
@@ -130,7 +137,7 @@ object Interfaces:
      * @return
      */
 
-    def findDlgs[T <: Dlg](dlg: Class[T] | String):List[(String,Dlg)]
+    def findDlgs[T <: Dlg](dlg: Class[T] | String | Dlg):List[(String,Dlg)]
 
     /**
      * find the unique dialog that matches the given parameter
@@ -140,7 +147,7 @@ object Interfaces:
      * @throws exeption if NOT unique OR NOT found
      * @see findDialogs
      */
-    def findDlg[T <: Dlg](dlg: Class[T] | String):(String,Dlg)
+    def findDlg[T <: Dlg](dlg: Class[T] | String | Dlg):(String,Dlg)
     /**
      * navigates directly to a dialog.
      * the dialog must have a goto-annotation
@@ -149,7 +156,7 @@ object Interfaces:
      * @param dlg the specified dialog must have an Go annotation
      *
      */
-    def goTo[T <: Dlg](dlg: Class[T] | String = "/"):Unit
+    def goTo[T <: Dlg](dlg: Class[T] | Dlg | String = "/"):Unit
     def goBack():Unit
 
     /**
@@ -194,7 +201,8 @@ object Interfaces:
   /**
    * collection of controls
    */
-  trait Dlg extends Obj:
+  trait Dlg extends Obj with Can:
+    def click( name:String):Unit
     /**
      * Helper to create default Txt
      * @param id unique id of this control if defined, default is "" which means no id
@@ -225,6 +233,9 @@ object Interfaces:
      */
     def allActions: List[(String, Action)]
 
+    def findCtrls[T <: Ctrl](ctrl: Class[T] | Ctrl |String): List[(String, Ctrl)]
+
+    def findCtrl[T <: Ctrl](ctrl: Class[T] | Ctrl| String): (String, Ctrl)
   /**
    * base for all controls.
    */
@@ -234,6 +245,9 @@ object Interfaces:
      * @return
      */
     def myDlg:Dlg
+    def click():Unit
+    def set( value:Any):Unit
+    def expect(value:Any):Unit
 
   /**
    * base for all data related controls. Text, Listbox, Combobox ....

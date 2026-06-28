@@ -16,6 +16,7 @@ type Adp = Ctrl => Loc
  *                default "" for testing purposes
  */
 class App(val baseUrl : String="") extends _App:
+  def instanceName = "PwApp"
   final val Unknown = new Dlg(using this){}
   lazy val playwright: Playwright = Playwright.create()
 
@@ -45,7 +46,7 @@ class App(val baseUrl : String="") extends _App:
 
 // playwright
 class Dlg(using app: App) extends _Dlg:
-
+  
   def wrap(loc: Loc): Adp = _ => loc
 
   def BTN(loc: Loc) = Btn(wrap(loc))(using this)
@@ -73,12 +74,7 @@ class Dlg(using app: App) extends _Dlg:
     else ??? //todo mkTxtById( id)
 
 
-abstract class Ctrl(var loc: Adp)(using dlg: Dlg, app: App) extends _Ctrl:
-  def click() = dlg
-
-  def set(value: Any) = dlg
-
-  def get(): String = ""
+abstract class Ctrl(var loc: Adp)(using dlg: Dlg, app: App) extends _Ctrl
 
 abstract class Data(loc: Adp)(using dlg: Dlg, app: App) extends Ctrl(loc) with _Data
 

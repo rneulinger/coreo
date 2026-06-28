@@ -4,9 +4,7 @@ import lab.pw.*
 import lab.utils
 
 class PracticeApp extends App("https://practice.expandtesting.com/"):// ("https://practice.expandtesting.com/") {
-  //override def nameOfApp = "Practice"
-
-  //override def predefBaseUrls = Map("Local" -> baseUrl)
+  override def instanceName = "PracticePw"
 
   val Inputs = Inputs_()
 
@@ -32,6 +30,7 @@ object PracticeApp:
   def ui()={
     val app=PracticeApp()
     app.goTo( classOf[BmiCalculator_])
+    app.click( "Height" )
     app.goTo("bmi")
     app.goTo("examples")
     app.goTo("cars")
