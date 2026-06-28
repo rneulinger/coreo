@@ -35,14 +35,9 @@ class App(val baseUrl : String="") extends _App:
     tmp.navigate(baseUrl)
     tmp
   }
-
-  override def goTo[T <: _Dlg](dlg: Class[T] | String = "/"): Unit = {
-    dlg match {
-      case url: String => pg.navigate(baseUrl + url)
-      //case dlg :Dlg =>
-    }
-  }
-
+  def navigate(path:String)=
+    pg.navigate(baseUrl+path)
+  
   def pause() = {
     pg.pause()
   }

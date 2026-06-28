@@ -4,7 +4,7 @@ import coreo.GoTo
 import lab.pw.*
 
 // tag::fields[]
-@GoTo("BMI Calculator")
+@GoTo("bmi")
 final class BmiCalculator_(using app: App) extends Dlg:
 
   // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this
@@ -22,6 +22,7 @@ final class BmiCalculator_(using app: App) extends Dlg:
 
   val Clear = BTN()
 
+  val nodlg = "dkfshsdhf"
 
   // end::fields[]
   given dlg: BmiCalculator_ = this

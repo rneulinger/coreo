@@ -52,13 +52,12 @@ object Interfaces:
      * @return
      */
     def myObjs: List[(String, Obj)] = collectMembersOfType(this, classOf[Obj])
-
     /**
      * return the name of the given object if it's a field.
      * @param obj to search for
      * @return unique name or None if obj is not a field
      */
-    def nameOfObj(obj: _Obj): Option[String] = {
+    def nameOfObj(obj: Obj): Option[String] = {
       myObjs.filter(_._2 == obj) match {
         case Nil => None
         case head :: tail => Some(head._1)
@@ -70,7 +69,7 @@ object Interfaces:
      * @param obj
      * @return
      */
-    def annotationsForObj(obj: _Obj): List[Annotation] = {
+    def annotationsForObj(obj: Obj): List[Annotation] = {
       nameOfObj(obj) match{
         case None => Nil
         case Some(name) =>
@@ -130,7 +129,8 @@ object Interfaces:
      * @tparam T type of dialog
      * @return
      */
-    def findDlgs[T <: _Dlg](dlg: Class[T] | String):List[Dlg]
+
+    def findDlgs[T <: Dlg](dlg: Class[T] | String):List[(String,Dlg)]
 
     /**
      * find the unique dialog that matches the given parameter
@@ -140,7 +140,7 @@ object Interfaces:
      * @throws exeption if NOT unique OR NOT found
      * @see findDialogs
      */
-    def findDlg[T <: _Dlg](dlg: Class[T] | String):Dlg
+    def findDlg[T <: Dlg](dlg: Class[T] | String):(String,Dlg)
     /**
      * navigates directly to a dialog.
      * the dialog must have a goto-annotation
@@ -149,7 +149,7 @@ object Interfaces:
      * @param dlg the specified dialog must have an Go annotation
      *
      */
-    def goTo[T <: _Dlg](dlg: Class[T] | String = "/"):Unit
+    def goTo[T <: Dlg](dlg: Class[T] | String = "/"):Unit
     def goBack():Unit
 
     /**
@@ -159,7 +159,7 @@ object Interfaces:
      *
      * @tparam T
      */
-    def nextTo[T <: _Dlg](dlg: Class[T]|String):Unit
+    def nextTo[T <: Dlg](dlg: Class[T]|String):Unit
 
     /**
      * the dialog from the stack becomes the active window
@@ -175,7 +175,7 @@ object Interfaces:
      * @param dlg
      * @tparam T
      */
-    def inTo[T <: _Dlg](dlg: Class[T]|String):Unit
+    def inTo[T <: Dlg](dlg: Class[T]|String):Unit
 
     /**
      * returns to the most recent dialog of the sub-stack
@@ -188,7 +188,7 @@ object Interfaces:
      * the dialog with no elements.
      * @return
      */
-    def Unknown: _Dlg
+    def Unknown: Dlg
 
 
   /**

@@ -56,21 +56,73 @@ abstract class _App extends App with _Obj with LogSimple:
    */
   private final val toHistory = mutable.Stack[_Dlg]()
 
-  final def allDlgs = collectMembersOfType(this, classOf[_Dlg])
+  final def allDlgs:List[(String,Dlg)] = collectMembersOfType(this, classOf[_Dlg])
   final def gotoMembers = ???
 
-  final def findDlgs[T <: _Dlg](dlg: Class[T] | String): List[Dlg] = ???
+  /**
+   * all dialogs of a certain type.
+   * can be usefull to validate
+   * @param dlg
+   * @tparam T
+   * @return
+   */
+  override def findDlgs[T <: Dlg](dlg: Class[T] | String ): List[(String,Dlg)] = {
+    dlg match{
+      case dlg:Class[T] => allDlgs.filter(x => dlg.isInstance(x._2))
+      case str:String => throw NotImplementedError("find dialog by string")
+    }
 
-  final def findDlg[T <: _Dlg](dlg: Class[T] | String): Dlg = ???
+  }
 
-  def goTo[T <: _Dlg](dlg:Class[T]|String="/") = ???
+  /**
+   * find a dialog by its type.
+   * todo search by instance
+   * @param dlg
+   * @tparam T
+   * @return
+   */
+  override final def findDlg[T <: Dlg](dlg: Class[T] | String ): (String,Dlg) = {
+    val hits = findDlgs(dlg)
+    hits match{
+      case head::Nil => head
+      case Nil => throw Exception(s"could not find dialog of type $dlg")
+      case _ => throw Exception(s"multiple dialogs of type $dlg $hits")
+    }
+  }
+
+  def goTo[T <: Dlg](dlg: Class[T] | String = "/"): Unit = {
+
+    dlg match {
+      case url: String =>
+        navigate(url)
+      case dlg: Class[_Dlg] =>
+        val dlgs = myObjs.filter(_._2.isInstanceOf[Dlg])
+        val hits = dlgs.filter(x => dlg.isInstance(x._2))
+        hits.size match {
+          case 1 =>
+            val hit = hits.head
+            val gotos = hit._2.goAnnotations.map(_.value()).distinct
+            if gotos.isEmpty then throw Exception(s"goto annotation missing for ${hits}")
+            if gotos.tail.nonEmpty then throw Exception(s"multiple goto annotation for ${hits} ${gotos}")
+            info(s"goto: ${gotos.head} ${hit._2}")
+            navigate(gotos.head)
+            act = hits.head._2.asInstanceOf[Dlg]
+
+          case 0 => throw new Exception(s"could not find a dialog of type ${dlg} ")
+        }
+    }
+  }
+
+
+  def navigate(path:String):Unit
   final def goBack() = ???
-  def nextTo[T <: _Dlg](dlg: Class[T]|String) = ???
+  def nextTo[T <: Dlg](dlg: Class[T]|String) = ???
   final def backTo() = ???
-  def inTo[T <: _Dlg](dlg: Class[T]|String) = ???
+  def inTo[T <: Dlg](dlg: Class[T]|String) = ???
   final def leave() = ???
   def Unknown:_Dlg
-  def activeDlg:_Dlg = act
+  var act : Dlg = Unknown
+  def activeDlg:_Dlg = act.asInstanceOf[_Dlg]
 
   /**
    * last dialogs -> pushed by to-button, popped by back-button
@@ -85,7 +137,6 @@ abstract class _App extends App with _Obj with LogSimple:
   def push(dlg: Interfaces.Dlg): Unit = ???
 
   def myApp = this
-  def act: _Dlg = ???
 
 
   private def push(dlg: _Dlg): Unit = ???
@@ -95,9 +146,8 @@ abstract class _App extends App with _Obj with LogSimple:
 
 /** a bunch of controls */
 trait _Dlg(using app: _App) extends Dlg with _Obj with LogDelegate:
-  def act = app.act
   final def myApp = app
-  final def activeDlg = app.act
+  final def activeDlg = app.activeDlg
 
   override def logger: Logging = app
   override def parentAnnotations: List[Annotation] = app.annotationsForObj(this);
@@ -129,8 +179,8 @@ trait _Ctrl(using dlg: _Dlg, app: _App) extends _Obj with Ctrl with LogDelegate:
 
   override def parentAnnotations: List[Annotation] = dlg.annotationsForObj(this)
 
-  final def myApp = app
-  final def activeDlg = app.act
+  def myApp = app
+  def activeDlg = app.activeDlg
   final def myDlg = dlg
 
   def click(): _Dlg

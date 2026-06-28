@@ -31,9 +31,10 @@ object PracticeApp:
   @main
   def ui()={
     val app=PracticeApp()
+    app.goTo( classOf[BmiCalculator_])
+    app.goTo("bmi")
     app.goTo("examples")
     app.goTo("cars")
-    app.goTo("bmi")
     //app.pause()
     app.context.close()
     app.context.browser().close()
