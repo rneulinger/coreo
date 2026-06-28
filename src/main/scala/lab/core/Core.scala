@@ -217,15 +217,15 @@ trait _Ctrl(using dlg: _Dlg, app: _App) extends _Obj with Ctrl with LogDelegate:
   final def myDlg = dlg
 
   def click(): Unit = {
-    info(s"click")
+    info(s"$instanceName.click")
   }
 
   def set(value: Any): Unit = {
-    info(s"set $value")
+    info(s"$instanceName.set $value")
   }
 
   def get(): Unit = {
-    info(s"get")
+    info(s"$instanceName.get")
   }
   final def expect( value:Any): Unit = {
     value match{
