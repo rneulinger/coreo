@@ -10,6 +10,7 @@ import lab.utils.*
 type Loc = Page => Locator
 type Adp = Ctrl => Loc
 
+def wrap( loc: Loc ):Adp = (ctrl:Ctrl) => loc
 /**
  * base for all apps using playwright
  * @param baseUrl of the page
@@ -38,15 +39,16 @@ class App(val baseUrl : String="") extends _App:
   }
   def navigate(path:String)=
     pg.navigate(baseUrl+path)
-  
+
   def pause() = {
     pg.pause()
   }
 
 
+
 // playwright
 class Dlg(using app: App) extends _Dlg:
-  
+
   def wrap(loc: Loc): Adp = _ => loc
 
   def BTN(loc: Loc) = Btn(wrap(loc))(using this)
@@ -73,21 +75,61 @@ class Dlg(using app: App) extends _Dlg:
   def TXT(id: String = ""): Txt = if id.isEmpty then Txt(null)(using this)
     else ??? //todo mkTxtById( id)
 
+  def SpinBTN(loc: Loc) = SpinBtn(wrap(loc))(using this)
+  def SpinBTN(id: String = ""): SpinBtn = if id.isEmpty then SpinBtn(null)(using this)
+  else ??? //todo mkTxtById( id)
 
-abstract class Ctrl(var loc: Adp)(using dlg: Dlg, app: App) extends _Ctrl
 
-abstract class Data(loc: Adp)(using dlg: Dlg, app: App) extends Ctrl(loc) with _Data
+/**
+ *
+ * @param adp
+ * @param dlg
+ * @param app
+ */
+abstract class Ctrl(var adp: Adp)(using dlg: Dlg, app: App) extends _Ctrl:
+  def ariaRole:AriaRole
+  if adp == null then adp = wrap(_.getByRole(ariaRole))
 
-abstract class Action(loc: Adp)(using dlg: Dlg, app: App) extends Ctrl(loc) with _Action
+  final def locs = adp(this)(app.pg)
+  final def loc = locs.nth(idx)
 
-class Txt(loc: Adp)(using dlg: Dlg, app: App) extends Data(loc) with _Txt
+  override def clickImpl() = {
+    loc.click()
+  }
+
+  override def setImpl(value:Any) = {
+    println(loc)
+    loc.fill(value.toString)
+    loc.press("Tab")
+  }
+
+abstract class Data(adp: Adp)(using dlg: Dlg, app: App) extends Ctrl(adp) with _Data
+
+abstract class Action(adp: Adp)(using dlg: Dlg, app: App) extends Ctrl(adp) with _Action
+
+class Txt(adp: Adp)(using dlg: Dlg, app: App) extends Data(adp) with _Txt {
+  def ariaRole = AriaRole.TEXTBOX
+}
+
+class SpinBtn(adp: Adp)(using dlg: Dlg, app: App) extends Data(adp) with _SpinBtn {
+  def ariaRole = AriaRole.SPINBUTTON
+  override def setImpl(value:Any) = {
+    val l =  loc
+    println(l)
+    l.fill(value.toString)
+    l.press("Tab")
+  }
+}
+
 
 @TBD
-class Btn(loc: Adp)(using dlg: Dlg, app: App) extends Action(loc) with _Btn
-class InToBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _InToBtn
-class RetBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _RetBtn
-class BackBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _BackBtn
-class NextBtn(loc: Adp)(using dlg: Dlg, app: App) extends Btn(loc) with _NextBtn
+class Btn(adp: Adp)(using dlg: Dlg, app: App) extends Action(adp) with _Btn:
+  def ariaRole = AriaRole.BUTTON
+
+class InToBtn(adp: Adp)(using dlg: Dlg, app: App) extends Btn(adp) with _InToBtn
+class RetBtn(adp: Adp)(using dlg: Dlg, app: App) extends Btn(adp) with _RetBtn
+class BackBtn(adp: Adp)(using dlg: Dlg, app: App) extends Btn(adp) with _BackBtn
+class NextBtn(adp: Adp)(using dlg: Dlg, app: App) extends Btn(adp) with _NextBtn
 
 trait MixIn(using app: App) extends _MixIn:
   self: Dlg =>

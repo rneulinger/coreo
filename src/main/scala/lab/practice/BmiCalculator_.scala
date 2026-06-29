@@ -2,7 +2,8 @@ package lab.practice
 
 import coreo.GoTo
 import lab.pw.*
-
+import com.microsoft.playwright.options.AriaRole
+import com.microsoft.playwright.*
 // tag::fields[]
 @GoTo("bmi")
 final class BmiCalculator_(using app: App) extends Dlg:
@@ -14,13 +15,13 @@ final class BmiCalculator_(using app: App) extends Dlg:
 
   val Age = TXT(_.locator(""))
 
-  val Height = TXT()
+  val Height = SpinBTN(_.getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("Height (cm)")))
 
-  val Weight = TXT()
+  val Weight = SpinBTN(_.getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("Weight (kg)")))
 
-  val Calculate = BTN()
+  val Calculate = BTN(_.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Calculate")))
 
-  val Clear = BTN()
+  val Clear = BTN(_.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Clear")))
 
   val nodlg = "dkfshsdhf"
 

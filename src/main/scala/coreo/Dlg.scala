@@ -132,6 +132,8 @@ abstract class Dlg(using val myApp: App)
 
   def TXT(func: Page => Locator = null, idx: Int = 0): Txt[?] = ???
 
+  def SpinBTN(func: Page => Locator = null, idx: Int = 0): Txt[?] = ???
+  
   def CBX(func: Page => Locator = null, idx: Int = 0): Cbx[?] = ???
 
   def TAB(func: Page => Locator = null, idx: Int = 0): Tab[?] = ???

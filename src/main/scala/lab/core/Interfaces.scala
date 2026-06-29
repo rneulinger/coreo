@@ -104,7 +104,6 @@ object Interfaces:
 
   trait Can:
     def click( ctrl:String):Unit
-
     def set( ctrl: String, value:Any): Unit
     def expect( ctrl: String, valueOf: Any ) :Unit
 
@@ -214,6 +213,7 @@ object Interfaces:
     def RET(id:String=""):RetBtn
     def NXT(id:String=""):NextBtn
     def BAK(id:String=""):BackBtn
+    def SpinBTN(id:String=""):SpinBtn
 
     /**
      * all controls of this dialog
@@ -240,6 +240,7 @@ object Interfaces:
    * base for all controls.
    */
   trait Ctrl extends Obj:
+    var idx = 0
     /**
      * every control belong to exactly one dialog
      * @return
@@ -255,7 +256,7 @@ object Interfaces:
   trait Data extends Ctrl
 
   trait Txt extends Data
-
+  trait SpinBtn extends Data
   /**
    * base for all action related controls
    */

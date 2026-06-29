@@ -153,11 +153,9 @@ trait _Dlg(using app: _App) extends Dlg with _Obj with LogDelegate:
   }
   final def activeDlg = app.activeDlg
 
-  final override def click(ctrl: String): Unit = {
-    findCtrl(ctrl)._2.click()
-  }
-  final override def set(ctrl: String, value:Any): Unit = activeDlg.set(ctrl, value)
-  final override def expect(ctrl: String, value:Any): Unit = activeDlg.expect(ctrl, value)
+  final override def click(ctrl: String): Unit = findCtrl(ctrl)._2.click()
+  final override def set(ctrl: String, value:Any): Unit = findCtrl(ctrl)._2.set(value)
+  final override def expect(ctrl: String, value:Any): Unit = findCtrl(ctrl)._2.expect(value)
 
   override def logger: Logging = app
   override def parentAnnotations: List[Annotation] = app.annotationsForObj(this);
@@ -189,6 +187,8 @@ trait _Dlg(using app: _App) extends Dlg with _Obj with LogDelegate:
 
   def TXT(id: String = ""): _Txt
 
+  def SpinBTN(id: String = ""): _SpinBtn
+  
   def BTN(id:String=""): _Btn
 
   def RET(id:String=""): _Btn & RetBtn
@@ -216,12 +216,16 @@ trait _Ctrl(using dlg: _Dlg, app: _App) extends _Obj with Ctrl with LogDelegate:
   def activeDlg = app.activeDlg
   final def myDlg = dlg
 
+  protected def clickImpl():Unit
   def click(): Unit = {
     info(s"$instanceName.click")
+    clickImpl()
   }
 
+  protected def setImpl(value: Any):Unit
   def set(value: Any): Unit = {
     info(s"$instanceName.set $value")
+    setImpl(value)
   }
 
   def get(): Unit = {
@@ -239,6 +243,8 @@ trait _Ctrl(using dlg: _Dlg, app: _App) extends _Obj with Ctrl with LogDelegate:
 trait _Data extends _Ctrl  with Data
 
 trait _Txt extends _Data with Txt
+
+trait _SpinBtn extends _Data with SpinBtn
 
 trait _Action extends _Ctrl with Action
 
