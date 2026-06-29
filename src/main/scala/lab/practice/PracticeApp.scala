@@ -33,16 +33,12 @@ object PracticeApp:
   def ui()={
     val app=PracticeApp()
     app.goTo( classOf[BmiCalculator_])
-    java(app.pg)
-    //app.goTo( classOf[Inputs_])
-    //app.set( "InputNumber", "22")
     app.click( "Height" )
-    //app.pause()
     app.click( "Weight" )
-    app.set( "Height", "188")
-    //app.set( "Weight", "90")
-    app.click( "Clear")
+    app.set( "Height", "196")
+    app.set( "Weight", "92")
     app.click( "Calculate" )
+    app.click( "Clear")
 //    app.goTo("bmi")
 //    app.goTo("examples")
 //    app.goTo("cars")
@@ -81,17 +77,4 @@ object PracticeApp:
     var dlg = app.Person.Cancel.dest.isEmpty
 
     println(app.allDlgs)
-  }
-
-  def java(page:Page) = {
-      page.navigate("https://practice.expandtesting.com/bmi");
-      var loc = page.getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("Height (cm)"))
-      println( loc )
-      loc.click()
-      loc = page.getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("Height (cm)"))
-      println( loc )
-      loc.fill("200")
-      loc = page.getByRole(AriaRole.SPINBUTTON, new Page.GetByRoleOptions().setName("Height (cm)"))
-      println (loc )
-      loc.press("Tab");
   }
