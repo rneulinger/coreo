@@ -93,33 +93,28 @@ abstract class Ctrl(var adp: Adp)(using dlg: Dlg, app: App) extends _Ctrl:
   final def locs = adp(this)(app.pg)
   final def loc = locs.nth(idx)
 
-  override def clickImpl() = {
-    loc.click()
-  }
+  override def clickImpl() = loc.click()
 
-  override def setImpl(value:Any) = {
-    println(loc)
+  override def getImpl():Any = ???
+
+  override def setImpl(value:Any) =
     loc.fill(value.toString)
     loc.press("Tab")
-  }
 
 abstract class Data(adp: Adp)(using dlg: Dlg, app: App) extends Ctrl(adp) with _Data
 
 abstract class Action(adp: Adp)(using dlg: Dlg, app: App) extends Ctrl(adp) with _Action
 
-class Txt(adp: Adp)(using dlg: Dlg, app: App) extends Data(adp) with _Txt {
+class Txt(adp: Adp)(using dlg: Dlg, app: App) extends Data(adp) with _Txt:
   def ariaRole = AriaRole.TEXTBOX
-}
 
-class SpinBtn(adp: Adp)(using dlg: Dlg, app: App) extends Data(adp) with _SpinBtn {
+class SpinBtn(adp: Adp)(using dlg: Dlg, app: App) extends Data(adp) with _SpinBtn:
   def ariaRole = AriaRole.SPINBUTTON
-  override def setImpl(value:Any) = {
-    val l =  loc
-    println(l)
-    l.fill(value.toString)
-    l.press("Tab")
-  }
-}
+  override def setImpl(value:Any) =
+    loc.fill(value.toString)
+    loc.press("Tab")
+
+
 
 
 @TBD

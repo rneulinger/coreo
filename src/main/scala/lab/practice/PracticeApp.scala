@@ -38,6 +38,7 @@ object PracticeApp:
     app.set( "Height", "196")
     app.set( "Weight", "92")
     app.click( "Calculate" )
+//    app.pause()
     app.click( "Clear")
 //    app.goTo("bmi")
 //    app.goTo("examples")

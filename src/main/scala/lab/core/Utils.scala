@@ -1,5 +1,6 @@
 package lab.core
 
+import java.util.regex.Pattern
 class Utils {
 
 }
@@ -63,5 +64,56 @@ object ReflectUtils {
   /** Convenience: only instance (non-static) fields */
   def allInstanceFields(clazz: Class[?]): Seq[Field] =
     allDeclaredFields(clazz).filterNot(f => Modifier.isStatic(f.getModifiers))
+
+
+  private val boundaries =
+    """(?<=[\p{Ll}\p{Nd}])(?=\p{Lu})|(?<=\p{Lu})(?=\p{Lu}\p{Ll})""".r
+
+  def splitIdentifier(s: String): List[String] =
+    s.split("[_-]+")
+      .iterator
+      .flatMap(part => boundaries.split(part))
+      .filter(_.nonEmpty)
+      .toList
+
+  /**
+   * @param s
+   * @param additionalChars
+   * @return
+   */
+  def normalizeSeparators(s: String, additionalChars: String): String =
+    val chars = Pattern.quote(additionalChars)
+    s.replaceAll(s"[\\s$chars]+", " ").trim
+
+
+  def normalizeSeparatorsSave(s: String, additionalChars: String): String =
+    val pattern =
+      s"[\\s${Pattern.quote(additionalChars).stripPrefix("\\Q").stripSuffix("\\E")}]+"
+
+    s.replaceAll(pattern, " ").trim
+
+  @main
+  def splitIdentifierTest()={
+
+    val examples = Seq(
+      "camelCase",
+      "PascalCase",
+      "snake_case",
+      "kebab-case",
+      "XMLParser",
+      "HTTPRequestHandler",
+      "ÄpfelSindLecker",
+      "StraßenName",
+      "ПриветМир",
+      "ΚαλημέραΚόσμε",
+      "HTTP jjj",
+      "  HTTP jjj  ",
+    )
+
+    examples.foreach { s =>
+      println(s"$s -> ${splitIdentifier(s)}")
+    }
+
+  }
 }
 

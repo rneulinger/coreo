@@ -26,7 +26,7 @@ enum Prop:
   case Present
   case Absent
 
-trait _Obj extends Interfaces.Obj with Logging {
+trait _Obj extends Interfaces.Obj with Logging:
 
 //  final def GoAnnotations()= getClass.getAnnotations.collect { case a: Ui => a.value }
 //  final def ToAnnotations() = getClass.getAnnotations.collect { case a: To => a.dest }
@@ -38,7 +38,7 @@ trait _Obj extends Interfaces.Obj with Logging {
   def validate() = {
     // todo implement validations
   }
-}
+
 /** Application, a bunch of dialogs */
 abstract class _App extends App with _Obj with LogSimple:
   final override def click(ctrl: String): Unit = activeDlg.click(ctrl)
@@ -69,14 +69,11 @@ abstract class _App extends App with _Obj with LogSimple:
    * @tparam T
    * @return
    */
-  override def findDlgs[T <: Dlg](dlg: Class[T] | String | Dlg): List[(String,Dlg)] = {
-    dlg match{
+  override def findDlgs[T <: Dlg](dlg: Class[T] | String | Dlg): List[(String,Dlg)] =
+    dlg match
       case d:Class[T] => allDlgs.filter(x => d.isInstance(x._2))
       case d:Dlg => allDlgs.filter(x => d == x._2)
       case str:String => throw NotImplementedError("find dialog by string")
-    }
-
-  }
 
   /**
    * find a dialog by its type.
@@ -85,21 +82,18 @@ abstract class _App extends App with _Obj with LogSimple:
    * @tparam T
    * @return
    */
-  override final def findDlg[T <: Dlg](dlg: Class[T] | String | Dlg ): (String,Dlg) = {
+  override final def findDlg[T <: Dlg](dlg: Class[T] | String | Dlg ): (String,Dlg) =
     val hits = findDlgs(dlg)
-    hits match{
+    hits match
       case head::Nil => head
       case Nil => throw Exception(s"could not find dialog of type $dlg")
       case _ => throw Exception(s"multiple dialogs of type $dlg $hits")
-    }
-  }
 
-  override final def goTo[T <: Dlg](dlg: Class[T] | Dlg | String = "/"): Unit = {
+  override final def goTo[T <: Dlg](dlg: Class[T] | Dlg | String = "/"): Unit =
     dlg match {
       case url: String =>
         val gotos = gotoDlgs
-        // todo try to find dialog
-        act = Unknown
+        act = Unknown // todo try to find dialog
         navigate(url)
 
       case dlg: Class[Dlg] =>
@@ -111,7 +105,6 @@ abstract class _App extends App with _Obj with LogSimple:
         navigate(gotos.head)
         act = hit._2
     }
-  }
 
   def navigate(path:String):Unit
   final def goBack() = ???
@@ -146,11 +139,11 @@ abstract class _App extends App with _Obj with LogSimple:
 /** a bunch of controls */
 trait _Dlg(using app: _App) extends Dlg with _Obj with LogDelegate:
   final def myApp = app
-  final def instanceName = {
+  final def instanceName =
     def hits = app.findDlgs(this)
     if hits.isEmpty then ""
     else hits.head._1
-  }
+
   final def activeDlg = app.activeDlg
 
   final override def click(ctrl: String): Unit = findCtrl(ctrl)._2.click()
@@ -166,22 +159,18 @@ trait _Dlg(using app: _App) extends Dlg with _Obj with LogDelegate:
 
   def allActions = collectMembersOfType(this, classOf[_Action])
 
-  final override def findCtrls[T <: Ctrl](ctrl: Class[T] | Ctrl | String): List[(String, Ctrl)] = {
-    ctrl match {
+  final override def findCtrls[T <: Ctrl](ctrl: Class[T] | Ctrl | String): List[(String, Ctrl)] =
+    ctrl match
       case c: Class[T] => allCtrls.filter(x => c.isInstance(x._2))
       case str: String => allCtrls.filter(x => x._1 == str)
       case c: Ctrl => allCtrls.filter(x => c == x._2)
-    }
-  }
 
-  final override def findCtrl[T <: Ctrl](ctrl: Class[T] | Ctrl |String ): (String,Ctrl) = {
+  final override def findCtrl[T <: Ctrl](ctrl: Class[T] | Ctrl |String ): (String,Ctrl) =
     val hits = findCtrls(ctrl)
-    hits match{
+    hits match
       case head::Nil => head
       case Nil => throw Exception(s"could not find dialog of type $ctrl")
       case _ => throw Exception(s"multiple dialogs of type $ctrl $hits")
-    }
-  }
 
   def notify(ctrl: _Ctrl): Unit = {}
 
@@ -205,37 +194,35 @@ trait _Ctrl(using dlg: _Dlg, app: _App) extends _Obj with Ctrl with LogDelegate:
   override def logger: Logging = dlg
   override def parentAnnotations: List[Annotation] = dlg.annotationsForObj(this)
 
-  final def instanceName = {
+  final def instanceName =
     def hits = dlg.findCtrls(this)
-
     if hits.isEmpty then ""
     else hits.head._1
-  }
 
   def myApp = app
   def activeDlg = app.activeDlg
   final def myDlg = dlg
 
   protected def clickImpl():Unit
-  def click(): Unit = {
+  def click(): Unit =
     info(s"$instanceName.click")
     clickImpl()
-  }
 
   protected def setImpl(value: Any):Unit
-  def set(value: Any): Unit = {
+  def set(value: Any): Unit =
     info(s"$instanceName.set $value")
     setImpl(value)
-  }
 
-  def get(): Unit = {
+  protected def getImpl():Any
+  def get(): Unit = 
     info(s"$instanceName.get")
-  }
-  final def expect( value:Any): Unit = {
-    value match{
+    getImpl()
+  
+
+  final def expect( value:Any): Unit = 
+    value match
       case prop:Prop => expectOneOf(prop)
-    }
-  }
+    
   def expectOneOf( prop:Prop*): Unit = ???
   def get(prop:Prop):Boolean = ???
 

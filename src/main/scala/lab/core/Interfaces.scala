@@ -39,13 +39,13 @@ object Interfaces:
      * get all annotations defined on class level for this object
      * @return
      */
-    final def classAnnotations:List[Annotation] = {
+    final def classAnnotations:List[Annotation] =
       val anis  = for ( itf <- getClass.getAnnotatedInterfaces ) yield {
         itf.getAnnotations.toList
       }
       //println( "Sup:" + getClass.getAnnotatedSuperclass.toList )
       getClass.getAnnotations.toList ++ anis.flatten
-    }
+
 
     /**
      * returns all fields derived from Obj for this instance
@@ -58,27 +58,25 @@ object Interfaces:
      * @param obj to search for
      * @return unique name or None if obj is not a field
      */
-    def nameOfObj(obj: Obj): Option[String] = {
+    def nameOfObj(obj: Obj): Option[String] =
       myObjs.filter(_._2 == obj) match {
         case Nil => None
         case head :: tail => Some(head._1)
       }
-    }
 
     /**
      *
      * @param obj
      * @return
      */
-    def annotationsForObj(obj: Obj): List[Annotation] = {
-      nameOfObj(obj) match{
+    def annotationsForObj(obj: Obj): List[Annotation] =
+      nameOfObj(obj) match
         case None => Nil
         case Some(name) =>
           val field = this.getClass.getDeclaredField(name)
           field.setAccessible(true)
           field.getAnnotations.toList
-      }
-    }
+
 
     /**
      * return all annotations for this object defined on parent level
