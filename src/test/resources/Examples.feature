@@ -32,4 +32,11 @@ Feature: Examples
     * # two parameters "p1" and "p2" with trailing text + object:
       |table or text|
 
+    * # three parameters "p1" and "p3" no trailing text "p3"
+    * # three parameters "p1" and "p3" no trailing text + object "p3":
+      |table or text|
+
+    * # three parameters "p1" and "p2" and "p3" with trailing text
+    * # three parameters "p1" and "p2" and "p3" with trailing text + object:
+      |table or text|
 

@@ -14,11 +14,12 @@ public class JavaSteps implements En {
     }
     public JavaSteps() {
 
+        // NO PARAMS
         // no parameter
         And("^# ([^\"]*[^:])$", (String t1) -> {
             log(t1);
         });
-        // no parameter and table
+        // no parameter : object
         And("^# ([^\"]+)(?::)$", (String t1, Object o) -> {
             log(t1, o.toString());
         });
@@ -27,7 +28,7 @@ public class JavaSteps implements En {
         And("^# ([^\"]+) \"([^\"]*)\"$", (String t1, String p1) -> {
             log(t1, p1);
         });
-        // one parameter no trailing text and table
+        // one parameter no trailing text : object
         And("^# ([^\"]+) \"([^\"]*)\"(?::)$", (String t1, String p1, Object o) -> {
             log(t1, p1, o);
         });
@@ -36,31 +37,61 @@ public class JavaSteps implements En {
         And("^# ([^\"]+) \"([^\"]*)\" ([^\"]*[^:])$", (String t1, String p1, String t2) -> {
             log(t1, p1, t2);
         });
-        // one parameter with trailing text and table
+        // one parameter with trailing text : object
         And("^# ([^\"]+) \"([^\"]*)\" ([^\"]*)(?::)$", (String t1, String p1, String t2, Object o) -> {
             log(t1, p1, t2, o);
         });
 
-        // two parameters no trailing text
-        And("^# ([^\"]+) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"$", (String t1, String p1, String t2, String p2 ) -> {
+        // TWO PARAMS
+        // two parameters no trailing text 
+        And("^# ([^\"]+) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"$", (String t1, String p1, String t2
+                , String p2 ) -> {
             log(t1, p1, t2, p2);
         });
 
-        // two parameters no trailing text and table
-        And("^# ([^\"]+) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"(?::)$", (String t1, String p1, String t2, String p2, Object o) -> {
+        // two parameters no trailing text : object
+        And("^# ([^\"]+) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"(?::)$", (String t1, String p1, String t2
+                , String p2, Object o) -> {
             log(t1, p1, t2, p2, o);
         });
 
         // two parameters with trailing text
-        And("^# ([^\"]+) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"([^\"]*[^:])$", (String t1, String p1, String t2, String p2, String t3) -> {
+        And("^# ([^\"]+) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"([^\"]*[^:])$", (String t1, String p1, String t2
+                , String p2, String t3) -> {
             log(t1, p1, t2, p2, t3);
         });
 
-        // two parameters with trailing text and table
-        And("^# ([^\"]+) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"([^\"]+)(?::)$", (String t1, String p1, String t2, String p2, String t3, Object o) -> {
+        // two parameters with trailing text : object
+        And("^# ([^\"]+) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"([^\"]+)(?::)$", (String t1, String p1, String t2
+                , String p2, String t3, Object o) -> {
             log(t1, p1, t2, p2, t3, o);
         });
 
+        // THREE PARAMS
+        // three parameters no trailing text 
+        And("^# ([^\"]+) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"$", (String t1, String p1, String t2
+                , String p2, String t3, String p3 ) -> {
+            log(t1, p1, t2, p2, t3, p3);
+        });
+
+        // three parameters no trailing text : object
+        And("^# ([^\"]+) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"(?::)$", (String t1, String p1, String t2
+                , String p2, String t3, String p3, Object o) -> {
+            log(t1, p1, t2, p2, t3, p3, o);
+        });
+
+        // three parameters with trailing text
+        And("^# ([^\"]+) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"([^\"]*[^:])$", (String t1, String p1, String t2
+                , String p2, String t3, String p3, String t4) -> {
+            log(t1, p1, t2, p2, t3, p3, t4);
+        });
+
+        // three parameters with trailing text : object
+        And("^# ([^\"]+) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"([^\"]+)(?::)$", (String t1, String p1, String t2
+                , String p2, String t3, String p3, String t4, Object o) -> {
+            log(t1, p1, t2, p2, t3, p3, t4, o);
+        });
+        
         And("goTo {string}", (String string) -> {
             // Write code here that turns the phrase above into concrete actions
             //throw new io.cucumber.java8.PendingException();
