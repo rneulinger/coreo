@@ -1,17 +1,16 @@
 package steps;
 
-import coreo.*;
-
 import io.cucumber.java8.En;
 //import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JavaSteps implements En {
-    void log( Object... args){
-        for( Object arg:args){
+    void log(Object... args) {
+        for (Object arg : args) {
             System.out.print(">" + arg.toString() + "< ");
         }
         System.out.println();
     }
+
     public JavaSteps() {
 
         // NO PARAMS
@@ -43,9 +42,9 @@ public class JavaSteps implements En {
         });
 
         // TWO PARAMS
-        // two parameters no trailing text 
+        // two parameters no trailing text
         And("^# ([^\"]+) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"$", (String t1, String p1, String t2
-                , String p2 ) -> {
+                , String p2) -> {
             log(t1, p1, t2, p2);
         });
 
@@ -68,9 +67,9 @@ public class JavaSteps implements En {
         });
 
         // THREE PARAMS
-        // three parameters no trailing text 
+        // three parameters no trailing text
         And("^# ([^\"]+) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"([^\"]*) \"([^\"]*)\"$", (String t1, String p1, String t2
-                , String p2, String t3, String p3 ) -> {
+                , String p2, String t3, String p3) -> {
             log(t1, p1, t2, p2, t3, p3);
         });
 
@@ -91,106 +90,94 @@ public class JavaSteps implements En {
                 , String p2, String t3, String p3, String t4, Object o) -> {
             log(t1, p1, t2, p2, t3, p3, t4, o);
         });
-        
+
         And("goTo {string}", (String string) -> {
-            // Write code here that turns the phrase above into concrete actions
-            //throw new io.cucumber.java8.PendingException();
+            throw new io.cucumber.java8.PendingException();
         });
         // like next / back
-        When("onTo {string}", (String string) -> {
-            // Write code here that turns the phrase above into concrete actions
+        And("onTo {string}", (String string) -> {
+            throw new io.cucumber.java8.PendingException();
         });
 
         // like gosub / return
-        When("inTo {string}", (String string) -> {
-            // Write code here that turns the phrase above into concrete actions
-        });
-
-        And("click {string}", (String string) -> {
-            // Write code here that turns the phrase above into concrete actions
-            throw new io.cucumber.java8.PendingException();
-        });
-        When("set:", (io.cucumber.datatable.DataTable dataTable) -> {
-            throw new io.cucumber.java8.PendingException();
-        });
-        When("back:", () -> {
-            // Write code here that turns the phrase above into concrete actions
-            throw new io.cucumber.java8.PendingException();
-        });
-        When("wait {double}", (Integer int1) -> {
-            // Write code here that turns the phrase above into concrete actions
+        And("inTo {string}", (String string) -> {
             throw new io.cucumber.java8.PendingException();
         });
 
-        When("set: {string}", (String string, io.cucumber.datatable.DataTable dataTable) -> {
-            // Write code here that turns the phrase above into concrete actions
-            // For automatic transformation, change DataTable to one of
-            // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-            // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-            // Double, Byte, Short, Long, BigInteger or BigDecimal.
-            //
-            // For other transformations you can register a DataTableType.
+        And("back:", () -> {
+            throw new io.cucumber.java8.PendingException();
+        });
+        And("wait {double}", (Double seconds) -> {
             throw new io.cucumber.java8.PendingException();
         });
 
         And("click text {string}", (String string) -> {
-            // Write code here that turns the phrase above into concrete actions
             throw new io.cucumber.java8.PendingException();
         });
 
+        And("click text ^{înt}", (Integer idx) -> {
+            throw new io.cucumber.java8.PendingException();
+        });
+
+        And("click {string}", (String string) -> {
+            throw new io.cucumber.java8.PendingException();
+        });
+
+        And("click ^{int}", (Integer idx) -> {
+            throw new io.cucumber.java8.PendingException();
+        });
+        And("click fail {string}", (String string) -> {
+            throw new io.cucumber.java8.PendingException();
+        });
+
+        And("click fail ^{int}", (Integer idx) -> {
+            throw new io.cucumber.java8.PendingException();
+        });
         And("set {string} = {string}", (String string, String string2) -> {
-            // Write code here that turns the phrase above into concrete actions
             throw new io.cucumber.java8.PendingException();
         });
-        And("expect:", (io.cucumber.datatable.DataTable dataTable) -> {
-            // Write code here that turns the phrase above into concrete actions
-            // For automatic transformation, change DataTable to one of
-            // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-            // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-            // Double, Byte, Short, Long, BigInteger or BigDecimal.
-            //
-            // For other transformations you can register a DataTableType.
+        And("set {string} = ^{int}", (String string, Integer idx) -> {
             throw new io.cucumber.java8.PendingException();
         });
-        And("expect: {string}", (String string, io.cucumber.datatable.DataTable dataTable) -> {
-            // Write code here that turns the phrase above into concrete actions
-            // For automatic transformation, change DataTable to one of
-            // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-            // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-            // Double, Byte, Short, Long, BigInteger or BigDecimal.
-            //
-            // For other transformations you can register a DataTableType.
+        And("set:", (io.cucumber.datatable.DataTable dataTable) -> {
             throw new io.cucumber.java8.PendingException();
         });
-        Given("expect {string} isDisabled", (String string) -> {
-            // Write code here that turns the phrase above into concrete actions
+        And("set^", () -> {
             throw new io.cucumber.java8.PendingException();
         });
-        Given("expect {string} != {string}", (String string, String string2) -> {
-            // Write code here that turns the phrase above into concrete actions
+        And("set: {string}", (io.cucumber.datatable.DataTable dataTable) -> {
             throw new io.cucumber.java8.PendingException();
         });
-        Given("expect {string} =~ {string}", (String string, String string2) -> {
-            // Write code here that turns the phrase above into concrete actions
-            throw new io.cucumber.java8.PendingException();
-        });
-        Given("!= All users are deleted", () -> {
-            // Write code here that turns the phrase above into concrete actions
+        And("set^ {string}", () -> {
             throw new io.cucumber.java8.PendingException();
         });
 
-        Given("jira:", (io.cucumber.datatable.DataTable dataTable) -> {
-            // Write code here that turns the phrase above into concrete actions
-            // For automatic transformation, change DataTable to one of
-            // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-            // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-            // Double, Byte, Short, Long, BigInteger or BigDecimal.
-            //
-            // For other transformations you can register a DataTableType.
+        And("expect:", (io.cucumber.datatable.DataTable dataTable) -> {
             throw new io.cucumber.java8.PendingException();
         });
-        Then("click faulty {string}", (String string) -> {
-            // Write code here that turns the phrase above into concrete actions
+        And("expect^", () -> {
+            throw new io.cucumber.java8.PendingException();
+        });
+        And("expect: {string}", (io.cucumber.datatable.DataTable dataTable) -> {
+            throw new io.cucumber.java8.PendingException();
+        });
+        And("expect^ {string}", () -> {
+            throw new io.cucumber.java8.PendingException();
+        });
+        And("expect {string} isDisabled", (String string) -> {
+            throw new io.cucumber.java8.PendingException();
+        });
+        And("expect {string} != {string}", (String string, String string2) -> {
+            throw new io.cucumber.java8.PendingException();
+        });
+        And("expect {string} =~ {string}", (String string, String string2) -> {
+            throw new io.cucumber.java8.PendingException();
+        });
+
+        And("jira:", (io.cucumber.datatable.DataTable dataTable) -> {
+            throw new io.cucumber.java8.PendingException();
+        });
+        And("click faulty {string}", (String string) -> {
             throw new io.cucumber.java8.PendingException();
         });
     }
