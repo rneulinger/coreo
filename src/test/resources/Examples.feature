@@ -40,3 +40,6 @@ Feature: Examples
     * # three parameters "p1" and "p2" and "p3" with trailing text + object:
       |table or text|
 
+    * set^
+    * set:
+    | Name| Gender |

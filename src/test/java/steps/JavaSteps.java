@@ -115,7 +115,7 @@ public class JavaSteps implements En {
             throw new io.cucumber.java8.PendingException();
         });
 
-        And("click text ^{înt}", (Integer idx) -> {
+        And("click text ^{int}", (Integer idx) -> {
             throw new io.cucumber.java8.PendingException();
         });
 
