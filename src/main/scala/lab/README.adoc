@@ -19,12 +19,17 @@ timestamo in youtube::
 
 ** https://www.youtube.com/watch?v=YD7pHObAROM&t=9m45s[BDD recap]
 
----
+----
  Use same short names for Persons in different roles.
-admin -> Amy, user Bob,
+admin -> Amy, user -> Bob.
+It's much easier to remember that than "The user"
+
 
  Use Acronyms for systems/components maybe with a dash
-UI "Users Overview"  displays user "john doe"
+UI "Users Overview"  displays user "john doe" or ACME.
+For better clarity, such identifiers should be in uppercase
+
+ Within generic "And" steps,  can be used at the beginning of the statement ... in place of the name
 
 ----
 == CRUD
