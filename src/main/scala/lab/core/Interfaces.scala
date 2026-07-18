@@ -6,11 +6,20 @@ import scala.annotation.StaticAnnotation
 import java.lang.annotation.Annotation
 import lab.utils.collectMembersOfType
 
+
 /**
  * public interface for important objects within the problem domain
  */
 object Interfaces:
 
+  /**
+   * Environment consists of at least one App
+   */
+  trait Env:
+    def activeApp:App
+    def use(app:App, name:String="DEFAULT"):App
+    def use(name:String):App
+    def apps = Map[String,App]()
   /**
    * common base for all elements of an application.
    * each element know the application and the current dialog,
@@ -100,9 +109,24 @@ object Interfaces:
     final def tbdAnnotations: List[TBD] = myAnnotations.collect { case a: TBD => a }
     final def retAnnotations: List[Return] = myAnnotations.collect { case a: Return => a }
 
-  trait Can:
+  /**
+   * Generic textual interface
+   */
+  trait CanDo:
+    /**
+     * clicks a control by a given name
+     * @param ctrl name of Ctrl
+     */
     def click( ctrl:String):Unit
+    /**
+     * sets the value of a control by a given name
+     * @param ctrl name of Ctrl
+     */
     def set( ctrl: String, value:Any): Unit
+    /**
+     * expects the value of a control by a given name
+     * @param ctrl name of Ctrl
+     */
     def expect( ctrl: String, valueOf: Any ) :Unit
 
   /**
@@ -110,7 +134,7 @@ object Interfaces:
    * goTo <=> goBack
    *
    */
-  trait App extends Obj with Can:
+  trait App extends Obj with CanDo:
     /**
      * @return all dialogs of this application
      */
@@ -198,10 +222,9 @@ object Interfaces:
   /**
    * collection of controls
    */
-  trait Dlg extends Obj with Can:
-    def click( name:String):Unit
+  trait Dlg extends Obj with CanDo:
     /**
-     * Helper to create default Txt
+     * Helpers to create default Ctrls and By ids
      * @param id unique id of this control if defined, default is "" which means no id
      * @return
      */
@@ -253,7 +276,14 @@ object Interfaces:
    */
   trait Data extends Ctrl
 
+  /**
+   * Textbox
+   */
   trait Txt extends Data
+  /**
+   * Searchbox
+   */
+  trait Sbx extends Data
   trait SpinBtn extends Data
   /**
    * base for all action related controls

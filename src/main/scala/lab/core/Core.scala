@@ -89,21 +89,24 @@ abstract class _App extends App with _Obj with LogSimple:
       case Nil => throw Exception(s"could not find dialog of type $dlg")
       case _ => throw Exception(s"multiple dialogs of type $dlg $hits")
 
-  override final def goTo[T <: Dlg](dlg: Class[T] | Dlg | String = "/"): Unit =
-    dlg match {
+  override final def goTo[T <: Dlg](dest: Class[T] | Dlg | String = "/"): Unit =
+    dest match {
       case url: String =>
         val gotos = gotoDlgs
         act = Unknown // todo try to find dialog
         navigate(url)
 
-      case dlg: Class[Dlg] =>
-        val hit = findDlg(dlg)
-        val gotos = hit._2.goAnnotations.map(_.value()).distinct
-        if gotos.isEmpty then throw Exception(s"goto annotation missing for ${hit}")
-        if gotos.tail.nonEmpty then throw Exception(s"multiple goto annotation for ${hit} ${gotos}")
-        info(s"goto: ${gotos.head} ${hit._2}")
+      case cla: Class[Dlg] =>
+        val dlg = findDlg(cla)
+        goTo( dlg._2)
+
+      case dlg:Dlg =>
+        val gotos = dlg.goAnnotations.map(_.value()).distinct
+        if gotos.isEmpty then throw Exception(s"goto annotation missing for ${dlg}")
+        if gotos.tail.nonEmpty then throw Exception(s"multiple goto annotation for ${dlg} ${gotos}")
+        info(s"goto: ${gotos.head} ${dlg}")
         navigate(gotos.head)
-        act = hit._2
+        act = dlg
     }
 
   def navigate(path:String):Unit
@@ -245,3 +248,19 @@ trait _NextBtn extends _Btn with NextBtn
 
 trait _BackBtn extends _Btn with BackBtn
 
+object NoneApp extends _App:
+
+  override def navigate(path: String): Unit = ???
+
+  override def Unknown: _Dlg = ???
+
+  given app: _App = this
+
+  override def instanceName: String = ""
+
+object Env extends Interfaces.Env {
+  override def activeApp: App = NoneApp
+
+  override def use(app: App, name: String): App = ???
+  override def use(name: String): App = ???
+}

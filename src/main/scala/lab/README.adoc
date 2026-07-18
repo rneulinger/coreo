@@ -1,6 +1,7 @@
 timestamo in youtube::
 &t=1m30s
 
+
 == BDD
 
 * https://en.wikipedia.org/wiki/Behavior-driven_development[]
@@ -35,3 +36,7 @@ For better clarity, such identifiers should be in uppercase
 == CRUD
 
 * https://en.wikipedia.org/wiki/Create,_read,_update_and_delete[]
+
+== Playwright
+
+* https://playwright.dev/java/docs/locators[Locators]
