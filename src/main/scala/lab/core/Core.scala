@@ -8,6 +8,7 @@ import java.lang.annotation.Annotation
 import scala.collection.mutable
 import scala.language.postfixOps
 import scala.collection.mutable.Stack
+import scala.compiletime.uninitialized
 
 /** Language for code generation. C#, Python...
  * default is C# */
@@ -259,8 +260,131 @@ object NoneApp extends _App:
   override def instanceName: String = ""
 
 object Env extends Interfaces.Env {
-  override def activeApp: App = NoneApp
+  /**
+   * all registered applications
+   * it is possible to have an application registered with more than one name
+   *
+   * @return
+   */
+  var apps = Map[String, App]()
+  use (NoneApp, "NoneApp")
+  private var actApp:App = uninitialized
+  use(NoneApp, "NoneApp")
 
-  override def use(app: App, name: String): App = ???
-  override def use(name: String): App = ???
+  override def activeApp: App = actApp
+
+  override def add(app: App, name: String): App = {
+    if ( ! apps.contains(name) ){  // new app
+      apps = apps + (name -> app)
+      return app
+    }
+    if ( apps(name) == app){ // already defined
+      return app
+    }
+    throw Exception(s"{name} is already in use")
+  }
+
+  override def use(app: App, name: String):App = {
+    add( app, name)
+    use( name )
+  }
+  override def use(name: String): App = {
+    actApp = apps(name)
+    actApp
+  }
+
+  /**
+   * return whether an App with a given Name exists
+   *
+   * @param name of application to finad
+   * @return
+   */
+  override def exists(name: String): Boolean = apps.contains(name)
+}
+
+object NoneDlg extends Interfaces.Dlg {
+  /**
+   * Helpers to create default Ctrls and By ids
+   *
+   * @param id unique id of this control if defined, default is "" which means no id
+   * @return
+   */
+  override def TXT(id: String): Txt = ???
+
+  override def BTN(id: String): Btn = ???
+
+  override def SUB(id: String): InToBtn = ???
+
+  override def RET(id: String): RetBtn = ???
+
+  override def NXT(id: String): NextBtn = ???
+
+  override def BAK(id: String): BackBtn = ???
+
+  override def SpinBTN(id: String): SpinBtn = ???
+
+  /**
+   * all controls of this dialog
+   *
+   * @return
+   */
+  override def allCtrls: List[(String, Ctrl)] = ???
+
+  /**
+   * all data controls
+   *
+   * @return
+   */
+  override def allDatas: List[(String, Data)] = ???
+
+  /**
+   * all action controls
+   *
+   * @return
+   */
+  override def allActions: List[(String, Action)] = ???
+
+  override def findCtrls[T <: Ctrl](ctrl: Class[T] | Ctrl | String): List[(String, Ctrl)] = ???
+
+  override def findCtrl[T <: Ctrl](ctrl: Class[T] | Ctrl | String): (String, Ctrl) = ???
+
+  /**
+   * clicks a control by a given name
+   *
+   * @param ctrl name of Ctrl
+   */
+  override def click(ctrl: String): Unit = ???
+
+  /**
+   * sets the value of a control by a given name
+   *
+   * @param ctrl name of Ctrl
+   */
+  override def set(ctrl: String, value: Any): Unit = ???
+
+  /**
+   * expects the value of a control by a given name
+   *
+   * @param ctrl name of Ctrl
+   */
+  override def expect(ctrl: String, valueOf: Any): Unit = ???
+
+  /**
+   *
+   * @return the application to which the object belongs.
+   */
+  override def myApp: App = ???
+
+  override def instanceName: String = ???
+
+  /**
+   * @return the currently active dialogue.
+   */
+  override def activeDlg: Dlg = ???
+
+  /**
+   * performs validation on the current object.
+   * there will be validations in the future
+   */
+  override def validate(): Unit = ???
 }

@@ -13,21 +13,22 @@ import lab.utils.collectMembersOfType
 object Interfaces:
 
   /**
-   * Environment consists of at least one App
+   * Environment consists of at least one App, which i the NoneApp
    */
   trait Env:
     /**
-     * active application
+     * returns the currently active application
      * @return
      */
     def activeApp:App
 
     /**
-     * active dialogue
+     * returns the currently active dialogue, which is the active dialogue of the active app
      * @return
      */
     final def activeDlg = activeApp.activeDlg
 
+    def add(app:App, name:String="DEFAULT"):App
     /**
      * switch to an application
      * @param app
@@ -44,11 +45,12 @@ object Interfaces:
     def use(name:String):App
 
     /**
-     * all registered applications
-     * it is possible to have an application registered with more than one name
+     * return whether an App with a given Name exists
+     * @param name of application to finad
      * @return
      */
-    def apps = Map[String,App]()
+    def exists( name:String):Boolean
+
   /**
    * common base for all elements of an application.
    * each element know the application and the current dialog,
