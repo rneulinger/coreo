@@ -16,9 +16,38 @@ object Interfaces:
    * Environment consists of at least one App
    */
   trait Env:
+    /**
+     * active application
+     * @return
+     */
     def activeApp:App
+
+    /**
+     * active dialogue
+     * @return
+     */
+    final def activeDlg = activeApp.activeDlg
+
+    /**
+     * switch to an application
+     * @param app
+     * @param name
+     * @return
+     */
     def use(app:App, name:String="DEFAULT"):App
+
+    /**
+     * switch to application by name
+     * @param name
+     * @return
+     */
     def use(name:String):App
+
+    /**
+     * all registered applications
+     * it is possible to have an application registered with more than one name
+     * @return
+     */
     def apps = Map[String,App]()
   /**
    * common base for all elements of an application.

@@ -6,6 +6,7 @@ import com.microsoft.playwright.*
 import com.microsoft.playwright.options.*
 
 val url = "https://testpages.eviltester.com/pages/"
+val bonder = "https://playground.bondaracademy.com/pages/forms/layouts"
 class PagesApp extends App(url):// ("https://practice.expandtesting.com/") {
   override def instanceName = "EviltesterPw"
 
@@ -23,7 +24,7 @@ object PracticeApp:
   @main
   def ui()={
     val app = PagesApp()
-    val ti = app.TextInputs
+    def ti = app.TextInputs
     app.goTo(classOf[TextInputs_])
     app.goTo(ti)
 
