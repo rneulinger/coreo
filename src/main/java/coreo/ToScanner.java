@@ -11,14 +11,14 @@ public final class ToScanner {
     // --- Find ALL annotated fields ---
     public static List<Field> findAnnotatedFields(Class<?> type) {
         return Arrays.stream(getAllFields(type))
-                .filter(f -> f.isAnnotationPresent(NextTo.class))
+                .filter(f -> f.isAnnotationPresent(OnTo.class))
                 .collect(Collectors.toList());
     }
 
     // --- Find ALL annotated methods ---
     public static List<Method> findAnnotatedMethods(Class<?> type) {
         return Arrays.stream(getAllMethods(type))
-                .filter(m -> m.isAnnotationPresent(NextTo.class))
+                .filter(m -> m.isAnnotationPresent(OnTo.class))
                 .collect(Collectors.toList());
     }
 
@@ -27,7 +27,7 @@ public final class ToScanner {
             Class<?> type, Class<? extends Destination> dest) {
 
         return findAnnotatedFields(type).stream()
-                .filter(f -> matchesDestination(f.getAnnotation(NextTo.class), dest))
+                .filter(f -> matchesDestination(f.getAnnotation(OnTo.class), dest))
                 .collect(Collectors.toList());
     }
 
@@ -36,7 +36,7 @@ public final class ToScanner {
             Class<?> type, Class<? extends Destination> dest) {
 
         return findAnnotatedMethods(type).stream()
-                .filter(m -> matchesDestination(m.getAnnotation(NextTo.class), dest))
+                .filter(m -> matchesDestination(m.getAnnotation(OnTo.class), dest))
                 .collect(Collectors.toList());
     }
 
@@ -49,7 +49,7 @@ public final class ToScanner {
     }
 
     // --- Helper: match destination ---
-    private static boolean matchesDestination(NextTo to,
+    private static boolean matchesDestination(OnTo to,
                                               Class<? extends Destination> dest) {
         return to.dest().equals(dest);
     }

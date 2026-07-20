@@ -1,6 +1,6 @@
 package lab.practice
 
-import coreo.{NextTo, Return, TBD}
+import coreo.{OnTo, Return, TBD}
 import lab.core.*
 import lab.pw.{App, Dlg}
 

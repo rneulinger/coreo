@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD})   // TYPE = class, interface, enum, record
 
-public @interface GoSub {
+public @interface InTo {
     Class<? extends Object> dest();
 //    String value() default  "";
 }

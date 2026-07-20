@@ -1,6 +1,6 @@
 package lab.core
 
-import coreo.{BackTo, GoTo, NextTo, Return, TBD}
+import coreo.{BackTo, GoTo, OnTo, Return, TBD}
 
 import scala.annotation.StaticAnnotation
 import java.lang.annotation.Annotation
@@ -135,7 +135,7 @@ object Interfaces:
      * @return
      */
     final def goAnnotations:List[GoTo] = myAnnotations.collect{ case a:GoTo => a }
-    final def toAnnotations:List[NextTo] = myAnnotations.collect{ case a:NextTo => a }
+    final def toAnnotations:List[OnTo] = myAnnotations.collect{ case a:OnTo => a }
     final def uiAnnotations:List[coreo.Ui] = myAnnotations.collect{ case a:coreo.Ui => a }
     final def tbdAnnotations: List[TBD] = myAnnotations.collect { case a: TBD => a }
     final def retAnnotations: List[Return] = myAnnotations.collect { case a: Return => a }
