@@ -24,9 +24,15 @@ object PracticeApp:
   @main
   def ui()={
     val app = PagesApp()
+    given a:PagesApp = app
     def ti = app.TextInputs
     app.goTo(classOf[TextInputs_])
     app.goTo(ti)
+
+    new TextInputs_ {
+      Text.click()
+      Text.set(42)
+    }
 
     ti.Text.click()
     ti.Text.set(42)

@@ -6,7 +6,7 @@ import com.microsoft.playwright.options.AriaRole
 import com.microsoft.playwright.*
 // tag::fields[]
 @GoTo("bmi")
-final class BmiCalculator_(using app: App) extends Dlg:
+class BmiCalculator_(using app: App) extends Dlg:
 
   // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this
   //override def path: String = "bmi"

@@ -33,6 +33,13 @@ object PracticeApp:
   def ui()={
     val app=PracticeApp()
     app.goTo( classOf[BmiCalculator_])
+    // todo clarify whether this is possible like app.with( BmiCalculator_ ){ .... } maybe macros needed
+    new BmiCalculator_(using app) {
+      Height.click()
+      Weight.click()
+      Height.set(196)
+      Weight.set(196)
+    }
     app.click( "Height" )
     app.click( "Weight" )
     app.set( "Height", "196")

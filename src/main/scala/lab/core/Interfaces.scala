@@ -158,7 +158,7 @@ object Interfaces:
      * expects the value of a control by a given name
      * @param ctrl name of Ctrl
      */
-    def expect( ctrl: String, valueOf: Any ) :Unit
+    def expect( ctrl: String, value: Any ) :Unit
 
   /**
    * collection of dialogs.

@@ -7,7 +7,7 @@ import lab.pw.*
 
 // tag::fields[]
 @GoTo("inputs")
-final class Inputs_(using own: App) extends Dlg:
+class Inputs_(using own: App) extends Dlg:
 
   // TODO set path if you can NAVIGATE directly to this page;  otherwise delete this
   //override def path: String = 

@@ -7,7 +7,7 @@ import lab.pw.*
 
 // tag::fields[]
 @GoTo("input-elements/text-inputs")
-final class TextInputs_(using own: App) extends Dlg:
+class TextInputs_(using own: App) extends Dlg:
 
   val Text = TXT( _.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Text").setExact(true)))
   val Search = TXT( _.getByRole(AriaRole.SEARCHBOX, new Page.GetByRoleOptions().setName("Search").setExact(true)))
