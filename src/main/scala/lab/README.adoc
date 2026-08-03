@@ -18,7 +18,29 @@ timestamo in youtube::
 
 * https://www.youtube.com/watch?v=YD7pHObAROM[Good Gherkin / Andy Knight]
 
-** https://www.youtube.com/watch?v=YD7pHObAROM&t=9m45s[BDD recap]
+* https://www.youtube.com/watch?v=YD7pHObAROM&t=9m45s[BDD recap]
+
+* https://www.youtube.com/watch?v=YD7pHObAROM&t=21m00s[Two extremes]
+
+* https://www.youtube.com/watch?v=YD7pHObAROM&t=46m50s[Propper english]
+
+----
+Why Proper English Matters
+
+Behavior scenarios are meant to be readable and expressive. Steps
+are also meant to be reusable.
+
+Poor grammar, misspellings, and inconsistent phrasing can ruin the
+benefits of behavior specification. Scenarios can become confusing.
+Improper steps could be used.
+----
+
+* https://www.youtube.com/watch?v=YD7pHObAROM&t=48m25s[Point of view]
+
+* https://charlies-names.com/tags/short-unisex-names/[unisex-names]
+
+=== Automation Panda
+* https://automationpanda.com/[Automation panda]
 
 ----
  Use same short names for Persons in different roles.
