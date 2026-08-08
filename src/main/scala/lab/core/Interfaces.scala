@@ -288,6 +288,41 @@ object Interfaces:
     def findCtrls[T <: Ctrl](ctrl: Class[T] | Ctrl |String): List[(String, Ctrl)]
 
     def findCtrl[T <: Ctrl](ctrl: Class[T] | Ctrl| String): (String, Ctrl)
+    def stepTo( name:String):Unit = {
+      throw new UnsupportedOperationException();
+    }
+  end Dlg
+
+  trait TabbedDlg extends Dlg:
+    var manager:TabbedManager
+    override def stepTo(name:String):Unit = {
+      throw new NotImplementedError();
+    }
+  end TabbedDlg
+
+  trait TabbedManager(first:TabbedDlg, last:TabbedDlg, more:TabbedDlg*)
+  end TabbedManager
+
+  trait WizardDlg extends Dlg:
+    var manager:WizardManager
+    override def stepTo(name:String):Unit = {
+      throw new NotImplementedError();
+    }
+  end WizardDlg
+
+  trait FirstDlg extends WizardDlg:
+  end FirstDlg
+
+  trait LastDlg extends WizardDlg:
+  end LastDlg
+
+  trait MidDlg extends WizardDlg:
+  end MidDlg
+
+  trait WizardManager(seq: Boolean, first: FirstDlg, last: LastDlg, more: MidDlg*)
+  end WizardManager
+
+
   /**
    * base for all controls.
    */
