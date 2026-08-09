@@ -1,6 +1,7 @@
 package lab.core
 
 import coreo.{BackTo, GoTo, OnTo, Return, TBD}
+import lab.core.Interfaces.Wizard
 
 import scala.annotation.StaticAnnotation
 import java.lang.annotation.Annotation
@@ -11,6 +12,9 @@ import lab.utils.collectMembersOfType
  * public interface for important objects within the problem domain
  */
 object Interfaces:
+
+  trait Universe:
+  end Universe
 
   /**
    * Environment consists of at least one App, which i the NoneApp
@@ -117,13 +121,13 @@ object Interfaces:
           field.setAccessible(true)
           field.getAnnotations.toList
 
-
     /**
      * return all annotations for this object defined on parent level
      * must be implemented in derived classes if appropriate
      * @return
      */
     def parentAnnotations = List[Annotation]()
+
     /**
      * get all defined annotations either by class or field
      * @return
@@ -148,16 +152,19 @@ object Interfaces:
      * clicks a control by a given name
      * @param ctrl name of Ctrl
      */
+
     def click( ctrl:String):Unit
     /**
      * sets the value of a control by a given name
      * @param ctrl name of Ctrl
      */
+
     def set( ctrl: String, value:Any): Unit
     /**
      * expects the value of a control by a given name
      * @param ctrl name of Ctrl
      */
+
     def expect( ctrl: String, value: Any ) :Unit
 
   /**
@@ -293,35 +300,40 @@ object Interfaces:
     }
   end Dlg
 
-  trait TabbedDlg extends Dlg:
-    var manager:TabbedManager
-    override def stepTo(name:String):Unit = {
-      throw new NotImplementedError();
-    }
-  end TabbedDlg
+  object Tabbed:
+    trait Dlg extends Interfaces.Dlg:
+      var manager: Manager
 
-  trait TabbedManager(first:TabbedDlg, last:TabbedDlg, more:TabbedDlg*)
-  end TabbedManager
+      override def stepTo(name: String): Unit = {
+        throw new NotImplementedError();
+      }
+    end Dlg
 
-  trait WizardDlg extends Dlg:
-    var manager:WizardManager
-    override def stepTo(name:String):Unit = {
-      throw new NotImplementedError();
-    }
-  end WizardDlg
+    trait Manager(first: Dlg, last: Dlg, middles: Dlg*)
+    end Manager
+  end Tabbed
 
-  trait FirstDlg extends WizardDlg:
-  end FirstDlg
+  object Wizard:
+    trait Dlg extends Interfaces.Dlg:
+      var manager: Manager
 
-  trait LastDlg extends WizardDlg:
-  end LastDlg
+      override def stepTo(name: String): Unit = {
+        throw new NotImplementedError();
+      }
+    end Dlg
 
-  trait MidDlg extends WizardDlg:
-  end MidDlg
+    trait FirstDlg extends Dlg:
+    end FirstDlg
 
-  trait WizardManager(seq: Boolean, first: FirstDlg, last: LastDlg, more: MidDlg*)
-  end WizardManager
+    trait LastDlg extends Dlg:
+    end LastDlg
 
+    trait MiddleDlg extends Dlg:
+    end MiddleDlg
+
+    trait Manager(seq: Boolean, first: FirstDlg, last: LastDlg, middles: MiddleDlg*)
+    end Manager
+  end Wizard
 
   /**
    * base for all controls.
